@@ -43,7 +43,8 @@ var
   desenharLinha, desenharTriangulo, desenharQuadrado: bool;
   x1Linha, y1Linha, x2Linha, y2Linha : double;
   xEsqTri, yEsqTri, xCimaTri, yCimaTri, xDirTri, yDirTri : double;
-  xEsqCimaQuad, yEsqCimaQuad, xDirCimaQuad, yDirCimaQuad, xDirBaixoQuad, yDirBaixoQuad, xEsqBaixoQuad, yEsqBaixoQuad : double;
+  xEsqCimaQuad, yEsqCimaQuad, xDirCimaQuad, yDirCimaQuad, xDirBaixoQuad,
+  yDirBaixoQuad, xEsqBaixoQuad, yEsqBaixoQuad : double;
 
 {$R *.DFM}
 
@@ -86,7 +87,7 @@ procedure GLInit;
 begin
    // set viewing projection
    glMatrixMode(GL_PROJECTION);
-   glFrustum(-0.1, 0.1, -0.1, 0.1, 0.3, 25.0);
+   glFrustum(-0.1, 0.1, -0.1, 0.1, 0.1, 15.0);
    // position viewer
    glMatrixMode(GL_MODELVIEW);
    glEnable(GL_DEPTH_TEST);
