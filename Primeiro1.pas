@@ -11,11 +11,19 @@ type
     btnTriangulo: TButton;
     btnQuadrado: TButton;
     btnLinha: TButton;
+    btnCima: TButton;
+    btnBaixo: TButton;
+    btnEsquerda: TButton;
+    btnDireita: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure btnTrianguloClick(Sender: TObject);
     procedure btnQuadradoClick(Sender: TObject);
     procedure btnLinhaClick(Sender: TObject);
+    procedure btnCimaClick(Sender: TObject);
+    procedure btnBaixoClick(Sender: TObject);
+    procedure btnEsquerdaClick(Sender: TObject);
+    procedure btnDireitaClick(Sender: TObject);
   private
     procedure Draw; //Draws an OpenGL scene on request
     procedure InicializaVariaveisLinha();
@@ -169,6 +177,102 @@ begin
   yCimaTri := 2;
   xDirTri  := 2;
   yDirTri  := 0;
+end;
+
+procedure TPrincipal.btnBaixoClick(Sender: TObject);
+begin
+  if(desenharLinha) then
+  begin
+    y1Linha := y1Linha - 0.5;
+    y2Linha := y2Linha - 0.5;
+  end
+  else
+  if(desenharTriangulo) then
+  begin
+    yEsqTri  := yEsqTri - 0.5;
+    yCimaTri := yCimaTri - 0.5;
+    yDirTri  := yDirTri - 0.5;
+  end
+  else
+  if(desenharQuadrado) then
+  begin
+    yEsqCimaQuad  := yEsqCimaQuad - 0.5;
+    yDirCimaQuad  := yDirCimaQuad - 0.5;
+    yDirBaixoQuad := yDirBaixoQuad - 0.5;
+    yEsqBaixoQuad := yEsqBaixoQuad - 0.5;
+  end;
+end;
+
+procedure TPrincipal.btnCimaClick(Sender: TObject);
+begin
+  if(desenharLinha) then
+  begin
+    y1Linha := y1Linha + 0.5;
+    y2Linha := y2Linha + 0.5;
+  end
+  else
+  if(desenharTriangulo) then
+  begin
+    yEsqTri  := yEsqTri + 0.5;
+    yCimaTri := yCimaTri + 0.5;
+    yDirTri  := yDirTri + 0.5;
+  end
+  else
+  if(desenharQuadrado) then
+  begin
+    yEsqCimaQuad  := yEsqCimaQuad + 0.5;
+    yDirCimaQuad  := yDirCimaQuad + 0.5;
+    yDirBaixoQuad := yDirBaixoQuad + 0.5;
+    yEsqBaixoQuad := yEsqBaixoQuad + 0.5;
+  end;
+end;
+
+procedure TPrincipal.btnDireitaClick(Sender: TObject);
+begin
+  if(desenharLinha) then
+  begin
+    x1Linha := x1Linha + 0.5;
+    x2Linha := x2Linha + 0.5;
+  end
+  else
+  if(desenharTriangulo) then
+  begin
+    xEsqTri  := xEsqTri + 0.5;
+    xCimaTri := xCimaTri + 0.5;
+    xDirTri  := xDirTri + 0.5;
+  end
+  else
+  if(desenharQuadrado) then
+  begin
+    xEsqCimaQuad  := xEsqCimaQuad + 0.5;
+    xDirCimaQuad  := xDirCimaQuad + 0.5;
+    xDirBaixoQuad := xDirBaixoQuad + 0.5;
+    xEsqBaixoQuad := xEsqBaixoQuad + 0.5;
+  end;
+end;
+
+procedure TPrincipal.btnEsquerdaClick(Sender: TObject);
+begin
+  if(desenharLinha) then
+  begin
+    x1Linha := x1Linha - 0.5;
+    x2Linha := x2Linha - 0.5;
+  end
+  else
+  if(desenharTriangulo) then
+  begin
+    xEsqTri  := xEsqTri - 0.5;
+    xCimaTri := xCimaTri - 0.5;
+    xDirTri  := xDirTri - 0.5;
+  end
+  else
+  if(desenharQuadrado) then
+  begin
+    xEsqCimaQuad  := xEsqCimaQuad - 0.5;
+    xDirCimaQuad  := xDirCimaQuad - 0.5;
+    xDirBaixoQuad := xDirBaixoQuad - 0.5;
+    xEsqBaixoQuad := xEsqBaixoQuad - 0.5;
+  end;
 end;
 
 procedure TPrincipal.btnLinhaClick(Sender: TObject);

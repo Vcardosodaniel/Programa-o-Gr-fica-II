@@ -42,4 +42,40 @@ object Principal: TPrincipal
     TabOrder = 2
     OnClick = btnLinhaClick
   end
+  object btnCima: TButton
+    Left = 40
+    Top = 56
+    Width = 41
+    Height = 25
+    Caption = 'Cima'
+    TabOrder = 3
+    OnClick = btnCimaClick
+  end
+  object btnBaixo: TButton
+    Left = 40
+    Top = 79
+    Width = 41
+    Height = 25
+    Caption = 'Baixo'
+    TabOrder = 4
+    OnClick = btnBaixoClick
+  end
+  object btnEsquerda: TButton
+    Left = 0
+    Top = 72
+    Width = 41
+    Height = 25
+    Caption = 'Esq.'
+    TabOrder = 5
+    OnClick = btnEsquerdaClick
+  end
+  object btnDireita: TButton
+    Left = 80
+    Top = 72
+    Width = 41
+    Height = 25
+    Caption = 'Dir.'
+    TabOrder = 6
+    OnClick = btnDireitaClick
+  end
 end
