@@ -3,9 +3,12 @@
 	<Transactions>
     <Transaction>2016/04/19 23:39:30.000.658,=C:\Users\Daniel\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>2016/08/17 21:40:25.000.323,=C:\Users\Daniel\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2016/08/20 10:26:46.308,=C:\Users\Daniel\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2016/08/20 10:27:28.915,D:\Facul\Programação Gráfica II\OpenGL\Capitulo1\Primeiro1.dfm=C:\Users\Daniel\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
-    <Transaction>2016/08/20 10:27:28.915,D:\Facul\Programação Gráfica II\OpenGL\Capitulo1\Primeiro1.pas=C:\Users\Daniel\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2016/08/20 10:28:11.527,D:\Facul\Programação Gráfica II\OpenGL\Capitulo1\Primeiro.dproj=C:\Users\Daniel\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2016/08/20 10:26:46.000.308,=C:\Users\Daniel\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2016/08/20 10:27:28.000.915,C:\Users\Daniel\Documents\Embarcadero\Studio\Projects\Unit1.dfm=D:\Facul\Programação Gráfica II\OpenGL\Capitulo1\Primeiro1.dfm</Transaction>
+    <Transaction>2016/08/20 10:27:28.000.915,C:\Users\Daniel\Documents\Embarcadero\Studio\Projects\Unit1.pas=D:\Facul\Programação Gráfica II\OpenGL\Capitulo1\Primeiro1.pas</Transaction>
+    <Transaction>2016/08/20 10:28:11.000.527,C:\Users\Daniel\Documents\Embarcadero\Studio\Projects\Project1.dproj=D:\Facul\Programação Gráfica II\OpenGL\Capitulo1\Primeiro.dproj</Transaction>
+    <Transaction>2016/08/21 09:43:36.809,=D:\Facul\Programação Gráfica II\OpenGL\Capitulo1\Unit1.pas</Transaction>
+    <Transaction>2016/08/21 10:07:47.843,D:\Facul\Programação Gráfica II\OpenGL\Capitulo1\CoordenadasQuadrado.dfm=D:\Facul\Programação Gráfica II\OpenGL\Capitulo1\Unit1.dfm</Transaction>
+    <Transaction>2016/08/21 10:07:47.843,D:\Facul\Programação Gráfica II\OpenGL\Capitulo1\CoordenadasQuadrado.pas=D:\Facul\Programação Gráfica II\OpenGL\Capitulo1\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>

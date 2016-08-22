@@ -26,19 +26,25 @@ type
     procedure btnDireitaClick(Sender: TObject);
   private
     procedure Draw; //Draws an OpenGL scene on request
-    procedure InicializaVariaveisLinha();
-    procedure InicializaVariaveisTriangulo();
-    procedure InicializaVariaveisQuadrado();
     procedure DesenhaLinha();
     procedure DesenhaTriangulo();
-    procedure DesenhaQuadrado();
+
+
   public
+    procedure InicializaVariaveisLinha();
+    procedure InicializaVariaveisTriangulo();
+    procedure InicializaVariaveisQuadrado(desenharQuadrado1:bool; xEsqCimaQuad1, yEsqCimaQuad1, xDirCimaQuad1, yDirCimaQuad1, xDirBaixoQuad1, yDirBaixoQuad1, xEsqBaixoQuad1, yEsqBaixoQuad1: double);
+    procedure DesenhaQuadrado();
   end;
 
 var
   Principal: TPrincipal;
 
 implementation
+
+uses
+  CoordenadasQuadrado;
+
 var
   desenharLinha, desenharTriangulo, desenharQuadrado: bool;
   x1Linha, y1Linha, x2Linha, y2Linha : double;
@@ -101,16 +107,17 @@ begin
   y2Linha := 0;
 end;
 
-procedure TPrincipal.InicializaVariaveisQuadrado();
+procedure TPrincipal.InicializaVariaveisQuadrado(desenharQuadrado1:bool; xEsqCimaQuad1, yEsqCimaQuad1, xDirCimaQuad1, yDirCimaQuad1, xDirBaixoQuad1, yDirBaixoQuad1, xEsqBaixoQuad1, yEsqBaixoQuad1: double);
 begin
-  xEsqCimaQuad  := 0;
-  yEsqCimaQuad  := 0;
-  xDirCimaQuad  := 0;
-  yDirCimaQuad  := 0;
-  xDirBaixoQuad := 0;
-  yDirBaixoQuad := 0;
-  xEsqBaixoQuad := 0;
-  yEsqBaixoQuad := 0;
+  desenharQuadrado := desenharQuadrado1;
+  xEsqCimaQuad  := xEsqCimaQuad1;
+  yEsqCimaQuad  := yEsqCimaQuad1;
+  xDirCimaQuad  := xDirCimaQuad1;
+  yDirCimaQuad  := yDirCimaQuad1;
+  xDirBaixoQuad := xDirBaixoQuad1;
+  yDirBaixoQuad := yDirBaixoQuad1;
+  xEsqBaixoQuad := xEsqBaixoQuad1;
+  yEsqBaixoQuad := yEsqBaixoQuad1;
 end;
 
 procedure TPrincipal.InicializaVariaveisTriangulo();
@@ -136,7 +143,6 @@ begin
   GLInit;                   //initialize OpenGL
   InicializaVariaveisLinha();
   InicializaVariaveisTriangulo();
-  InicializaVariaveisQuadrado();
 end;
 
 procedure TPrincipal.Draw;
@@ -154,11 +160,12 @@ begin
   glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT);
   glLoadIdentity;
   glTranslatef(0.0, 0.0, -12.0);
+//  InicializaVariaveisQuadrado();
   DesenhaLinha();
   DesenhaTriangulo();
   DesenhaQuadrado();
   SwapBuffers(wglGetCurrentDC);
-  glFlush();
+//  glFlush();
 end;
 
 procedure TPrincipal.FormPaint(Sender: TObject);
@@ -289,19 +296,24 @@ begin
 end;
 
 procedure TPrincipal.btnQuadradoClick(Sender: TObject);
+var
+  coordenadasQuadrado: TfrmCoordenadasQuadrado;
 begin
-  desenharQuadrado  := true;
+  coordenadasQuadrado := TfrmCoordenadasQuadrado.Create(self);
+  coordenadasQuadrado.showModal();
+
+//  desenharQuadrado  := true;
   desenharTriangulo := false;
   desenharLinha     := false;
 
-  xEsqCimaQuad  := -2;
-  yEsqCimaQuad  := 2;
-  xDirCimaQuad  := 2;
-  yDirCimaQuad  := 2;
-  xDirBaixoQuad := 2;
-  yDirBaixoQuad := -2;
-  xEsqBaixoQuad := -2;
-  yEsqBaixoQuad := -2;
+//  xEsqCimaQuad  := -2;
+//  yEsqCimaQuad  := 2;
+//  xDirCimaQuad  := 2;
+//  yDirCimaQuad  := 2;
+//  xDirBaixoQuad := 2;
+//  yDirBaixoQuad := -2;
+//  xEsqBaixoQuad := -2;
+//  yEsqBaixoQuad := -2;
 end;
 
 procedure TPrincipal.DesenhaLinha();
@@ -341,6 +353,7 @@ begin
       glVertex2f(xDirBaixoQuad, yDirBaixoQuad);
       glVertex2f(xEsqBaixoQuad, yEsqBaixoQuad);
     glEnd();
+    glFlush();
   end;
 end;
 

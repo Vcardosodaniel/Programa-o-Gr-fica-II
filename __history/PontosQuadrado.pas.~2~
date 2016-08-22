@@ -1,0 +1,10 @@
+unit PontosQuadrado;
+
+interface
+
+type
+  Point = Class;
+
+implementation
+
+end.
