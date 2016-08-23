@@ -98,6 +98,10 @@
             <Form>frmTriangulo</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="CoordenadasLinhas.pas">
+            <Form>frmLinha</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -124,6 +128,12 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment>
+                <DeployFile LocalName="D:\Facul\Programação Gráfica II\OpenGL\Capitulo1\Primeiro.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>Primeiro.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Primeiro.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Primeiro.exe</RemoteName>
