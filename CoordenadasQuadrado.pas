@@ -57,7 +57,6 @@ procedure TfrmCoordenadasQuadrado.btnOKClick(Sender: TObject);
 var
   Principal: TPrincipal;
 begin
-//  Principal := Principal.Create(self);
   Principal.InicializaVariaveisQuadrado(true, StrToFloat(edXPonto1.Text), StrToFloat(edYPonto1.Text), StrToFloat(edXPonto2.Text), StrToFloat(edYPonto2.Text),
                             StrToFloat(edXPonto3.Text), StrToFloat(edYPonto3.Text), StrToFloat(edXPonto4.Text), StrToFloat(edYPonto4.Text));
   btnCancelarClick(self);
