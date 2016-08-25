@@ -11,6 +11,7 @@ object frmLinha: TfrmLinha
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   PixelsPerInch = 96
   TextHeight = 13
   object Principal: TPanel

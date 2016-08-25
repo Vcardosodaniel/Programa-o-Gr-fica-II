@@ -11,6 +11,7 @@ object frmCoordenadasQuadrado: TfrmCoordenadasQuadrado
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -133,7 +134,6 @@ object frmCoordenadasQuadrado: TfrmCoordenadasQuadrado
         Top = 27
         Width = 46
         Height = 21
-        NumbersOnly = True
         TabOrder = 0
       end
       object edYPonto1: TEdit
@@ -141,7 +141,6 @@ object frmCoordenadasQuadrado: TfrmCoordenadasQuadrado
         Top = 27
         Width = 46
         Height = 21
-        NumbersOnly = True
         TabOrder = 1
       end
       object edXPonto2: TEdit
@@ -149,7 +148,6 @@ object frmCoordenadasQuadrado: TfrmCoordenadasQuadrado
         Top = 54
         Width = 46
         Height = 21
-        NumbersOnly = True
         TabOrder = 2
       end
       object edYPonto2: TEdit
@@ -157,7 +155,6 @@ object frmCoordenadasQuadrado: TfrmCoordenadasQuadrado
         Top = 54
         Width = 46
         Height = 21
-        NumbersOnly = True
         TabOrder = 3
       end
       object edXPonto3: TEdit
@@ -165,7 +162,6 @@ object frmCoordenadasQuadrado: TfrmCoordenadasQuadrado
         Top = 82
         Width = 46
         Height = 21
-        NumbersOnly = True
         TabOrder = 4
       end
       object edYPonto3: TEdit
@@ -173,7 +169,6 @@ object frmCoordenadasQuadrado: TfrmCoordenadasQuadrado
         Top = 82
         Width = 46
         Height = 21
-        NumbersOnly = True
         TabOrder = 5
       end
       object edXPonto4: TEdit
@@ -181,7 +176,6 @@ object frmCoordenadasQuadrado: TfrmCoordenadasQuadrado
         Top = 110
         Width = 46
         Height = 21
-        NumbersOnly = True
         TabOrder = 6
       end
       object edYPonto4: TEdit
@@ -189,7 +183,6 @@ object frmCoordenadasQuadrado: TfrmCoordenadasQuadrado
         Top = 110
         Width = 46
         Height = 21
-        NumbersOnly = True
         TabOrder = 7
       end
     end

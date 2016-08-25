@@ -11,6 +11,7 @@ object frmTriangulo: TfrmTriangulo
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   PixelsPerInch = 96
   TextHeight = 13
   object painelPrincipal: TPanel
@@ -94,7 +95,6 @@ object frmTriangulo: TfrmTriangulo
         Top = 25
         Width = 48
         Height = 21
-        NumbersOnly = True
         TabOrder = 0
       end
       object edXPonto2: TEdit
@@ -102,7 +102,6 @@ object frmTriangulo: TfrmTriangulo
         Top = 53
         Width = 48
         Height = 21
-        NumbersOnly = True
         TabOrder = 2
       end
       object edXPonto3: TEdit
@@ -110,7 +109,6 @@ object frmTriangulo: TfrmTriangulo
         Top = 81
         Width = 48
         Height = 21
-        NumbersOnly = True
         TabOrder = 4
       end
       object edYPonto1: TEdit
@@ -118,15 +116,13 @@ object frmTriangulo: TfrmTriangulo
         Top = 25
         Width = 47
         Height = 21
-        NumbersOnly = True
         TabOrder = 1
       end
       object edYPonto2: TEdit
         Left = 181
         Top = 53
         Width = 47
-        Height = 20
-        NumbersOnly = True
+        Height = 21
         TabOrder = 3
       end
       object edYPonto3: TEdit
@@ -134,7 +130,6 @@ object frmTriangulo: TfrmTriangulo
         Top = 81
         Width = 47
         Height = 21
-        NumbersOnly = True
         TabOrder = 5
       end
     end
