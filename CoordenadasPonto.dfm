@@ -1,8 +1,8 @@
 object frmPonto: TfrmPonto
   Left = 0
   Top = 0
-  Caption = 'frmPonto'
-  ClientHeight = 249
+  Caption = 'Ponto'
+  ClientHeight = 211
   ClientWidth = 231
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,7 +18,7 @@ object frmPonto: TfrmPonto
     Left = 8
     Top = 8
     Width = 217
-    Height = 233
+    Height = 193
     TabOrder = 0
     object GroupBox1: TGroupBox
       Left = 16

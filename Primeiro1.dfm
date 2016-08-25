@@ -1,9 +1,10 @@
 object Principal: TPrincipal
   Left = 0
   Top = 0
+  BorderStyle = bsToolWindow
   Caption = 'Primitivas Geogr'#225'ficas'
-  ClientHeight = 569
-  ClientWidth = 592
+  ClientHeight = 571
+  ClientWidth = 594
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -88,5 +89,23 @@ object Principal: TPrincipal
     Caption = 'Ponto'
     TabOrder = 7
     OnClick = btnPontoClick
+  end
+  object btnZoomIn: TButton
+    Left = 0
+    Top = 544
+    Width = 75
+    Height = 25
+    Caption = 'Zoom IN'
+    TabOrder = 8
+    OnClick = btnZoomInClick
+  end
+  object btnZoomOut: TButton
+    Left = 81
+    Top = 544
+    Width = 75
+    Height = 25
+    Caption = 'Zoom OUT'
+    TabOrder = 9
+    OnClick = btnZoomOutClick
   end
 end

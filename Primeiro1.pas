@@ -16,6 +16,8 @@ type
     btnEsquerda: TButton;
     btnDireita: TButton;
     btnPonto: TButton;
+    btnZoomIn: TButton;
+    btnZoomOut: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure btnTrianguloClick(Sender: TObject);
@@ -26,6 +28,8 @@ type
     procedure btnEsquerdaClick(Sender: TObject);
     procedure btnDireitaClick(Sender: TObject);
     procedure btnPontoClick(Sender: TObject);
+    procedure btnZoomInClick(Sender: TObject);
+    procedure btnZoomOutClick(Sender: TObject);
   private
     procedure Draw; //Draws an OpenGL scene on request
     procedure DesenhaLinha();
@@ -56,6 +60,7 @@ var
   xEsqCimaQuad, yEsqCimaQuad, xDirCimaQuad, yDirCimaQuad, xDirBaixoQuad,
   yDirBaixoQuad, xEsqBaixoQuad, yEsqBaixoQuad : double;
   xPonto, yPonto: double;
+  zoom: double;
 
 {$R *.DFM}
 
@@ -103,7 +108,6 @@ begin
   glOrtho(-11.1, 11.1, -11.1, 11.1, 11.1, 20.0);
   // position viewer
   glMatrixMode(GL_MODELVIEW);
-  //   glEnable(GL_DEPTH_TEST);
 end;
 
 procedure TPrincipal.InicializaVariaveisLinha(desenharLinha1: bool; xPonto1, yPonto1, xPonto2, yPonto2: double);
@@ -157,29 +161,22 @@ begin
   RC := wglCreateContext(DC); //makes OpenGL window out of DC
   wglMakeCurrent(DC, RC);   //makes OpenGL window active
   GLInit;                   //initialize OpenGL
+  zoom := 1;
 end;
 
 procedure TPrincipal.Draw;
-const
-  D = 1.5;
-  H1= D/1.732;
-  H2= D*1.732-H1; // D/H = tg(30) = 1/sqrt(3)
-  HY= 3.0;
-const //vertexes
-  a1:TGLArrayf3=(-D, 0, -H1); //bootom left
-  a2:TGLArrayf3=( D, 0, -H1); //bootom right
-  a3:TGLArrayf3=( 0, 0,  H2); //bootom back
-  a4:TGLArrayf3=( 0, HY, 0);  //top
 begin
-  glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT);
   glClearColor(1.0, 1.0, 1.0, 1.0);
   glLoadIdentity();
   glTranslatef(0.0, 0.0, -12.0);
   DesenhaLinhasDivisorias();
+  glScaled(zoom, zoom, 0);
   DesenhaLinha();
   DesenhaTriangulo();
   DesenhaQuadrado();
   DesenhaPonto();
+  glScaled(-zoom, -zoom, 0);
   SwapBuffers(wglGetCurrentDC);
   glFlush();
 end;
@@ -210,6 +207,11 @@ begin
     yDirCimaQuad  := yDirCimaQuad - 0.5;
     yDirBaixoQuad := yDirBaixoQuad - 0.5;
     yEsqBaixoQuad := yEsqBaixoQuad - 0.5;
+  end
+  else
+  if (desenharPonto) then
+  begin
+    yPonto := yPonto - 0.5;
   end;
 end;
 
@@ -234,6 +236,11 @@ begin
     yDirCimaQuad  := yDirCimaQuad + 0.5;
     yDirBaixoQuad := yDirBaixoQuad + 0.5;
     yEsqBaixoQuad := yEsqBaixoQuad + 0.5;
+  end
+  else
+  if (desenharPonto) then
+  begin
+    yPonto := yPonto + 0.5;
   end;
 end;
 
@@ -258,6 +265,11 @@ begin
     xDirCimaQuad  := xDirCimaQuad + 0.5;
     xDirBaixoQuad := xDirBaixoQuad + 0.5;
     xEsqBaixoQuad := xEsqBaixoQuad + 0.5;
+  end
+  else
+  if (desenharPonto) then
+  begin
+    xPonto := xPonto + 0.5;
   end;
 end;
 
@@ -282,6 +294,11 @@ begin
     xDirCimaQuad  := xDirCimaQuad - 0.5;
     xDirBaixoQuad := xDirBaixoQuad - 0.5;
     xEsqBaixoQuad := xEsqBaixoQuad - 0.5;
+  end
+  else
+  if (desenharPonto) then
+  begin
+    xPonto := xPonto - 0.5;
   end;
 end;
 
@@ -293,6 +310,17 @@ begin
   coordenadasTriangulo.showModal();
   desenharQuadrado  := false;
   desenharLinha     := false;
+  desenharPonto     := false;
+end;
+
+procedure TPrincipal.btnZoomInClick(Sender: TObject);
+begin
+  zoom := zoom + 0.2;
+end;
+
+procedure TPrincipal.btnZoomOutClick(Sender: TObject);
+begin
+  zoom := zoom - 0.2;
 end;
 
 procedure TPrincipal.btnLinhaClick(Sender: TObject);
@@ -303,6 +331,7 @@ begin
   coordenadasLinha.showModal();
   desenharTriangulo := false;
   desenharQuadrado  := false;
+  desenharPonto     := false;
 end;
 
 procedure TPrincipal.btnPontoClick(Sender: TObject);
@@ -324,6 +353,7 @@ begin
   coordenadasQuadrado.showModal();
   desenharTriangulo := false;
   desenharLinha     := false;
+  desenharPonto     := false;
 end;
 
 procedure TPrincipal.DesenhaLinha();
@@ -336,6 +366,7 @@ begin
       glVertex2f(x1Linha, y1Linha);
       glVertex2f(x2Linha, y2Linha);
     glEnd();
+    glLineWidth(1);
   end;
 end;
 
