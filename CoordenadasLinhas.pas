@@ -46,8 +46,8 @@ procedure TfrmLinha.btnOKClick(Sender: TObject);
 var
   Principal: TPrincipal;
 begin
-  Principal.InicializaVariaveisLinha(true, StrToFloat(edXPonto1.Text), StrToFloat(edYPonto1.Text),
-                                           StrToFloat(edXPonto2.Text),  StrToFloat(edYPonto2.Text));
+  Principal.InicializaVariaveisLinha(StrToFloat(edXPonto1.Text), StrToFloat(edYPonto1.Text),
+                                     StrToFloat(edXPonto2.Text),  StrToFloat(edYPonto2.Text));
   btnCancelarClick(self);
 end;
 

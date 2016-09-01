@@ -40,7 +40,7 @@ procedure TfrmPonto.btnOKClick(Sender: TObject);
 var
   Principal: TPrincipal;
 begin
-  Principal.InicializaVariaveisPonto(true, StrToFloat(edXPonto.Text), StrToFloat(edYPonto.Text));
+  Principal.InicializaVariaveisPonto(StrToFloat(edXPonto.Text), StrToFloat(edYPonto.Text));
   btnCancelarClick(self);
 end;
 

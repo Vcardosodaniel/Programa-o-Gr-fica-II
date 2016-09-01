@@ -4,7 +4,7 @@ interface
 
 uses
   OpenGL, Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, ComCtrls;
+  StdCtrls, ExtCtrls, ComCtrls, Math;
 
 type
   TPrincipal = class(TForm)
@@ -18,6 +18,7 @@ type
     btnPonto: TButton;
     btnZoomIn: TButton;
     btnZoomOut: TButton;
+    btnRotacionar: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure btnTrianguloClick(Sender: TObject);
@@ -30,6 +31,7 @@ type
     procedure btnPontoClick(Sender: TObject);
     procedure btnZoomInClick(Sender: TObject);
     procedure btnZoomOutClick(Sender: TObject);
+    procedure btnRotacionarClick(Sender: TObject);
   private
     procedure Draw; //Draws an OpenGL scene on request
     procedure DesenhaLinha();
@@ -37,12 +39,14 @@ type
     procedure DesenhaQuadrado();
     procedure DesenhaPonto();
     procedure DesenhaLinhasDivisorias();
+    procedure rotacionar(graus: double);
 
   public
-    procedure InicializaVariaveisLinha(desenharLinha1: bool; xPonto1, yPonto1, xPonto2, yPonto2: double);
-    procedure InicializaVariaveisTriangulo(desenharTriangulo1: bool; xEsqTri1, yEsqTri1, xCimaTri1, yCimaTri1, xDirTri1, yDirTri1: double);
-    procedure InicializaVariaveisQuadrado(desenharQuadrado1:bool; xEsqCimaQuad1, yEsqCimaQuad1, xDirCimaQuad1, yDirCimaQuad1, xDirBaixoQuad1, yDirBaixoQuad1, xEsqBaixoQuad1, yEsqBaixoQuad1: double);
-    procedure InicializaVariaveisPonto(desenharPonto1: bool; xPonto1, yPonto1: double);
+    procedure InicializaVariaveisLinha(xPonto1, yPonto1, xPonto2, yPonto2: double);
+    procedure InicializaVariaveisTriangulo(xEsqTri1, yEsqTri1, xCimaTri1, yCimaTri1, xDirTri1, yDirTri1: double);
+    procedure InicializaVariaveisQuadrado(xEsqCimaQuad1, yEsqCimaQuad1, xDirCimaQuad1, yDirCimaQuad1, xDirBaixoQuad1, yDirBaixoQuad1, xEsqBaixoQuad1, yEsqBaixoQuad1: double);
+    procedure InicializaVariaveisPonto(xPonto1, yPonto1: double);
+
   end;
 
 var
@@ -101,34 +105,28 @@ end;
 
 procedure GLInit;
 begin
-  // set viewing projection
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-//  gluOrtho2D(-300, 300, -300, 300);
-  glOrtho(-11.1, 11.1, -11.1, 11.1, 11.1, 20.0);
-  // position viewer
+  gluOrtho2D(-30, 30, -30, 30);
   glMatrixMode(GL_MODELVIEW);
 end;
 
-procedure TPrincipal.InicializaVariaveisLinha(desenharLinha1: bool; xPonto1, yPonto1, xPonto2, yPonto2: double);
+procedure TPrincipal.InicializaVariaveisLinha(xPonto1, yPonto1, xPonto2, yPonto2: double);
 begin
-  desenharLinha := desenharLinha1;
   x1Linha := xPonto1;
   y1Linha := yPonto1;
   x2Linha := xPonto2;
   y2Linha := yPonto2;
 end;
 
-procedure TPrincipal.InicializaVariaveisPonto(desenharPonto1: bool; xPonto1, yPonto1: double);
+procedure TPrincipal.InicializaVariaveisPonto(xPonto1, yPonto1: double);
 begin
-  desenharPonto := desenharPonto1;
   xPonto := xPonto1;
   yPonto := yPonto1;
 end;
 
-procedure TPrincipal.InicializaVariaveisQuadrado(desenharQuadrado1:bool; xEsqCimaQuad1, yEsqCimaQuad1, xDirCimaQuad1, yDirCimaQuad1, xDirBaixoQuad1, yDirBaixoQuad1, xEsqBaixoQuad1, yEsqBaixoQuad1: double);
+procedure TPrincipal.InicializaVariaveisQuadrado(xEsqCimaQuad1, yEsqCimaQuad1, xDirCimaQuad1, yDirCimaQuad1, xDirBaixoQuad1, yDirBaixoQuad1, xEsqBaixoQuad1, yEsqBaixoQuad1: double);
 begin
-  desenharQuadrado := desenharQuadrado1;
   xEsqCimaQuad  := xEsqCimaQuad1;
   yEsqCimaQuad  := yEsqCimaQuad1;
   xDirCimaQuad  := xDirCimaQuad1;
@@ -139,15 +137,55 @@ begin
   yEsqBaixoQuad := yEsqBaixoQuad1;
 end;
 
-procedure TPrincipal.InicializaVariaveisTriangulo(desenharTriangulo1: bool; xEsqTri1, yEsqTri1, xCimaTri1, yCimaTri1, xDirTri1, yDirTri1: double);
+procedure TPrincipal.InicializaVariaveisTriangulo(xEsqTri1, yEsqTri1, xCimaTri1, yCimaTri1, xDirTri1, yDirTri1: double);
 begin
-   desenharTriangulo := desenharTriangulo1;
    xEsqTri  := xEsqTri1;
    yEsqTri  := yEsqTri1;
    xCimaTri := xCimaTri1;
    yCimaTri := yCimaTri1;
    xDirTri  := xDirTri1;
    yDirTri  := yDirTri1;
+end;
+
+procedure TPrincipal.rotacionar(graus: double);
+
+  function rotacionarX(grausRot, xRot, yRot: double): double;
+  begin
+    Result :=  xRot * cos(DegToRad(grausRot)) - yRot * sin(DegToRad(grausRot));
+  end;
+
+  function rotacionarY(grausRot, xRot, yRot: single): single;
+  begin
+    Result :=  xRot * sin(DegToRad(grausRot)) + yRot * cos(DegToRad(grausRot));
+  end;
+
+begin
+    x1Linha := rotacionarX(graus, x1Linha, y1Linha);
+    x2Linha := rotacionarX(graus, x2Linha, y2Linha);
+
+    y1Linha := rotacionarY(graus, x1Linha, y1Linha);
+    y2Linha := rotacionarY(graus, x2Linha, y2Linha);
+
+    xEsqTri  := rotacionarX(graus, xEsqTri, yEsqTri);
+    xCimaTri := rotacionarX(graus, xCimaTri, yCimaTri);
+    xDirTri  := rotacionarX(graus, xDirTri, yDirTri);
+
+    yEsqTri  := rotacionarY(graus, xEsqTri, yEsqTri);
+    yCimaTri := rotacionarY(graus, xCimaTri, yCimaTri);
+    yDirTri  := rotacionarY(graus, xDirTri, yDirTri);
+
+    xEsqCimaQuad  := rotacionarX(graus, xEsqCimaQuad, yEsqCimaQuad);
+    xDirCimaQuad  := rotacionarX(graus, xDirCimaQuad, yDirCimaQuad);
+    xDirBaixoQuad := rotacionarX(graus, xDirBaixoQuad, yDirBaixoQuad);
+    xEsqBaixoQuad := rotacionarX(graus, xEsqBaixoQuad, yEsqBaixoQuad);
+
+    yEsqCimaQuad  := rotacionarY(graus, xEsqCimaQuad, yEsqCimaQuad);
+    yDirCimaQuad  := rotacionarY(graus, xDirCimaQuad, yDirCimaQuad);
+    yDirBaixoQuad := rotacionarY(graus, xDirBaixoQuad, yDirBaixoQuad);
+    yEsqBaixoQuad := rotacionarY(graus, xEsqBaixoQuad, yEsqBaixoQuad);
+
+    xPonto := rotacionarX(graus, xPonto, yPonto);
+    yPonto := rotacionarY(graus, xPonto, yPonto);
 end;
 
 procedure TPrincipal.FormCreate(Sender: TObject);
@@ -169,7 +207,6 @@ begin
   glClear(GL_COLOR_BUFFER_BIT);
   glClearColor(1.0, 1.0, 1.0, 1.0);
   glLoadIdentity();
-  glTranslatef(0.0, 0.0, -12.0);
   DesenhaLinhasDivisorias();
   glScaled(zoom, zoom, 0);
   DesenhaLinha();
@@ -188,129 +225,70 @@ end;
 
 procedure TPrincipal.btnBaixoClick(Sender: TObject);
 begin
-  if(desenharLinha) then
-  begin
     y1Linha := y1Linha - 0.5;
     y2Linha := y2Linha - 0.5;
-  end
-  else
-  if(desenharTriangulo) then
-  begin
+
     yEsqTri  := yEsqTri - 0.5;
     yCimaTri := yCimaTri - 0.5;
     yDirTri  := yDirTri - 0.5;
-  end
-  else
-  if(desenharQuadrado) then
-  begin
+
     yEsqCimaQuad  := yEsqCimaQuad - 0.5;
     yDirCimaQuad  := yDirCimaQuad - 0.5;
     yDirBaixoQuad := yDirBaixoQuad - 0.5;
     yEsqBaixoQuad := yEsqBaixoQuad - 0.5;
-  end
-  else
-  if (desenharPonto) then
-  begin
+
     yPonto := yPonto - 0.5;
-  end;
 end;
 
 procedure TPrincipal.btnCimaClick(Sender: TObject);
 begin
-  if(desenharLinha) then
-  begin
     y1Linha := y1Linha + 0.5;
     y2Linha := y2Linha + 0.5;
-  end
-  else
-  if(desenharTriangulo) then
-  begin
+
     yEsqTri  := yEsqTri + 0.5;
     yCimaTri := yCimaTri + 0.5;
     yDirTri  := yDirTri + 0.5;
-  end
-  else
-  if(desenharQuadrado) then
-  begin
+
     yEsqCimaQuad  := yEsqCimaQuad + 0.5;
     yDirCimaQuad  := yDirCimaQuad + 0.5;
     yDirBaixoQuad := yDirBaixoQuad + 0.5;
     yEsqBaixoQuad := yEsqBaixoQuad + 0.5;
-  end
-  else
-  if (desenharPonto) then
-  begin
+
     yPonto := yPonto + 0.5;
-  end;
 end;
 
 procedure TPrincipal.btnDireitaClick(Sender: TObject);
 begin
-  if(desenharLinha) then
-  begin
     x1Linha := x1Linha + 0.5;
     x2Linha := x2Linha + 0.5;
-  end
-  else
-  if(desenharTriangulo) then
-  begin
+
     xEsqTri  := xEsqTri + 0.5;
     xCimaTri := xCimaTri + 0.5;
     xDirTri  := xDirTri + 0.5;
-  end
-  else
-  if(desenharQuadrado) then
-  begin
+
     xEsqCimaQuad  := xEsqCimaQuad + 0.5;
     xDirCimaQuad  := xDirCimaQuad + 0.5;
     xDirBaixoQuad := xDirBaixoQuad + 0.5;
     xEsqBaixoQuad := xEsqBaixoQuad + 0.5;
-  end
-  else
-  if (desenharPonto) then
-  begin
+
     xPonto := xPonto + 0.5;
-  end;
 end;
 
 procedure TPrincipal.btnEsquerdaClick(Sender: TObject);
 begin
-  if(desenharLinha) then
-  begin
     x1Linha := x1Linha - 0.5;
     x2Linha := x2Linha - 0.5;
-  end
-  else
-  if(desenharTriangulo) then
-  begin
+
     xEsqTri  := xEsqTri - 0.5;
     xCimaTri := xCimaTri - 0.5;
     xDirTri  := xDirTri - 0.5;
-  end
-  else
-  if(desenharQuadrado) then
-  begin
+
     xEsqCimaQuad  := xEsqCimaQuad - 0.5;
     xDirCimaQuad  := xDirCimaQuad - 0.5;
     xDirBaixoQuad := xDirBaixoQuad - 0.5;
     xEsqBaixoQuad := xEsqBaixoQuad - 0.5;
-  end
-  else
-  if (desenharPonto) then
-  begin
-    xPonto := xPonto - 0.5;
-  end;
-end;
 
-procedure TPrincipal.btnTrianguloClick(Sender: TObject);
-var
-  coordenadasTriangulo: TfrmTriangulo;
-begin
-  coordenadasTriangulo := TfrmTriangulo.Create(self);
-  coordenadasTriangulo.showModal();
-  desenharQuadrado  := false;
-  desenharLinha     := false;
-  desenharPonto     := false;
+    xPonto := xPonto - 0.5;
 end;
 
 procedure TPrincipal.btnZoomInClick(Sender: TObject);
@@ -323,15 +301,20 @@ begin
   zoom := zoom - 0.2;
 end;
 
+procedure TPrincipal.btnTrianguloClick(Sender: TObject);
+var
+  coordenadasTriangulo: TfrmTriangulo;
+begin
+  coordenadasTriangulo := TfrmTriangulo.Create(self);
+  coordenadasTriangulo.showModal();
+end;
+
 procedure TPrincipal.btnLinhaClick(Sender: TObject);
 var
   coordenadasLinha: TfrmLinha;
 begin
   coordenadasLinha := TfrmLinha.Create(self);
   coordenadasLinha.showModal();
-  desenharTriangulo := false;
-  desenharQuadrado  := false;
-  desenharPonto     := false;
 end;
 
 procedure TPrincipal.btnPontoClick(Sender: TObject);
@@ -340,9 +323,6 @@ var
 begin
   coordenadasPonto := TfrmPonto.Create(self);
   coordenadasPonto.showModal();
-  desenharTriangulo := false;
-  desenharLinha     := false;
-  desenharQuadrado  := false;
 end;
 
 procedure TPrincipal.btnQuadradoClick(Sender: TObject);
@@ -351,75 +331,65 @@ var
 begin
   coordenadasQuadrado := TfrmCoordenadasQuadrado.Create(self);
   coordenadasQuadrado.showModal();
-  desenharTriangulo := false;
-  desenharLinha     := false;
-  desenharPonto     := false;
+end;
+
+procedure TPrincipal.btnRotacionarClick(Sender: TObject);
+begin
+  rotacionar(45);
 end;
 
 procedure TPrincipal.DesenhaLinha();
 begin
-  if desenharLinha then
-  begin
     glColor3f(1.0, 1.0, 0.0);
-    glLineWidth(20);
+    glLineWidth(10);
     glBegin(GL_LINES);
       glVertex2f(x1Linha, y1Linha);
       glVertex2f(x2Linha, y2Linha);
     glEnd();
     glLineWidth(1);
-  end;
 end;
 
 procedure TPrincipal.DesenhaLinhasDivisorias();
 begin
   glColor3f(0.0, 0.0, 0.0);
   glBegin(GL_LINES);
-    glVertex2f(0, -15);
-    glVertex2f(0, 15);
+    glVertex2f(0, -30);
+    glVertex2f(0, 30);
   glEnd();
 
   glBegin(GL_LINES);
-    glVertex2f(-15, 0);
-    glVertex2f(15, 0);
+    glVertex2f(-30, 0);
+    glVertex2f(30, 0);
   glEnd();
 end;
 
 procedure TPrincipal.DesenhaPonto;
 begin
-  if desenharPonto then
-  begin
-    glPointSize(15);
-    glBegin(GL_POINTS);
-      glVertex2f(xPonto, yPonto);
-    glEnd();
-  end;
+  glPointSize(5);
+  glBegin(GL_POINTS);
+    glVertex2f(xPonto, yPonto);
+  glEnd();
 end;
 
 procedure TPrincipal.DesenhaTriangulo();
 begin
-  if desenharTriangulo then
-  begin
-    glColor3f(1.0, 0.0, 1.0);
-    glBegin(GL_LINE_LOOP);
-      glVertex2f(xEsqTri, yEsqTri);
-      glVertex2f(xCimaTri, yCimaTri);
-      glVertex2f(xDirTri, yDirTri);
-    glEnd();
-  end;
+  glColor3f(1.0, 0.0, 1.0);
+  glBegin(GL_LINE_LOOP);
+    glVertex2f(xEsqTri, yEsqTri);
+    glVertex2f(xCimaTri, yCimaTri);
+    glVertex2f(xDirTri, yDirTri);
+  glEnd();
 end;
 
 procedure TPrincipal.DesenhaQuadrado();
 begin
-  if desenharQuadrado then
-  begin
-    glColor3f(1.0, 0.0, 0.0);
-    glBegin(GL_LINE_LOOP);
-      glVertex2f(xEsqCimaQuad, yEsqCimaQuad);
-      glVertex2f(xDirCimaQuad, yDirCimaQuad);
-      glVertex2f(xDirBaixoQuad, yDirBaixoQuad);
-      glVertex2f(xEsqBaixoQuad, yEsqBaixoQuad);
-    glEnd();
-  end;
+  glColor3f(1.0, 0.0, 0.0);
+  glBegin(GL_LINE_LOOP);
+    glVertex2f(xEsqCimaQuad, yEsqCimaQuad);
+    glVertex2f(xDirCimaQuad, yDirCimaQuad);
+    glVertex2f(xDirBaixoQuad, yDirBaixoQuad);
+    glVertex2f(xEsqBaixoQuad, yEsqBaixoQuad);
+  glEnd();
 end;
 
 end.

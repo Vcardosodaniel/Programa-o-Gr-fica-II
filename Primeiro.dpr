@@ -14,9 +14,5 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrincipal, Principal);
-  Application.CreateForm(TfrmCoordenadasQuadrado, frmCoordenadasQuadrado);
-  Application.CreateForm(TfrmTriangulo, frmTriangulo);
-  Application.CreateForm(TfrmLinha, frmLinha);
-  Application.CreateForm(TfrmPonto, frmPonto);
   Application.Run;
 end.

@@ -51,8 +51,8 @@ procedure TfrmTriangulo.btnOKClick(Sender: TObject);
 var
   Principal: TPrincipal;
 begin
-  Principal.InicializaVariaveisTriangulo(true, StrToFloat(edXPonto1.Text), StrToFloat(edYPonto1.Text), StrToFloat(edXPonto2.Text),
-                                               StrToFloat(edYPonto2.Text), StrToFloat(edXPonto3.Text), StrToFloat(edYPonto3.Text));
+  Principal.InicializaVariaveisTriangulo(StrToFloat(edXPonto1.Text), StrToFloat(edYPonto1.Text), StrToFloat(edXPonto2.Text),
+                                         StrToFloat(edYPonto2.Text), StrToFloat(edXPonto3.Text), StrToFloat(edYPonto3.Text));
   btnCancelClick(self);
 end;
 

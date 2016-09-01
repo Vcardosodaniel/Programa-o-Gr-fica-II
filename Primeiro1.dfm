@@ -28,7 +28,7 @@ object Principal: TPrincipal
     OnClick = btnTrianguloClick
   end
   object btnQuadrado: TButton
-    Left = 81
+    Left = 80
     Top = 0
     Width = 75
     Height = 25
@@ -37,8 +37,8 @@ object Principal: TPrincipal
     OnClick = btnQuadradoClick
   end
   object btnLinha: TButton
-    Left = 0
-    Top = 31
+    Left = 159
+    Top = 0
     Width = 75
     Height = 25
     Caption = 'Linha'
@@ -46,8 +46,8 @@ object Principal: TPrincipal
     OnClick = btnLinhaClick
   end
   object btnCima: TButton
-    Left = 40
-    Top = 61
+    Left = 512
+    Top = 520
     Width = 41
     Height = 27
     Caption = 'Cima'
@@ -55,8 +55,8 @@ object Principal: TPrincipal
     OnClick = btnCimaClick
   end
   object btnBaixo: TButton
-    Left = 40
-    Top = 84
+    Left = 512
+    Top = 543
     Width = 41
     Height = 27
     Caption = 'Baixo'
@@ -64,8 +64,8 @@ object Principal: TPrincipal
     OnClick = btnBaixoClick
   end
   object btnEsquerda: TButton
-    Left = 0
-    Top = 77
+    Left = 472
+    Top = 536
     Width = 41
     Height = 27
     Caption = 'Esq.'
@@ -73,8 +73,8 @@ object Principal: TPrincipal
     OnClick = btnEsquerdaClick
   end
   object btnDireita: TButton
-    Left = 80
-    Top = 77
+    Left = 552
+    Top = 536
     Width = 41
     Height = 27
     Caption = 'Dir.'
@@ -82,8 +82,8 @@ object Principal: TPrincipal
     OnClick = btnDireitaClick
   end
   object btnPonto: TButton
-    Left = 81
-    Top = 31
+    Left = 240
+    Top = 0
     Width = 75
     Height = 25
     Caption = 'Ponto'
@@ -107,5 +107,14 @@ object Principal: TPrincipal
     Caption = 'Zoom OUT'
     TabOrder = 9
     OnClick = btnZoomOutClick
+  end
+  object btnRotacionar: TButton
+    Left = 161
+    Top = 544
+    Width = 75
+    Height = 25
+    Caption = 'Rotacionar'
+    TabOrder = 10
+    OnClick = btnRotacionarClick
   end
 end
