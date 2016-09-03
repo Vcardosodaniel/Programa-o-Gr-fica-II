@@ -107,6 +107,9 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Linha.pas"/>
+        <DCCReference Include="Ponto.pas"/>
+        <DCCReference Include="Quadrado.pas"/>
+        <DCCReference Include="Triangulo.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -133,7 +136,7 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment>
-                <DeployFile LocalName="Win32\Debug\Primeiro.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="D:\Facul\Programação Gráfica II\OpenGL\Capitulo1\Primeiro.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Primeiro.exe</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -145,7 +148,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="D:\Facul\Programação Gráfica II\OpenGL\Capitulo1\Primeiro.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Win32\Debug\Primeiro.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Primeiro.exe</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -485,6 +488,7 @@
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">False</Platform>
             </Platforms>
+            <ModelSupport>False</ModelSupport>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>

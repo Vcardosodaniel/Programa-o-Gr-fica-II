@@ -7,7 +7,10 @@ uses
   CoordenadasTriangulo in 'CoordenadasTriangulo.pas' {frmTriangulo},
   CoordenadasLinhas in 'CoordenadasLinhas.pas' {frmLinha},
   CoordenadasPonto in 'CoordenadasPonto.pas' {frmPonto},
-  Linha in 'Linha.pas';
+  Linha in 'Linha.pas',
+  Ponto in 'Ponto.pas',
+  Quadrado in 'Quadrado.pas',
+  Triangulo in 'Triangulo.pas';
 
 {$R *.res}
 

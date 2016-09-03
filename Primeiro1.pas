@@ -4,7 +4,7 @@ interface
 
 uses
   OpenGL, Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, ComCtrls, Math, Linha, Ponto, Quadrado;
+  StdCtrls, ExtCtrls, ComCtrls, Math, Linha, Ponto, Quadrado, Triangulo;
 
 type
   TPrincipal = class(TForm)
@@ -41,9 +41,6 @@ type
     procedure DesenhaLinhasDivisorias();
     procedure rotacionar(graus: double);
 
-  public
-    procedure InicializaVariaveisTriangulo(xEsqTri1, yEsqTri1, xCimaTri1, yCimaTri1, xDirTri1, yDirTri1: double);
-
   end;
 
 var
@@ -60,6 +57,7 @@ var
   Linha: TLinha;
   Ponto: TPonto;
   Quadrado: TQuadrado;
+  Triangulo: TTriangulo;
   xEsqTri, yEsqTri, xCimaTri, yCimaTri, xDirTri, yDirTri : double;
   xEsqCimaQuad, yEsqCimaQuad, xDirCimaQuad, yDirCimaQuad, xDirBaixoQuad,
   yDirBaixoQuad, xEsqBaixoQuad, yEsqBaixoQuad : double;
@@ -109,16 +107,6 @@ begin
   glLoadIdentity();
   gluOrtho2D(-30, 30, -30, 30);
   glMatrixMode(GL_MODELVIEW);
-end;
-
-procedure TPrincipal.InicializaVariaveisTriangulo(xEsqTri1, yEsqTri1, xCimaTri1, yCimaTri1, xDirTri1, yDirTri1: double);
-begin
-   xEsqTri  := xEsqTri1;
-   yEsqTri  := yEsqTri1;
-   xCimaTri := xCimaTri1;
-   yCimaTri := yCimaTri1;
-   xDirTri  := xDirTri1;
-   yDirTri  := yDirTri1;
 end;
 
 procedure TPrincipal.rotacionar(graus: double);
@@ -177,6 +165,7 @@ begin
   Linha.Inicializa();
   Ponto.Inicializa();
   Quadrado.Inicializa();
+  Triangulo.Inicializa();
 end;
 
 procedure TPrincipal.Draw;
@@ -202,70 +191,70 @@ end;
 
 procedure TPrincipal.btnBaixoClick(Sender: TObject);
 begin
-    y1Linha := y1Linha - 0.5;
-    y2Linha := y2Linha - 0.5;
+  linha.setP1Y(linha.getYP1() - 0.5);
+  linha.setP2Y(linha.getYP2() - 0.5);
 
-    yEsqTri  := yEsqTri - 0.5;
-    yCimaTri := yCimaTri - 0.5;
-    yDirTri  := yDirTri - 0.5;
+  triangulo.setP1Y(triangulo.getYP1 - 0.5);
+  triangulo.setP2Y(triangulo.getYP2 - 0.5);
+  triangulo.setP3Y(triangulo.getYP3 - 0.5);
 
-    yEsqCimaQuad  := yEsqCimaQuad - 0.5;
-    yDirCimaQuad  := yDirCimaQuad - 0.5;
-    yDirBaixoQuad := yDirBaixoQuad - 0.5;
-    yEsqBaixoQuad := yEsqBaixoQuad - 0.5;
+  quadrado.setP1Y(quadrado.getYP1 - 0.5);
+  quadrado.setP2Y(quadrado.getYP2 - 0.5);
+  quadrado.setP3Y(quadrado.getYP3 - 0.5);
+  quadrado.setP4Y(quadrado.getYP4 - 0.5);
 
-    yPonto := yPonto - 0.5;
+  ponto.setP1Y(ponto.getYP1 - 0.5);
 end;
 
 procedure TPrincipal.btnCimaClick(Sender: TObject);
 begin
-    y1Linha := y1Linha + 0.5;
-    y2Linha := y2Linha + 0.5;
+  linha.setP1Y(linha.getYP1() + 0.5);
+  linha.setP2Y(linha.getYP2() + 0.5);
 
-    yEsqTri  := yEsqTri + 0.5;
-    yCimaTri := yCimaTri + 0.5;
-    yDirTri  := yDirTri + 0.5;
+  triangulo.setP1Y(triangulo.getYP1 + 0.5);
+  triangulo.setP2Y(triangulo.getYP2 + 0.5);
+  triangulo.setP3Y(triangulo.getYP3 + 0.5);
 
-    yEsqCimaQuad  := yEsqCimaQuad + 0.5;
-    yDirCimaQuad  := yDirCimaQuad + 0.5;
-    yDirBaixoQuad := yDirBaixoQuad + 0.5;
-    yEsqBaixoQuad := yEsqBaixoQuad + 0.5;
+  quadrado.setP1Y(quadrado.getYP1 + 0.5);
+  quadrado.setP2Y(quadrado.getYP2 + 0.5);
+  quadrado.setP3Y(quadrado.getYP3 + 0.5);
+  quadrado.setP4Y(quadrado.getYP4 + 0.5);
 
-    yPonto := yPonto + 0.5;
+  ponto.setP1Y(ponto.getYP1 + 0.5);
 end;
 
 procedure TPrincipal.btnDireitaClick(Sender: TObject);
 begin
-    x1Linha := x1Linha + 0.5;
-    x2Linha := x2Linha + 0.5;
+  linha.setP1X(linha.getXP1() + 0.5);
+  linha.setP2X(linha.getXP2() + 0.5);
 
-    xEsqTri  := xEsqTri + 0.5;
-    xCimaTri := xCimaTri + 0.5;
-    xDirTri  := xDirTri + 0.5;
+  triangulo.setP1X(triangulo.getXP1 + 0.5);
+  triangulo.setP2X(triangulo.getXP2 + 0.5);
+  triangulo.setP3X(triangulo.getXP3 + 0.5);
 
-    xEsqCimaQuad  := xEsqCimaQuad + 0.5;
-    xDirCimaQuad  := xDirCimaQuad + 0.5;
-    xDirBaixoQuad := xDirBaixoQuad + 0.5;
-    xEsqBaixoQuad := xEsqBaixoQuad + 0.5;
+  quadrado.setP1X(quadrado.getXP1 + 0.5);
+  quadrado.setP2X(quadrado.getXP2 + 0.5);
+  quadrado.setP3X(quadrado.getXP3 + 0.5);
+  quadrado.setP4X(quadrado.getXP4 + 0.5);
 
-    xPonto := xPonto + 0.5;
+  ponto.setP1X(ponto.getXP1 + 0.5);
 end;
 
 procedure TPrincipal.btnEsquerdaClick(Sender: TObject);
 begin
-    x1Linha := x1Linha - 0.5;
-    x2Linha := x2Linha - 0.5;
+  linha.setP1X(linha.getXP1() - 0.5);
+  linha.setP2X(linha.getXP2() - 0.5);
 
-    xEsqTri  := xEsqTri - 0.5;
-    xCimaTri := xCimaTri - 0.5;
-    xDirTri  := xDirTri - 0.5;
+  triangulo.setP1X(triangulo.getXP1 - 0.5);
+  triangulo.setP2X(triangulo.getXP2 - 0.5);
+  triangulo.setP3X(triangulo.getXP3 - 0.5);
 
-    xEsqCimaQuad  := xEsqCimaQuad - 0.5;
-    xDirCimaQuad  := xDirCimaQuad - 0.5;
-    xDirBaixoQuad := xDirBaixoQuad - 0.5;
-    xEsqBaixoQuad := xEsqBaixoQuad - 0.5;
+  quadrado.setP1X(quadrado.getXP1 - 0.5);
+  quadrado.setP2X(quadrado.getXP2 - 0.5);
+  quadrado.setP3X(quadrado.getXP3 - 0.5);
+  quadrado.setP4X(quadrado.getXP4 - 0.5);
 
-    xPonto := xPonto - 0.5;
+  ponto.setP1X(ponto.getXP1 - 0.5);
 end;
 
 procedure TPrincipal.btnZoomInClick(Sender: TObject);
@@ -353,9 +342,9 @@ procedure TPrincipal.DesenhaTriangulo();
 begin
   glColor3f(1.0, 0.0, 1.0);
   glBegin(GL_LINE_LOOP);
-    glVertex2f(xEsqTri, yEsqTri);
-    glVertex2f(xCimaTri, yCimaTri);
-    glVertex2f(xDirTri, yDirTri);
+    glVertex2f(Triangulo.getXP1, Triangulo.getYP1);
+    glVertex2f(Triangulo.getXP2, Triangulo.getYP2);
+    glVertex2f(Triangulo.getXP3, Triangulo.getYP3);
   glEnd();
 end;
 
