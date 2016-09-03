@@ -1,0 +1,9 @@
+unit Ponto;
+
+interface
+uses
+  Math, Classes;
+
+implementation
+
+end.

@@ -106,6 +106,7 @@
             <Form>frmPonto</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Linha.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -132,7 +133,7 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment>
-                <DeployFile LocalName="D:\Facul\Programação Gráfica II\OpenGL\Capitulo1\Primeiro.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Win32\Debug\Primeiro.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Primeiro.exe</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -144,7 +145,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Win32\Debug\Primeiro.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="D:\Facul\Programação Gráfica II\OpenGL\Capitulo1\Primeiro.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Primeiro.exe</RemoteName>
                         <Overwrite>true</Overwrite>

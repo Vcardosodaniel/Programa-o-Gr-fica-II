@@ -4,7 +4,7 @@ interface
 
 uses
   OpenGL, Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, ComCtrls, Math;
+  StdCtrls, ExtCtrls, ComCtrls, Math, Linha, Ponto, Quadrado;
 
 type
   TPrincipal = class(TForm)
@@ -42,10 +42,7 @@ type
     procedure rotacionar(graus: double);
 
   public
-    procedure InicializaVariaveisLinha(xPonto1, yPonto1, xPonto2, yPonto2: double);
     procedure InicializaVariaveisTriangulo(xEsqTri1, yEsqTri1, xCimaTri1, yCimaTri1, xDirTri1, yDirTri1: double);
-    procedure InicializaVariaveisQuadrado(xEsqCimaQuad1, yEsqCimaQuad1, xDirCimaQuad1, yDirCimaQuad1, xDirBaixoQuad1, yDirBaixoQuad1, xEsqBaixoQuad1, yEsqBaixoQuad1: double);
-    procedure InicializaVariaveisPonto(xPonto1, yPonto1: double);
 
   end;
 
@@ -60,6 +57,9 @@ uses
 var
   desenharLinha, desenharTriangulo, desenharQuadrado, desenharPonto: bool;
   x1Linha, y1Linha, x2Linha, y2Linha : double;
+  Linha: TLinha;
+  Ponto: TPonto;
+  Quadrado: TQuadrado;
   xEsqTri, yEsqTri, xCimaTri, yCimaTri, xDirTri, yDirTri : double;
   xEsqCimaQuad, yEsqCimaQuad, xDirCimaQuad, yDirCimaQuad, xDirBaixoQuad,
   yDirBaixoQuad, xEsqBaixoQuad, yEsqBaixoQuad : double;
@@ -109,32 +109,6 @@ begin
   glLoadIdentity();
   gluOrtho2D(-30, 30, -30, 30);
   glMatrixMode(GL_MODELVIEW);
-end;
-
-procedure TPrincipal.InicializaVariaveisLinha(xPonto1, yPonto1, xPonto2, yPonto2: double);
-begin
-  x1Linha := xPonto1;
-  y1Linha := yPonto1;
-  x2Linha := xPonto2;
-  y2Linha := yPonto2;
-end;
-
-procedure TPrincipal.InicializaVariaveisPonto(xPonto1, yPonto1: double);
-begin
-  xPonto := xPonto1;
-  yPonto := yPonto1;
-end;
-
-procedure TPrincipal.InicializaVariaveisQuadrado(xEsqCimaQuad1, yEsqCimaQuad1, xDirCimaQuad1, yDirCimaQuad1, xDirBaixoQuad1, yDirBaixoQuad1, xEsqBaixoQuad1, yEsqBaixoQuad1: double);
-begin
-  xEsqCimaQuad  := xEsqCimaQuad1;
-  yEsqCimaQuad  := yEsqCimaQuad1;
-  xDirCimaQuad  := xDirCimaQuad1;
-  yDirCimaQuad  := yDirCimaQuad1;
-  xDirBaixoQuad := xDirBaixoQuad1;
-  yDirBaixoQuad := yDirBaixoQuad1;
-  xEsqBaixoQuad := xEsqBaixoQuad1;
-  yEsqBaixoQuad := yEsqBaixoQuad1;
 end;
 
 procedure TPrincipal.InicializaVariaveisTriangulo(xEsqTri1, yEsqTri1, xCimaTri1, yCimaTri1, xDirTri1, yDirTri1: double);
@@ -200,6 +174,9 @@ begin
   wglMakeCurrent(DC, RC);   //makes OpenGL window active
   GLInit;                   //initialize OpenGL
   zoom := 1;
+  Linha.Inicializa();
+  Ponto.Inicializa();
+  Quadrado.Inicializa();
 end;
 
 procedure TPrincipal.Draw;
@@ -338,16 +315,6 @@ begin
   rotacionar(45);
 end;
 
-procedure TPrincipal.DesenhaLinha();
-begin
-    glColor3f(1.0, 1.0, 0.0);
-    glLineWidth(10);
-    glBegin(GL_LINES);
-      glVertex2f(x1Linha, y1Linha);
-      glVertex2f(x2Linha, y2Linha);
-    glEnd();
-    glLineWidth(1);
-end;
 
 procedure TPrincipal.DesenhaLinhasDivisorias();
 begin
@@ -363,11 +330,22 @@ begin
   glEnd();
 end;
 
+procedure TPrincipal.DesenhaLinha();
+begin
+    glColor3f(1.0, 1.0, 0.0);
+    glLineWidth(10);
+    glBegin(GL_LINES);
+      glVertex2f(Linha.getXP1, Linha.getYP1);
+      glVertex2f(Linha.getXP2, Linha.getYP2);
+    glEnd();
+    glLineWidth(1);
+end;
+
 procedure TPrincipal.DesenhaPonto;
 begin
   glPointSize(5);
   glBegin(GL_POINTS);
-    glVertex2f(xPonto, yPonto);
+    glVertex2f(Ponto.getXP1, Ponto.getYP1);
   glEnd();
 end;
 
@@ -385,10 +363,10 @@ procedure TPrincipal.DesenhaQuadrado();
 begin
   glColor3f(1.0, 0.0, 0.0);
   glBegin(GL_LINE_LOOP);
-    glVertex2f(xEsqCimaQuad, yEsqCimaQuad);
-    glVertex2f(xDirCimaQuad, yDirCimaQuad);
-    glVertex2f(xDirBaixoQuad, yDirBaixoQuad);
-    glVertex2f(xEsqBaixoQuad, yEsqBaixoQuad);
+    glVertex2f(Quadrado.getXP1, Quadrado.getYP1);
+    glVertex2f(Quadrado.getXP2, Quadrado.getYP2);
+    glVertex2f(Quadrado.getXP3, Quadrado.getYP3);
+    glVertex2f(Quadrado.getXP4, Quadrado.getYP4);
   glEnd();
 end;
 

@@ -1,0 +1,69 @@
+unit frmPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Primeiro1, Vcl.StdCtrls, Vcl.ExtCtrls;
+
+type
+  TFramePrincipal = class(TForm)
+    btnTriangulo: TButton;
+    btnQuadrado: TButton;
+    btnLinha: TButton;
+    btnPonto: TButton;
+    btnCima: TButton;
+    btnBaixo: TButton;
+    btnDireita: TButton;
+    btnEsquerda: TButton;
+    btnZoomIn: TButton;
+    btnZoomOut: TButton;
+    procedure Button1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btnBaixoClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FramePrincipal: TFramePrincipal;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFramePrincipal.btnBaixoClick(Sender: TObject);
+begin
+    y1Linha := y1Linha - 0.5;
+  y2Linha := y2Linha - 0.5;
+
+  yEsqTri  := yEsqTri - 0.5;
+  yCimaTri := yCimaTri - 0.5;
+  yDirTri  := yDirTri - 0.5;
+
+  yEsqCimaQuad  := yEsqCimaQuad - 0.5;
+  yDirCimaQuad  := yDirCimaQuad - 0.5;
+  yDirBaixoQuad := yDirBaixoQuad - 0.5;
+  yEsqBaixoQuad := yEsqBaixoQuad - 0.5;
+
+  yPonto := yPonto - 0.5;
+end;
+
+procedure TFramePrincipal.Button1Click(Sender: TObject);
+var
+  Principal: TPrincipal;
+begin
+//    Principal := TPrincipal.Create(self);
+end;
+
+procedure TFramePrincipal.FormShow(Sender: TObject);
+var
+  Principal: TPrincipal;
+begin
+    Principal := TPrincipal.Create(self);
+end;
+
+end.
+

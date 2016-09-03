@@ -6,7 +6,8 @@ uses
   CoordenadasQuadrado in 'CoordenadasQuadrado.pas' {frmCoordenadasQuadrado},
   CoordenadasTriangulo in 'CoordenadasTriangulo.pas' {frmTriangulo},
   CoordenadasLinhas in 'CoordenadasLinhas.pas' {frmLinha},
-  CoordenadasPonto in 'CoordenadasPonto.pas' {frmPonto};
+  CoordenadasPonto in 'CoordenadasPonto.pas' {frmPonto},
+  Linha in 'Linha.pas';
 
 {$R *.res}
 
