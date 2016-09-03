@@ -7,10 +7,11 @@ uses
 type
   Ponto1 = array[0..2] of double;
   TPonto = class (TComponent)
+  private
+      procedure Inicializa();
 
   public
     Constructor Create(AOwner: TComponent); override;
-    procedure Inicializa();
     procedure setP1X(value: double);
     procedure setP1Y(value: double);
     function getXP1(): double;
@@ -29,6 +30,7 @@ var
 constructor TPonto.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  Inicializa();
 end;
 
 function TPonto.getP1: Ponto1;

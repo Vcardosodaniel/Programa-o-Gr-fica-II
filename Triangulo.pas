@@ -10,9 +10,12 @@ type
   Ponto3 = array[0..2] of double;
   TTriangulo = class (TComponent)
 
+  private
+      procedure Inicializa();
+
   public
     Constructor Create(AOwner: TComponent); override;
-    procedure Inicializa();
+
 
     procedure setP1X(value: double);
     procedure setP1Y(value: double);
@@ -46,6 +49,7 @@ var
 constructor TTriangulo.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  Inicializa();
 end;
 
 function TTriangulo.getXP1: double;

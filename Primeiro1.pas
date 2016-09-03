@@ -7,6 +7,8 @@ uses
   StdCtrls, ExtCtrls, ComCtrls, Math, Linha, Ponto, Quadrado, Triangulo;
 
 type
+//  TVetor = array[0..2] of double;
+  TMatrizRotacao = array[0..2,0..2] of double;
   TPrincipal = class(TForm)
     btnTriangulo: TButton;
     btnQuadrado: TButton;
@@ -52,16 +54,10 @@ uses
   CoordenadasQuadrado, CoordenadasTriangulo, CoordenadasLinhas, CoordenadasPonto;
 
 var
-  desenharLinha, desenharTriangulo, desenharQuadrado, desenharPonto: bool;
-  x1Linha, y1Linha, x2Linha, y2Linha : double;
-  Linha: TLinha;
-  Ponto: TPonto;
-  Quadrado: TQuadrado;
-  Triangulo: TTriangulo;
-  xEsqTri, yEsqTri, xCimaTri, yCimaTri, xDirTri, yDirTri : double;
-  xEsqCimaQuad, yEsqCimaQuad, xDirCimaQuad, yDirCimaQuad, xDirBaixoQuad,
-  yDirBaixoQuad, xEsqBaixoQuad, yEsqBaixoQuad : double;
-  xPonto, yPonto: double;
+  linha: TLinha;
+  ponto: TPonto;
+  quadrado: TQuadrado;
+  triangulo: TTriangulo;
   zoom: double;
 
 {$R *.DFM}
@@ -110,44 +106,47 @@ begin
 end;
 
 procedure TPrincipal.rotacionar(graus: double);
+var
+  matrizRotacao: TMatrizRotacao;
 
-  function rotacionarX(grausRot, xRot, yRot: double): double;
+  function rotacionar(ponto: TVetor; matriz: TMatrizRotacao): TVetor;
+  var
+    resultado: TVetor;
   begin
-    Result :=  xRot * cos(DegToRad(grausRot)) - yRot * sin(DegToRad(grausRot));
+    resultado[0] := (ponto[0]*matriz[0][0] + ponto[1]*matriz[1][0] + ponto[2]*matriz[2][0]);
+    resultado[1] := (ponto[0]*matriz[0][1] + ponto[1]*matriz[1][1] + ponto[2]*matriz[2][1]);
+    Result := resultado;
   end;
 
-  function rotacionarY(grausRot, xRot, yRot: single): single;
+  procedure rotacionarLinha();
+  var
+    pontoRotacionado: TVetor;
   begin
-    Result :=  xRot * sin(DegToRad(grausRot)) + yRot * cos(DegToRad(grausRot));
+    pontoRotacionado := rotacionar(linha.getP1, matrizRotacao);
+    linha.setP1X(pontoRotacionado[0]);
+    linha.setP1Y(pontoRotacionado[1]);
+    pontoRotacionado := rotacionar(linha.getP2, matrizRotacao);
+    linha.setP2X(pontoRotacionado[0]);
+    linha.setP2Y(pontoRotacionado[1]);
+  end;
+
+  procedure zeraMatriz();
+  begin
+    matrizRotacao[0][0] := cos(DegToRad(graus));
+    matrizRotacao[0][1] := sin(DegToRad(graus));
+    matrizRotacao[0][2] := 0;
+    matrizRotacao[1][0] := -sin(DegToRad(graus));
+    matrizRotacao[1][1] := cos(DegToRad(graus));
+    matrizRotacao[1][2] := 0;
+    matrizRotacao[2][0] := 0;
+    matrizRotacao[2][1] := 0;
+    matrizRotacao[2][2] := 1;
   end;
 
 begin
-    x1Linha := rotacionarX(graus, x1Linha, y1Linha);
-    x2Linha := rotacionarX(graus, x2Linha, y2Linha);
+  zeraMatriz();
+  rotacionarLinha();
 
-    y1Linha := rotacionarY(graus, x1Linha, y1Linha);
-    y2Linha := rotacionarY(graus, x2Linha, y2Linha);
-
-    xEsqTri  := rotacionarX(graus, xEsqTri, yEsqTri);
-    xCimaTri := rotacionarX(graus, xCimaTri, yCimaTri);
-    xDirTri  := rotacionarX(graus, xDirTri, yDirTri);
-
-    yEsqTri  := rotacionarY(graus, xEsqTri, yEsqTri);
-    yCimaTri := rotacionarY(graus, xCimaTri, yCimaTri);
-    yDirTri  := rotacionarY(graus, xDirTri, yDirTri);
-
-    xEsqCimaQuad  := rotacionarX(graus, xEsqCimaQuad, yEsqCimaQuad);
-    xDirCimaQuad  := rotacionarX(graus, xDirCimaQuad, yDirCimaQuad);
-    xDirBaixoQuad := rotacionarX(graus, xDirBaixoQuad, yDirBaixoQuad);
-    xEsqBaixoQuad := rotacionarX(graus, xEsqBaixoQuad, yEsqBaixoQuad);
-
-    yEsqCimaQuad  := rotacionarY(graus, xEsqCimaQuad, yEsqCimaQuad);
-    yDirCimaQuad  := rotacionarY(graus, xDirCimaQuad, yDirCimaQuad);
-    yDirBaixoQuad := rotacionarY(graus, xDirBaixoQuad, yDirBaixoQuad);
-    yEsqBaixoQuad := rotacionarY(graus, xEsqBaixoQuad, yEsqBaixoQuad);
-
-    xPonto := rotacionarX(graus, xPonto, yPonto);
-    yPonto := rotacionarY(graus, xPonto, yPonto);
 end;
 
 procedure TPrincipal.FormCreate(Sender: TObject);
@@ -162,10 +161,10 @@ begin
   wglMakeCurrent(DC, RC);   //makes OpenGL window active
   GLInit;                   //initialize OpenGL
   zoom := 1;
-  Linha.Inicializa();
-  Ponto.Inicializa();
-  Quadrado.Inicializa();
-  Triangulo.Inicializa();
+  linha := TLinha.Create(self);
+  ponto := TPonto.Create(self);
+  quadrado := TQuadrado.Create(self);
+  triangulo := TTriangulo.Create(self);
 end;
 
 procedure TPrincipal.Draw;

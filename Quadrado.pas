@@ -11,9 +11,11 @@ type
   Ponto4 = array[0..2] of double;
   TQuadrado = class (TComponent)
 
+  private
+      procedure Inicializa();
+
   public
     Constructor Create(AOwner: TComponent); override;
-    procedure Inicializa();
 
     procedure setP1X(value: double);
     procedure setP1Y(value: double);
@@ -53,6 +55,7 @@ var
 constructor TQuadrado.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  Inicializa();
 end;
 
 function TQuadrado.getXP1: double;

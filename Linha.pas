@@ -5,13 +5,13 @@ uses
   Math, Classes;
 
 type
-  Ponto1 = array[0..2] of double;
-  Ponto2 = array[0..2] of double;
+  TVetor = array[0..2] of double;
   TLinha = class (TComponent)
+  private
+    procedure Inicializa();
 
   public
     Constructor Create(AOwner: TComponent); override;
-    procedure Inicializa();
     procedure setP1X(value: double);
     procedure setP1Y(value: double);
     procedure setP2X(value: double);
@@ -20,15 +20,15 @@ type
     function getYP1(): double;
     function getXP2(): double;
     function getYP2(): double;
-    function getP1(): Ponto1;
-    function getP2(): Ponto2;
+    function getP1(): TVetor;
+    function getP2(): TVetor;
   end;
 
 implementation
 
 var
-  p1: Ponto1;
-  p2: Ponto2;
+  p1: TVetor;
+  p2: TVetor;
   p1X, p1Y, p2X, p2Y: double;
 
 { TLinha }
@@ -36,6 +36,7 @@ var
 constructor TLinha.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  Inicializa();
 end;
 
 function TLinha.getXP1: double;
@@ -69,12 +70,12 @@ begin
   p2[2] := 1;
 end;
 
-function TLinha.getP1: Ponto1;
+function TLinha.getP1: TVetor;
 begin
   Result := p1;
 end;
 
-function TLinha.getP2: Ponto2;
+function TLinha.getP2: TVetor;
 begin
   Result := p2;
 end;
