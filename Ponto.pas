@@ -2,10 +2,9 @@ unit Ponto;
 
 interface
 uses
-  Math, Classes;
+  Math, Classes, Vetor;
 
 type
-  Ponto1 = array[0..2] of double;
   TPonto = class (TComponent)
   private
       procedure Inicializa();
@@ -16,13 +15,13 @@ type
     procedure setP1Y(value: double);
     function getXP1(): double;
     function getYP1(): double;
-    function getP1(): Ponto1;
+    function getP1(): TVetor;
   end;
 
 implementation
 
 var
-  p1: Ponto1;
+  p1: TVetor;
   p1X, p1Y: double;
 
 { TPonto }
@@ -33,7 +32,7 @@ begin
   Inicializa();
 end;
 
-function TPonto.getP1: Ponto1;
+function TPonto.getP1: TVetor;
 begin
   Result := p1;
 end;

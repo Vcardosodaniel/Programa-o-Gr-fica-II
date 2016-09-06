@@ -2,10 +2,9 @@ unit Linha;
 
 interface
 uses
-  Math, Classes;
+  Math, Classes, Vetor;
 
 type
-  TVetor = array[0..2] of double;
   TLinha = class (TComponent)
   private
     procedure Inicializa();

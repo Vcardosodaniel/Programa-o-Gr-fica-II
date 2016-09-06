@@ -2,12 +2,9 @@ unit Triangulo;
 
 interface
 uses
-  Math, Classes;
+  Math, Classes, Vetor;
 
 type
-  Ponto1 = array[0..2] of double;
-  Ponto2 = array[0..2] of double;
-  Ponto3 = array[0..2] of double;
   TTriangulo = class (TComponent)
 
   private
@@ -31,17 +28,17 @@ type
     function getXP3(): double;
     function getYP3(): double;
 
-    function getP1(): Ponto1;
-    function getP2(): Ponto2;
-    function getP3(): Ponto3;
+    function getP1(): TVetor;
+    function getP2(): TVetor;
+    function getP3(): TVetor;
   end;
 
 implementation
 
 var
-  p1: Ponto1;
-  p2: Ponto2;
-  p3: Ponto3;
+  p1: TVetor;
+  p2: TVetor;
+  p3: TVetor;
   p1X, p1Y, p2X, p2Y, p3X, p3Y: double;
 
 { TLinha }
@@ -97,17 +94,17 @@ begin
   p3[2] := 1;
 end;
 
-function TTriangulo.getP1: Ponto1;
+function TTriangulo.getP1: TVetor;
 begin
   Result := p1;
 end;
 
-function TTriangulo.getP2: Ponto2;
+function TTriangulo.getP2: TVetor;
 begin
   Result := p2;
 end;
 
-function TTriangulo.getP3: Ponto3;
+function TTriangulo.getP3: TVetor;
 begin
   Result := p3;
 end;

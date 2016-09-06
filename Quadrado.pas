@@ -2,13 +2,9 @@ unit Quadrado;
 
 interface
 uses
-  Math, Classes;
+  Math, Classes, Vetor;
 
 type
-  Ponto1 = array[0..2] of double;
-  Ponto2 = array[0..2] of double;
-  Ponto3 = array[0..2] of double;
-  Ponto4 = array[0..2] of double;
   TQuadrado = class (TComponent)
 
   private
@@ -35,19 +31,19 @@ type
     function getXP4(): double;
     function getYP4(): double;
 
-    function getP1(): Ponto1;
-    function getP2(): Ponto2;
-    function getP3(): Ponto3;
-    function getP4(): Ponto4;
+    function getP1(): TVetor;
+    function getP2(): TVetor;
+    function getP3(): TVetor;
+    function getP4(): TVetor;
   end;
 
 implementation
 
 var
-  p1: Ponto1;
-  p2: Ponto2;
-  p3: Ponto3;
-  p4: Ponto4;
+  p1: TVetor;
+  p2: TVetor;
+  p3: TVetor;
+  p4: TVetor;
   p1X, p1Y, p2X, p2Y, p3X, p3Y, p4X, p4Y: double;
 
 { TLinha }
@@ -117,22 +113,22 @@ begin
   p4[2] := 1;
 end;
 
-function TQuadrado.getP1: Ponto1;
+function TQuadrado.getP1: TVetor;
 begin
   Result := p1;
 end;
 
-function TQuadrado.getP2: Ponto2;
+function TQuadrado.getP2: TVetor;
 begin
   Result := p2;
 end;
 
-function TQuadrado.getP3: Ponto3;
+function TQuadrado.getP3: TVetor;
 begin
   Result := p3;
 end;
 
-function TQuadrado.getP4: Ponto4;
+function TQuadrado.getP4: TVetor;
 begin
   Result := p4;
 end;

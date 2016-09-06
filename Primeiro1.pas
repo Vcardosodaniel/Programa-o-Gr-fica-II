@@ -4,10 +4,9 @@ interface
 
 uses
   OpenGL, Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, ComCtrls, Math, Linha, Ponto, Quadrado, Triangulo;
+  StdCtrls, ExtCtrls, ComCtrls, Math, Linha, Ponto, Quadrado, Triangulo, Vetor;
 
 type
-//  TVetor = array[0..2] of double;
   TMatrizRotacao = array[0..2,0..2] of double;
   TPrincipal = class(TForm)
     btnTriangulo: TButton;
@@ -130,6 +129,48 @@ var
     linha.setP2Y(pontoRotacionado[1]);
   end;
 
+  procedure rotacionarPonto();
+  var
+    pontoRotacionado: TVetor;
+  begin
+    pontoRotacionado := rotacionar(ponto.getP1, matrizRotacao);
+    ponto.setP1X(pontoRotacionado[0]);
+    ponto.setP1Y(pontoRotacionado[1]);
+  end;
+
+  procedure rotacionarTriangulo();
+  var
+    pontoRotacionado: TVetor;
+  begin
+    pontoRotacionado := rotacionar(triangulo.getP1, matrizRotacao);
+    triangulo.setP1X(pontoRotacionado[0]);
+    triangulo.setP1Y(pontoRotacionado[1]);
+    pontoRotacionado := rotacionar(triangulo.getP2, matrizRotacao);
+    triangulo.setP2X(pontoRotacionado[0]);
+    triangulo.setP2Y(pontoRotacionado[1]);
+    pontoRotacionado := rotacionar(triangulo.getP3, matrizRotacao);
+    triangulo.setP3X(pontoRotacionado[0]);
+    triangulo.setP3Y(pontoRotacionado[1]);
+  end;
+
+  procedure rotacionarQuadrado();
+  var
+    pontoRotacionado: TVetor;
+  begin
+    pontoRotacionado := rotacionar(quadrado.getP1, matrizRotacao);
+    quadrado.setP1X(pontoRotacionado[0]);
+    quadrado.setP1Y(pontoRotacionado[1]);
+    pontoRotacionado := rotacionar(quadrado.getP2, matrizRotacao);
+    quadrado.setP2X(pontoRotacionado[0]);
+    quadrado.setP2Y(pontoRotacionado[1]);
+    pontoRotacionado := rotacionar(quadrado.getP3, matrizRotacao);
+    quadrado.setP3X(pontoRotacionado[0]);
+    quadrado.setP3Y(pontoRotacionado[1]);
+    pontoRotacionado := rotacionar(quadrado.getP4, matrizRotacao);
+    quadrado.setP4X(pontoRotacionado[0]);
+    quadrado.setP4Y(pontoRotacionado[1]);
+  end;
+
   procedure zeraMatriz();
   begin
     matrizRotacao[0][0] := cos(DegToRad(graus));
@@ -146,6 +187,9 @@ var
 begin
   zeraMatriz();
   rotacionarLinha();
+  rotacionarPonto();
+  rotacionarTriangulo();
+  rotacionarQuadrado();
 
 end;
 

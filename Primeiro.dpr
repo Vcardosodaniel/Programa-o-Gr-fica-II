@@ -10,7 +10,8 @@ uses
   Linha in 'Linha.pas',
   Ponto in 'Ponto.pas',
   Quadrado in 'Quadrado.pas',
-  Triangulo in 'Triangulo.pas';
+  Triangulo in 'Triangulo.pas',
+  Vetor in 'Vetor.pas';
 
 {$R *.res}
 
