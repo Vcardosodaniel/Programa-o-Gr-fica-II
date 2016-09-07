@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Quadrado;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Quadrado, Primeiro1;
 
 type
   TfrmCoordenadasQuadrado = class(TForm)
@@ -56,6 +56,7 @@ end;
 procedure TfrmCoordenadasQuadrado.btnOKClick(Sender: TObject);
 var
   Quadrado: TQuadrado;
+  principal: TPrincipal;
 begin
   Quadrado.setP1X(StrToFloat(edXPonto1.Text));
   Quadrado.setP1Y(StrToFloat(edYPonto1.Text));
@@ -65,6 +66,7 @@ begin
   Quadrado.setP3Y(StrToFloat(edYPonto3.Text));
   Quadrado.setP4X(StrToFloat(edXPonto4.Text));
   Quadrado.setP4Y(StrToFloat(edYPonto4.Text));
+  principal.setDesenharQuadrado(true);
   btnCancelarClick(self);
 end;
 

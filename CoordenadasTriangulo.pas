@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Triangulo;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Triangulo, Primeiro1;
 
 type
   TfrmTriangulo = class(TForm)
@@ -50,6 +50,7 @@ end;
 procedure TfrmTriangulo.btnOKClick(Sender: TObject);
 var
   Triangulo: TTriangulo;
+  principal: TPrincipal;
 begin
   Triangulo.setP1X(StrToFloat(edXPonto1.Text));
   Triangulo.setP1Y(StrToFloat(edYPonto1.Text));
@@ -57,6 +58,7 @@ begin
   Triangulo.setP2Y(StrToFloat(edYPonto2.Text));
   Triangulo.setP3X(StrToFloat(edXPonto3.Text));
   Triangulo.setP3Y(StrToFloat(edYPonto3.Text));
+  principal.setDesenharTriangulo(true);
   btnCancelClick(self);
 end;
 

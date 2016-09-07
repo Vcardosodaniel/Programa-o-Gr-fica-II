@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Linha;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Linha, Primeiro1;
 
 type
   TfrmLinha = class(TForm)
@@ -45,11 +45,13 @@ end;
 procedure TfrmLinha.btnOKClick(Sender: TObject);
 var
   linha: TLinha;
+  principal: TPrincipal;
 begin
   linha.setP1X(StrToFloat(edXPonto1.Text));
   linha.setP1Y(StrToFloat(edYPonto1.Text));
   linha.setP2X(StrToFloat(edXPonto2.Text));
   linha.setP2Y(StrToFloat(edYPonto2.Text));
+  principal.setDesenharLinha(true);
   btnCancelarClick(self);
 end;
 

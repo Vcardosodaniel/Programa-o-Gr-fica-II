@@ -50,6 +50,11 @@ begin
     principal.escalonar(StrToFloat(edPontoX.Text), StrToFloat(edPontoY.Text));
     btnCancelarClick(self);
   end;
+  if (rbCentro.Checked = true) then
+  begin
+    principal.escalonamentoNatural(StrToFloat(edPontoX.Text), StrToFloat(edPontoY.Text));
+    btnCancelarClick(self);
+  end;
 end;
 
 end.

@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Ponto;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Ponto, Primeiro1;
 
 type
   TfrmPonto = class(TForm)
@@ -39,9 +39,11 @@ end;
 procedure TfrmPonto.btnOKClick(Sender: TObject);
 var
   Ponto: TPonto;
+  principal: TPrincipal;
 begin
   Ponto.setP1X(StrToFloat(edXPonto.Text));
   Ponto.setP1Y(StrToFloat(edYPonto.Text));
+  principal.setDesenharPonto(true);
   btnCancelarClick(self);
 end;
 

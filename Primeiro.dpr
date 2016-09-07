@@ -12,7 +12,9 @@ uses
   Quadrado in 'Quadrado.pas',
   Triangulo in 'Triangulo.pas',
   Vetor in 'Vetor.pas',
-  Rotacionar in 'Rotacionar.pas' {frmRotacionar};
+  Rotacionar in 'Rotacionar.pas' {frmRotacionar},
+  Escalonamento in 'Escalonamento.pas' {frmEscalonamento},
+  Translacao in 'Translacao.pas' {frmTranslacao};
 
 {$R *.res}
 
@@ -21,5 +23,7 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrincipal, Principal);
   Application.CreateForm(TfrmRotacionar, frmRotacionar);
+  Application.CreateForm(TfrmEscalonamento, frmEscalonamento);
+  Application.CreateForm(TfrmTranslacao, frmTranslacao);
   Application.Run;
 end.

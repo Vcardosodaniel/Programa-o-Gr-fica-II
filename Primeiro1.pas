@@ -46,16 +46,23 @@ type
     procedure DesenhaPonto();
     procedure DesenhaLinhasDivisorias();
     function multiplicarVetorPorMatriz(ponto: TVetor; matriz: TMatriz):TVetor;
+    function calculaCentro(somaX, somaY, numPontos: double):TVetor;
 
   public
     procedure rotacionar(graus: double);
     procedure escalonar(escX, escY: double);
+    procedure escalonamentoNatural(escX, escY: double);
     procedure translacao(tX, tY: double);
+    procedure setDesenharLinha(desenhar: boolean);
+    procedure setDesenharPonto(desenhar: boolean);
+    procedure setDesenharQuadrado(desenhar: boolean);
+    procedure setDesenharTriangulo(desenhar: boolean);
 
   end;
 
 var
   Principal: TPrincipal;
+  desenharLinha, desenharQuadrado, desenharTriangulo, desenharPonto: boolean;
 
 implementation
 
@@ -201,6 +208,113 @@ begin
   rotacionarTriangulo();
   rotacionarQuadrado();
 end;
+
+procedure TPrincipal.setDesenharLinha(desenhar: boolean);
+begin
+  desenharLinha := desenhar;
+end;
+
+procedure TPrincipal.setDesenharPonto(desenhar: boolean);
+begin
+  desenharPonto := desenhar;
+end;
+
+procedure TPrincipal.setDesenharQuadrado(desenhar: boolean);
+begin
+  desenharQuadrado := desenhar;
+end;
+
+procedure TPrincipal.setDesenharTriangulo(desenhar: boolean);
+begin
+  desenharTriangulo := desenhar;
+end;
+
+procedure TPrincipal.escalonamentoNatural(escX, escY: double);
+var
+  matrizEscalonamento: TMatriz;
+
+  procedure escalonarLinha();
+  const
+    NUMERO_PONTOS_LINHA = 2;
+  var
+    pontoResultado: TVetor;
+    somaXlinha, somaYlinha: double;
+  begin
+    somaXlinha := linha.getXP1 + linha.getXP2;
+    somaYlinha := linha.getYP1 + linha.getYP2;
+    pontoResultado := calculaCentro(somaXlinha, somaYlinha, NUMERO_PONTOS_LINHA);
+    translacao(-pontoResultado[0], -pontoResultado[1]);
+    escalonar(escX, escY);
+    translacao(pontoResultado[0], pontoResultado[1]);
+  end;
+
+  procedure escalonarPonto();
+  const
+    NUMERO_PONTOS_PONTO = 1;
+  var
+    pontoResultadoPonto: TVetor;
+    somaXPonto, somaYPonto: double;
+  begin
+    somaXPonto := ponto.getXP1;
+    somaYPonto := ponto.getYP1;
+    pontoResultadoPonto := calculaCentro(somaXPonto, somaYPonto, NUMERO_PONTOS_PONTO);
+    translacao(-(pontoResultadoPonto[0]), -(pontoResultadoPonto[1]));
+    escalonar(escX, escY);
+    translacao(pontoResultadoPonto[0], pontoResultadoPonto[1]);    
+  end;
+
+  procedure escalonarTriangulo();
+  const
+    NUMERO_PONTOS_TRIANGULO = 3;
+  var
+    pontoResultadoTriangulo: TVetor;
+    somaXTriangulo, somaYTriangulo: double;
+  begin
+    somaXTriangulo := triangulo.getXP1 + triangulo.getXP2 + triangulo.getXP3;
+    somaYTriangulo := triangulo.getYP1 + triangulo.getYP2 + triangulo.getYP3;
+    pontoResultadoTriangulo := calculaCentro(somaXTriangulo, somaYTriangulo, NUMERO_PONTOS_TRIANGULO);    
+    translacao(-(pontoResultadoTriangulo[0]), -(pontoResultadoTriangulo[1]));
+    escalonar(escX, escY);
+    translacao(pontoResultadoTriangulo[0], pontoResultadoTriangulo[1]);    
+  end;
+
+  procedure escalonarQuadrado();
+  const
+    NUMERO_PONTOS_QUADRADO = 4;
+  var
+    pontoResultadoQuadrado: TVetor;
+    somaXQuadrado, somaYQuadrado: double;
+  begin
+    somaXQuadrado := quadrado.getXP1 + quadrado.getXP2 + quadrado.getXP3 + quadrado.getXP4;
+    somaYQuadrado := quadrado.getYP1 + quadrado.getYP2 + quadrado.getYP3 + quadrado.getYP4;
+    pontoResultadoQuadrado := calculaCentro(somaXQuadrado, somaYQuadrado, NUMERO_PONTOS_QUADRADO);    
+    translacao(-(pontoResultadoQuadrado[0]), -(pontoResultadoQuadrado[1]));
+    escalonar(escX, escY);
+    translacao(pontoResultadoQuadrado[0], pontoResultadoQuadrado[1]);    
+  end;
+
+begin
+  if (desenharLinha) then
+  begin
+    escalonarLinha();  
+  end;
+
+  if (desenharQuadrado) then
+  begin
+    escalonarQuadrado();
+  end;
+
+  if (desenharPonto) then
+  begin
+    escalonarPonto();
+  end;
+
+  if (desenharTriangulo) then
+  begin
+    escalonarTriangulo();
+  end;  
+end;
+
 
 procedure TPrincipal.escalonar(escX, escY: double);
 var
@@ -475,6 +589,16 @@ end;
 procedure TPrincipal.btnZoomOutClick(Sender: TObject);
 begin
   zoom := zoom - 0.2;
+end;
+
+function TPrincipal.calculaCentro(somaX, somaY, numPontos: double): TVetor;
+var
+  pontoResultado: TVetor;
+begin
+  pontoResultado[0] := somaX / numPontos;
+  pontoResultado[1] := somaY / numPontos;
+  pontoResultado[2] := 1;
+  Result := pontoResultado;
 end;
 
 procedure TPrincipal.btnEscalonamentoClick(Sender: TObject);
