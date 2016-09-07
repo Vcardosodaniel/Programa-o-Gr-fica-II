@@ -4,10 +4,10 @@ interface
 
 uses
   OpenGL, Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, ComCtrls, Math, Linha, Ponto, Quadrado, Triangulo, Vetor;
+  StdCtrls, ExtCtrls, ComCtrls, Math, Linha, Ponto, Quadrado, Triangulo, Vetor, Rotacionar;
 
 type
-  TMatrizRotacao = array[0..2,0..2] of double;
+  TMatriz = array[0..2,0..2] of double;
   TPrincipal = class(TForm)
     btnTriangulo: TButton;
     btnQuadrado: TButton;
@@ -40,6 +40,8 @@ type
     procedure DesenhaQuadrado();
     procedure DesenhaPonto();
     procedure DesenhaLinhasDivisorias();
+
+  public
     procedure rotacionar(graus: double);
 
   end;
@@ -106,9 +108,9 @@ end;
 
 procedure TPrincipal.rotacionar(graus: double);
 var
-  matrizRotacao: TMatrizRotacao;
+  matrizRotacao: TMatriz;
 
-  function rotacionar(ponto: TVetor; matriz: TMatrizRotacao): TVetor;
+  function rotacionar(ponto: TVetor; matriz: TMatriz): TVetor;
   var
     resultado: TVetor;
   begin
@@ -343,8 +345,11 @@ begin
 end;
 
 procedure TPrincipal.btnRotacionarClick(Sender: TObject);
+var
+  grausRotacao: TfrmRotacionar;
 begin
-  rotacionar(45);
+  grausRotacao := TfrmRotacionar.Create(self);
+  grausRotacao.showModal();
 end;
 
 
