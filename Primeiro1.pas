@@ -4,7 +4,8 @@ interface
 
 uses
   OpenGL, Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, ComCtrls, Math, Linha, Ponto, Quadrado, Triangulo, Vetor, Rotacionar;
+  StdCtrls, ExtCtrls, ComCtrls, Math, Linha, Ponto, Quadrado, Triangulo, Vetor, 
+  Rotacionar, Escalonamento, Translacao;
 
 type
   TMatriz = array[0..2,0..2] of double;
@@ -20,6 +21,8 @@ type
     btnZoomIn: TButton;
     btnZoomOut: TButton;
     btnRotacionar: TButton;
+    btnEscalonamento: TButton;
+    btnTranslacao: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure btnTrianguloClick(Sender: TObject);
@@ -33,6 +36,8 @@ type
     procedure btnZoomInClick(Sender: TObject);
     procedure btnZoomOutClick(Sender: TObject);
     procedure btnRotacionarClick(Sender: TObject);
+    procedure btnEscalonamentoClick(Sender: TObject);
+    procedure btnTranslacaoClick(Sender: TObject);
   private
     procedure Draw; //Draws an OpenGL scene on request
     procedure DesenhaLinha();
@@ -40,9 +45,12 @@ type
     procedure DesenhaQuadrado();
     procedure DesenhaPonto();
     procedure DesenhaLinhasDivisorias();
+    function multiplicarVetorPorMatriz(ponto: TVetor; matriz: TMatriz):TVetor;
 
   public
     procedure rotacionar(graus: double);
+    procedure escalonar(escX, escY: double);
+    procedure translacao(tX, tY: double);
 
   end;
 
@@ -106,27 +114,27 @@ begin
   glMatrixMode(GL_MODELVIEW);
 end;
 
+function TPrincipal.multiplicarVetorPorMatriz(ponto: TVetor; matriz: TMatriz): TVetor;
+var
+  resultado: TVetor;
+begin
+  resultado[0] := (ponto[0]*matriz[0][0] + ponto[1]*matriz[1][0] + ponto[2]*matriz[2][0]);
+  resultado[1] := (ponto[0]*matriz[0][1] + ponto[1]*matriz[1][1] + ponto[2]*matriz[2][1]);
+  Result := resultado;
+end;
+
 procedure TPrincipal.rotacionar(graus: double);
 var
   matrizRotacao: TMatriz;
-
-  function rotacionar(ponto: TVetor; matriz: TMatriz): TVetor;
-  var
-    resultado: TVetor;
-  begin
-    resultado[0] := (ponto[0]*matriz[0][0] + ponto[1]*matriz[1][0] + ponto[2]*matriz[2][0]);
-    resultado[1] := (ponto[0]*matriz[0][1] + ponto[1]*matriz[1][1] + ponto[2]*matriz[2][1]);
-    Result := resultado;
-  end;
 
   procedure rotacionarLinha();
   var
     pontoRotacionado: TVetor;
   begin
-    pontoRotacionado := rotacionar(linha.getP1, matrizRotacao);
+    pontoRotacionado := multiplicarVetorPorMatriz(linha.getP1, matrizRotacao);
     linha.setP1X(pontoRotacionado[0]);
     linha.setP1Y(pontoRotacionado[1]);
-    pontoRotacionado := rotacionar(linha.getP2, matrizRotacao);
+    pontoRotacionado := multiplicarVetorPorMatriz(linha.getP2, matrizRotacao);
     linha.setP2X(pontoRotacionado[0]);
     linha.setP2Y(pontoRotacionado[1]);
   end;
@@ -135,7 +143,7 @@ var
   var
     pontoRotacionado: TVetor;
   begin
-    pontoRotacionado := rotacionar(ponto.getP1, matrizRotacao);
+    pontoRotacionado := multiplicarVetorPorMatriz(ponto.getP1, matrizRotacao);
     ponto.setP1X(pontoRotacionado[0]);
     ponto.setP1Y(pontoRotacionado[1]);
   end;
@@ -144,13 +152,13 @@ var
   var
     pontoRotacionado: TVetor;
   begin
-    pontoRotacionado := rotacionar(triangulo.getP1, matrizRotacao);
+    pontoRotacionado := multiplicarVetorPorMatriz(triangulo.getP1, matrizRotacao);
     triangulo.setP1X(pontoRotacionado[0]);
     triangulo.setP1Y(pontoRotacionado[1]);
-    pontoRotacionado := rotacionar(triangulo.getP2, matrizRotacao);
+    pontoRotacionado := multiplicarVetorPorMatriz(triangulo.getP2, matrizRotacao);
     triangulo.setP2X(pontoRotacionado[0]);
     triangulo.setP2Y(pontoRotacionado[1]);
-    pontoRotacionado := rotacionar(triangulo.getP3, matrizRotacao);
+    pontoRotacionado := multiplicarVetorPorMatriz(triangulo.getP3, matrizRotacao);
     triangulo.setP3X(pontoRotacionado[0]);
     triangulo.setP3Y(pontoRotacionado[1]);
   end;
@@ -159,16 +167,16 @@ var
   var
     pontoRotacionado: TVetor;
   begin
-    pontoRotacionado := rotacionar(quadrado.getP1, matrizRotacao);
+    pontoRotacionado := multiplicarVetorPorMatriz(quadrado.getP1, matrizRotacao);
     quadrado.setP1X(pontoRotacionado[0]);
     quadrado.setP1Y(pontoRotacionado[1]);
-    pontoRotacionado := rotacionar(quadrado.getP2, matrizRotacao);
+    pontoRotacionado := multiplicarVetorPorMatriz(quadrado.getP2, matrizRotacao);
     quadrado.setP2X(pontoRotacionado[0]);
     quadrado.setP2Y(pontoRotacionado[1]);
-    pontoRotacionado := rotacionar(quadrado.getP3, matrizRotacao);
+    pontoRotacionado := multiplicarVetorPorMatriz(quadrado.getP3, matrizRotacao);
     quadrado.setP3X(pontoRotacionado[0]);
     quadrado.setP3Y(pontoRotacionado[1]);
-    pontoRotacionado := rotacionar(quadrado.getP4, matrizRotacao);
+    pontoRotacionado := multiplicarVetorPorMatriz(quadrado.getP4, matrizRotacao);
     quadrado.setP4X(pontoRotacionado[0]);
     quadrado.setP4Y(pontoRotacionado[1]);
   end;
@@ -192,7 +200,164 @@ begin
   rotacionarPonto();
   rotacionarTriangulo();
   rotacionarQuadrado();
+end;
 
+procedure TPrincipal.escalonar(escX, escY: double);
+var
+  matrizEscalonamento: TMatriz;
+
+  procedure escalonarLinha();
+  var
+    pontoEscalonado: TVetor;
+  begin
+    pontoEscalonado := multiplicarVetorPorMatriz(linha.getP1, matrizEscalonamento);
+    linha.setP1X(pontoEscalonado[0]);
+    linha.setP1Y(pontoEscalonado[1]);
+    pontoEscalonado := multiplicarVetorPorMatriz(linha.getP2, matrizEscalonamento);
+    linha.setP2X(pontoEscalonado[0]);
+    linha.setP2Y(pontoEscalonado[1]);
+  end;
+
+  procedure escalonarPonto();
+  var
+    pontoEscalonado: TVetor;
+  begin
+    pontoEscalonado := multiplicarVetorPorMatriz(ponto.getP1, matrizEscalonamento);
+    ponto.setP1X(pontoEscalonado[0]);
+    ponto.setP1Y(pontoEscalonado[1]);
+  end;
+
+  procedure escalonarTriangulo();
+  var
+    pontoEscalonado: TVetor;
+  begin
+    pontoEscalonado := multiplicarVetorPorMatriz(triangulo.getP1, matrizEscalonamento);
+    triangulo.setP1X(pontoEscalonado[0]);
+    triangulo.setP1Y(pontoEscalonado[1]);
+    pontoEscalonado := multiplicarVetorPorMatriz(triangulo.getP2, matrizEscalonamento);
+    triangulo.setP2X(pontoEscalonado[0]);
+    triangulo.setP2Y(pontoEscalonado[1]);
+    pontoEscalonado := multiplicarVetorPorMatriz(triangulo.getP3, matrizEscalonamento);
+    triangulo.setP3X(pontoEscalonado[0]);
+    triangulo.setP3Y(pontoEscalonado[1]);
+  end;
+
+  procedure escalonarQuadrado();
+  var
+    pontoEscalonado: TVetor;
+  begin
+    pontoEscalonado := multiplicarVetorPorMatriz(quadrado.getP1, matrizEscalonamento);
+    quadrado.setP1X(pontoEscalonado[0]);
+    quadrado.setP1Y(pontoEscalonado[1]);
+    pontoEscalonado := multiplicarVetorPorMatriz(quadrado.getP2, matrizEscalonamento);
+    quadrado.setP2X(pontoEscalonado[0]);
+    quadrado.setP2Y(pontoEscalonado[1]);
+    pontoEscalonado := multiplicarVetorPorMatriz(quadrado.getP3, matrizEscalonamento);
+    quadrado.setP3X(pontoEscalonado[0]);
+    quadrado.setP3Y(pontoEscalonado[1]);
+    pontoEscalonado := multiplicarVetorPorMatriz(quadrado.getP4, matrizEscalonamento);
+    quadrado.setP4X(pontoEscalonado[0]);
+    quadrado.setP4Y(pontoEscalonado[1]);
+  end;
+
+  procedure zeraMatriz();
+  begin
+    matrizEscalonamento[0][0] := escX;
+    matrizEscalonamento[0][1] := 0;
+    matrizEscalonamento[0][2] := 0;
+    matrizEscalonamento[1][0] := 0;
+    matrizEscalonamento[1][1] := escY;
+    matrizEscalonamento[1][2] := 0;
+    matrizEscalonamento[2][0] := 0;
+    matrizEscalonamento[2][1] := 0;
+    matrizEscalonamento[2][2] := 1;
+  end;
+
+begin
+  zeraMatriz();
+  escalonarLinha();
+  escalonarPonto();
+  escalonarTriangulo();
+  escalonarQuadrado();
+end;
+
+procedure TPrincipal.translacao(tX: Double; tY: Double);
+var
+  matrizTranslacao: TMatriz;
+
+  procedure translacaoLinha();
+  var
+    pontoResultado: TVetor;
+  begin
+    pontoResultado := multiplicarVetorPorMatriz(linha.getP1, matrizTranslacao);
+    linha.setP1X(pontoResultado[0]);
+    linha.setP1Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(linha.getP2, matrizTranslacao);
+    linha.setP2X(pontoResultado[0]);
+    linha.setP2Y(pontoResultado[1]);
+  end;
+
+  procedure translacaoPonto();
+  var
+    pontoResultado: TVetor;
+  begin
+    pontoResultado := multiplicarVetorPorMatriz(ponto.getP1, matrizTranslacao);
+    ponto.setP1X(pontoResultado[0]);
+    ponto.setP1Y(pontoResultado[1]);
+  end;
+
+  procedure translacaoTriangulo();
+  var
+    pontoResultado: TVetor;
+  begin
+    pontoResultado := multiplicarVetorPorMatriz(triangulo.getP1, matrizTranslacao);
+    triangulo.setP1X(pontoResultado[0]);
+    triangulo.setP1Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(triangulo.getP2, matrizTranslacao);
+    triangulo.setP2X(pontoResultado[0]);
+    triangulo.setP2Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(triangulo.getP3, matrizTranslacao);
+    triangulo.setP3X(pontoResultado[0]);
+    triangulo.setP3Y(pontoResultado[1]);
+  end;
+
+  procedure translacaoQuadrado();
+  var
+    pontoResultado: TVetor;
+  begin
+    pontoResultado := multiplicarVetorPorMatriz(quadrado.getP1, matrizTranslacao);
+    quadrado.setP1X(pontoResultado[0]);
+    quadrado.setP1Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(quadrado.getP2, matrizTranslacao);
+    quadrado.setP2X(pontoResultado[0]);
+    quadrado.setP2Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(quadrado.getP3, matrizTranslacao);
+    quadrado.setP3X(pontoResultado[0]);
+    quadrado.setP3Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(quadrado.getP4, matrizTranslacao);
+    quadrado.setP4X(pontoResultado[0]);
+    quadrado.setP4Y(pontoResultado[1]);
+  end;
+
+  procedure zeraMatriz();
+  begin
+    matrizTranslacao[0][0] := 1;
+    matrizTranslacao[0][1] := 0;
+    matrizTranslacao[0][2] := 0;
+    matrizTranslacao[1][0] := 0;
+    matrizTranslacao[1][1] := 1;
+    matrizTranslacao[1][2] := 0;
+    matrizTranslacao[2][0] := tX;
+    matrizTranslacao[2][1] := tY;
+    matrizTranslacao[2][2] := 1;
+  end;
+
+begin
+  zeraMatriz();
+  translacaoLinha();
+  translacaoPonto();
+  translacaoTriangulo();
+  translacaoQuadrado();
 end;
 
 procedure TPrincipal.FormCreate(Sender: TObject);
@@ -310,6 +475,22 @@ end;
 procedure TPrincipal.btnZoomOutClick(Sender: TObject);
 begin
   zoom := zoom - 0.2;
+end;
+
+procedure TPrincipal.btnEscalonamentoClick(Sender: TObject);
+var
+  escalonamento: TfrmEscalonamento;
+begin
+  escalonamento := TfrmEscalonamento.Create(self);
+  escalonamento.ShowModal();
+end;
+
+procedure TPrincipal.btnTranslacaoClick(Sender: TObject);
+var
+  translacao: TfrmTranslacao;
+begin
+  translacao := TfrmTranslacao.Create(self);
+  translacao.ShowModal();
 end;
 
 procedure TPrincipal.btnTrianguloClick(Sender: TObject);

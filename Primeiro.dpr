@@ -11,7 +11,8 @@ uses
   Ponto in 'Ponto.pas',
   Quadrado in 'Quadrado.pas',
   Triangulo in 'Triangulo.pas',
-  Vetor in 'Vetor.pas';
+  Vetor in 'Vetor.pas',
+  Rotacionar in 'Rotacionar.pas' {frmRotacionar};
 
 {$R *.res}
 
@@ -19,5 +20,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrincipal, Principal);
+  Application.CreateForm(TfrmRotacionar, frmRotacionar);
   Application.Run;
 end.

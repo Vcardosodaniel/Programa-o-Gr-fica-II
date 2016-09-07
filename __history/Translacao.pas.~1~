@@ -1,0 +1,25 @@
+unit Translacao;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls;
+
+type
+  TfrmTranslacao = class(TForm)
+    Principal: TPanel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmTranslacao: TfrmTranslacao;
+
+implementation
+
+{$R *.dfm}
+
+end.

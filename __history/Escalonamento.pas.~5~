@@ -1,0 +1,40 @@
+unit Escalonamento;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls;
+
+type
+  TfrmEscalonamento = class(TForm)
+    Principal: TPanel;
+    gpEscalonar: TGroupBox;
+    lblPontoX: TLabel;
+    lblPontoY: TLabel;
+    edPontoX: TEdit;
+    edPontoY: TEdit;
+    rbOrigem: TRadioButton;
+    rbCentro: TRadioButton;
+    btnOK: TButton;
+    btnCancelar: TButton;
+    procedure btnCancelarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmEscalonamento: TfrmEscalonamento;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmEscalonamento.btnCancelarClick(Sender: TObject);
+begin
+  self.Close();
+end;
+
+end.

@@ -3,7 +3,7 @@ object Principal: TPrincipal
   Top = 0
   BorderStyle = bsToolWindow
   Caption = 'Primitivas Geogr'#225'ficas'
-  ClientHeight = 571
+  ClientHeight = 591
   ClientWidth = 594
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -46,8 +46,8 @@ object Principal: TPrincipal
     OnClick = btnLinhaClick
   end
   object btnCima: TButton
-    Left = 512
-    Top = 520
+    Left = 510
+    Top = 534
     Width = 41
     Height = 27
     Caption = 'Cima'
@@ -55,8 +55,8 @@ object Principal: TPrincipal
     OnClick = btnCimaClick
   end
   object btnBaixo: TButton
-    Left = 512
-    Top = 543
+    Left = 510
+    Top = 557
     Width = 41
     Height = 27
     Caption = 'Baixo'
@@ -64,8 +64,8 @@ object Principal: TPrincipal
     OnClick = btnBaixoClick
   end
   object btnEsquerda: TButton
-    Left = 472
-    Top = 536
+    Left = 470
+    Top = 550
     Width = 41
     Height = 27
     Caption = 'Esq.'
@@ -73,8 +73,8 @@ object Principal: TPrincipal
     OnClick = btnEsquerdaClick
   end
   object btnDireita: TButton
-    Left = 552
-    Top = 536
+    Left = 550
+    Top = 550
     Width = 41
     Height = 27
     Caption = 'Dir.'
@@ -91,8 +91,8 @@ object Principal: TPrincipal
     OnClick = btnPontoClick
   end
   object btnZoomIn: TButton
-    Left = 0
-    Top = 544
+    Left = -2
+    Top = 558
     Width = 75
     Height = 25
     Caption = 'Zoom IN'
@@ -100,8 +100,8 @@ object Principal: TPrincipal
     OnClick = btnZoomInClick
   end
   object btnZoomOut: TButton
-    Left = 81
-    Top = 544
+    Left = 79
+    Top = 558
     Width = 75
     Height = 25
     Caption = 'Zoom OUT'
@@ -109,12 +109,30 @@ object Principal: TPrincipal
     OnClick = btnZoomOutClick
   end
   object btnRotacionar: TButton
-    Left = 161
-    Top = 544
+    Left = 159
+    Top = 558
     Width = 75
     Height = 25
-    Caption = 'Rotacionar'
+    Caption = 'Rota'#231#227'o'
     TabOrder = 10
     OnClick = btnRotacionarClick
+  end
+  object btnEscalonamento: TButton
+    Left = 240
+    Top = 558
+    Width = 92
+    Height = 25
+    Caption = 'Escalonamento'
+    TabOrder = 11
+    OnClick = btnEscalonamentoClick
+  end
+  object btnTranslacao: TButton
+    Left = 339
+    Top = 558
+    Width = 88
+    Height = 25
+    Caption = 'Transla'#231#227'o'
+    TabOrder = 12
+    OnClick = btnTranslacaoClick
   end
 end
