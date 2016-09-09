@@ -127,6 +127,7 @@ var
 begin
   resultado[0] := (ponto[0]*matriz[0][0] + ponto[1]*matriz[1][0] + ponto[2]*matriz[2][0]);
   resultado[1] := (ponto[0]*matriz[0][1] + ponto[1]*matriz[1][1] + ponto[2]*matriz[2][1]);
+  resultado[2] := 1;
   Result := resultado;
 end;
 
