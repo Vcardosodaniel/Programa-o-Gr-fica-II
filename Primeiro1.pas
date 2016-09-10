@@ -4,7 +4,7 @@ interface
 
 uses
   OpenGL, Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, ComCtrls, Math, Linha, Ponto, Quadrado, Triangulo, Vetor, 
+  StdCtrls, ExtCtrls, ComCtrls, Math, Linha, Ponto, Quadrado, Triangulo, Vetor,
   Rotacionar, Escalonamento, Translacao;
 
 type
@@ -63,6 +63,7 @@ type
 var
   Principal: TPrincipal;
   desenharLinha, desenharQuadrado, desenharTriangulo, desenharPonto: boolean;
+  xViewPort, yViewPort, widthViewPort, heigthViewport: integer;
 
 implementation
 
@@ -117,8 +118,49 @@ procedure GLInit;
 begin
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluOrtho2D(-30, 30, -30, 30);
+  gluOrtho2D(-50, 50, -50, 50);
   glMatrixMode(GL_MODELVIEW);
+end;
+
+procedure TPrincipal.FormCreate(Sender: TObject);
+var
+  DC:HDC;
+  RC:HGLRC;
+  i:integer;
+begin
+  DC := GetDC(Handle);        //Actually, you can use any windowed control here
+  SetupPixelFormat(DC);
+  RC := wglCreateContext(DC); //makes OpenGL window out of DC
+  wglMakeCurrent(DC, RC);   //makes OpenGL window active
+  GLInit;                   //initialize OpenGL
+  linha := TLinha.Create(self);
+  ponto := TPonto.Create(self);
+  quadrado := TQuadrado.Create(self);
+  triangulo := TTriangulo.Create(self);
+  xViewPort := 0;
+  yViewPort := 0;
+  widthViewPort := 600;
+  heigthViewport := 600;
+end;
+
+procedure TPrincipal.Draw;
+begin
+  glClear(GL_COLOR_BUFFER_BIT);
+  glClearColor(1.0, 1.0, 1.0, 1.0);
+  glLoadIdentity();
+  glViewPort(xViewPort, yViewPort, widthViewPort, heigthViewport);
+  DesenhaLinhasDivisorias();
+  DesenhaLinha();
+  DesenhaTriangulo();
+  DesenhaQuadrado();
+  DesenhaPonto();
+  SwapBuffers(wglGetCurrentDC);
+  glFlush();
+end;
+
+procedure TPrincipal.FormPaint(Sender: TObject);
+begin
+   Draw;
 end;
 
 function TPrincipal.multiplicarVetorPorMatriz(ponto: TVetor; matriz: TMatriz): TVetor;
@@ -475,121 +517,44 @@ begin
   translacaoQuadrado();
 end;
 
-procedure TPrincipal.FormCreate(Sender: TObject);
-var
-  DC:HDC;
-  RC:HGLRC;
-  i:integer;
-begin
-  DC := GetDC(Handle);        //Actually, you can use any windowed control here
-  SetupPixelFormat(DC);
-  RC := wglCreateContext(DC); //makes OpenGL window out of DC
-  wglMakeCurrent(DC, RC);   //makes OpenGL window active
-  GLInit;                   //initialize OpenGL
-  zoom := 1;
-  linha := TLinha.Create(self);
-  ponto := TPonto.Create(self);
-  quadrado := TQuadrado.Create(self);
-  triangulo := TTriangulo.Create(self);
-end;
-
-procedure TPrincipal.Draw;
-begin
-  glClear(GL_COLOR_BUFFER_BIT);
-  glClearColor(1.0, 1.0, 1.0, 1.0);
-  glLoadIdentity();
-  DesenhaLinhasDivisorias();
-  glScaled(zoom, zoom, 0);
-  DesenhaLinha();
-  DesenhaTriangulo();
-  DesenhaQuadrado();
-  DesenhaPonto();
-  glScaled(-zoom, -zoom, 0);
-  SwapBuffers(wglGetCurrentDC);
-  glFlush();
-end;
-
-procedure TPrincipal.FormPaint(Sender: TObject);
-begin
-   Draw;
-end;
-
 procedure TPrincipal.btnBaixoClick(Sender: TObject);
 begin
-  linha.setP1Y(linha.getYP1() - 0.5);
-  linha.setP2Y(linha.getYP2() - 0.5);
-
-  triangulo.setP1Y(triangulo.getYP1 - 0.5);
-  triangulo.setP2Y(triangulo.getYP2 - 0.5);
-  triangulo.setP3Y(triangulo.getYP3 - 0.5);
-
-  quadrado.setP1Y(quadrado.getYP1 - 0.5);
-  quadrado.setP2Y(quadrado.getYP2 - 0.5);
-  quadrado.setP3Y(quadrado.getYP3 - 0.5);
-  quadrado.setP4Y(quadrado.getYP4 - 0.5);
-
-  ponto.setP1Y(ponto.getYP1 - 0.5);
+  yViewPort := yViewPort - 2;
+  heigthViewport := heigthViewport - 2;
 end;
 
 procedure TPrincipal.btnCimaClick(Sender: TObject);
 begin
-  linha.setP1Y(linha.getYP1() + 0.5);
-  linha.setP2Y(linha.getYP2() + 0.5);
-
-  triangulo.setP1Y(triangulo.getYP1 + 0.5);
-  triangulo.setP2Y(triangulo.getYP2 + 0.5);
-  triangulo.setP3Y(triangulo.getYP3 + 0.5);
-
-  quadrado.setP1Y(quadrado.getYP1 + 0.5);
-  quadrado.setP2Y(quadrado.getYP2 + 0.5);
-  quadrado.setP3Y(quadrado.getYP3 + 0.5);
-  quadrado.setP4Y(quadrado.getYP4 + 0.5);
-
-  ponto.setP1Y(ponto.getYP1 + 0.5);
+  yViewPort := yViewPort + 2;
+  heigthViewport := heigthViewport + 2;
 end;
 
 procedure TPrincipal.btnDireitaClick(Sender: TObject);
 begin
-  linha.setP1X(linha.getXP1() + 0.5);
-  linha.setP2X(linha.getXP2() + 0.5);
-
-  triangulo.setP1X(triangulo.getXP1 + 0.5);
-  triangulo.setP2X(triangulo.getXP2 + 0.5);
-  triangulo.setP3X(triangulo.getXP3 + 0.5);
-
-  quadrado.setP1X(quadrado.getXP1 + 0.5);
-  quadrado.setP2X(quadrado.getXP2 + 0.5);
-  quadrado.setP3X(quadrado.getXP3 + 0.5);
-  quadrado.setP4X(quadrado.getXP4 + 0.5);
-
-  ponto.setP1X(ponto.getXP1 + 0.5);
+  xViewPort := xViewPort + 2;
+  widthViewport := widthViewport + 2;
 end;
 
 procedure TPrincipal.btnEsquerdaClick(Sender: TObject);
 begin
-  linha.setP1X(linha.getXP1() - 0.5);
-  linha.setP2X(linha.getXP2() - 0.5);
-
-  triangulo.setP1X(triangulo.getXP1 - 0.5);
-  triangulo.setP2X(triangulo.getXP2 - 0.5);
-  triangulo.setP3X(triangulo.getXP3 - 0.5);
-
-  quadrado.setP1X(quadrado.getXP1 - 0.5);
-  quadrado.setP2X(quadrado.getXP2 - 0.5);
-  quadrado.setP3X(quadrado.getXP3 - 0.5);
-  quadrado.setP4X(quadrado.getXP4 - 0.5);
-
-  ponto.setP1X(ponto.getXP1 - 0.5);
+  xViewPort := xViewPort - 2;
+  widthViewport := widthViewport - 2;
 end;
 
 procedure TPrincipal.btnZoomInClick(Sender: TObject);
 begin
-  zoom := zoom + 0.2;
+  xViewport := xViewport - 2;
+  widthViewport := widthViewport + 4;
+  yViewport := yViewport - 2;
+  heigthViewport := heigthViewport + 4;
 end;
 
 procedure TPrincipal.btnZoomOutClick(Sender: TObject);
 begin
-  zoom := zoom - 0.2;
+  xViewport := xViewport + 2;
+  widthViewport := widthViewport - 4;
+  yViewport := yViewport + 2;
+  heigthViewport := heigthViewport - 4;
 end;
 
 function TPrincipal.calculaCentro(somaX, somaY, numPontos: double): TVetor;
@@ -663,13 +628,23 @@ procedure TPrincipal.DesenhaLinhasDivisorias();
 begin
   glColor3f(0.0, 0.0, 0.0);
   glBegin(GL_LINES);
-    glVertex2f(0, -30);
-    glVertex2f(0, 30);
-  glEnd();
+    glVertex2f(0, -40);
+    glVertex2f(0, 40);
 
-  glBegin(GL_LINES);
-    glVertex2f(-30, 0);
-    glVertex2f(30, 0);
+    glVertex2f(-40, 0);
+    glVertex2f(40, 0);
+
+    glVertex2f(-40, 40);
+    glVertex2f(40, 40);
+
+    glVertex2f(-40, -40);
+    glVertex2f(40, -40);
+
+    glVertex2f(-40, -40);
+    glVertex2f(-40, 40);
+
+    glVertex2f(40, 40);
+    glVertex2f(40, -40);
   glEnd();
 end;
 
