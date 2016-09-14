@@ -135,4 +135,12 @@ object Principal: TPrincipal
     TabOrder = 12
     OnClick = btnTranslacaoClick
   end
+  object ListBox: TListBox
+    Left = 328
+    Top = 0
+    Width = 257
+    Height = 41
+    ItemHeight = 13
+    TabOrder = 13
+  end
 end

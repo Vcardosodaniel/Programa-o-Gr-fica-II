@@ -51,10 +51,6 @@ begin
   begin
     principal.rotacionarPeloCentro(StrToFloat(edGraus.Text));
   end;
-  if(rbPonto.Checked = true) then
-  begin
-    principal.rotacionarPorPonto(StrToFloat(edGraus.Text));
-  end;
   btnCancelarClick(self);
 end;
 

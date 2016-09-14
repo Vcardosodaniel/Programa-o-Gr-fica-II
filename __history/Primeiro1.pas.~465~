@@ -4,7 +4,7 @@ interface
 
 uses
   OpenGL, Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, ComCtrls, Math, Linha, Ponto, Quadrado, Triangulo, Vetor, 
+  StdCtrls, ExtCtrls, ComCtrls, Math, Linha, Ponto, Quadrado, Triangulo, Vetor,
   Rotacionar, Escalonamento, Translacao;
 
 type
@@ -23,6 +23,7 @@ type
     btnRotacionar: TButton;
     btnEscalonamento: TButton;
     btnTranslacao: TButton;
+    ListBox: TListBox;
     procedure FormCreate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure btnTrianguloClick(Sender: TObject);
@@ -50,6 +51,8 @@ type
 
   public
     procedure rotacionar(graus: double);
+    procedure rotacionarPeloCentro(graus: double);
+    procedure rotacionarPorPonto(graus: double);
     procedure escalonar(escX, escY: double);
     procedure escalonamentoNatural(escX, escY: double);
     procedure translacao(tX, tY: double);
@@ -63,6 +66,7 @@ type
 var
   Principal: TPrincipal;
   desenharLinha, desenharQuadrado, desenharTriangulo, desenharPonto: boolean;
+  xViewPort, yViewPort, widthViewPort, heigthViewport: integer;
 
 implementation
 
@@ -119,6 +123,47 @@ begin
   glLoadIdentity();
   gluOrtho2D(-50, 50, -50, 50);
   glMatrixMode(GL_MODELVIEW);
+end;
+
+procedure TPrincipal.FormCreate(Sender: TObject);
+var
+  DC:HDC;
+  RC:HGLRC;
+  i:integer;
+begin
+  DC := GetDC(Handle);        //Actually, you can use any windowed control here
+  SetupPixelFormat(DC);
+  RC := wglCreateContext(DC); //makes OpenGL window out of DC
+  wglMakeCurrent(DC, RC);   //makes OpenGL window active
+  GLInit;                   //initialize OpenGL
+  linha := TLinha.Create(self);
+  ponto := TPonto.Create(self);
+  quadrado := TQuadrado.Create(self);
+  triangulo := TTriangulo.Create(self);
+  xViewPort := 0;
+  yViewPort := 0;
+  widthViewPort := 600;
+  heigthViewport := 600;
+end;
+
+procedure TPrincipal.Draw;
+begin
+  glClear(GL_COLOR_BUFFER_BIT);
+  glClearColor(1.0, 1.0, 1.0, 1.0);
+  glLoadIdentity();
+  glViewPort(xViewPort, yViewPort, widthViewPort, heigthViewport);
+  DesenhaLinhasDivisorias();
+  DesenhaLinha();
+  DesenhaTriangulo();
+  DesenhaQuadrado();
+  DesenhaPonto();
+  SwapBuffers(wglGetCurrentDC);
+  glFlush();
+end;
+
+procedure TPrincipal.FormPaint(Sender: TObject);
+begin
+   Draw;
 end;
 
 function TPrincipal.multiplicarVetorPorMatriz(ponto: TVetor; matriz: TMatriz): TVetor;
@@ -210,7 +255,168 @@ begin
   rotacionarQuadrado();
 end;
 
+procedure TPrincipal.rotacionarPeloCentro(graus: double);
+var
+  matrizEscalonamento: TMatriz;
+
+  procedure rotacionarPeloCentroLinha();
+  const
+    NUMERO_PONTOS_LINHA = 2;
+  var
+    pontoResultado: TVetor;
+    somaXlinha, somaYlinha: double;
+  begin
+    somaXlinha := linha.getXP1 + linha.getXP2;
+    somaYlinha := linha.getYP1 + linha.getYP2;
+    pontoResultado := calculaCentro(somaXlinha, somaYlinha, NUMERO_PONTOS_LINHA);
+    translacao(-pontoResultado[0], -pontoResultado[1]);
+    rotacionar(graus);
+    translacao(pontoResultado[0], pontoResultado[1]);
+  end;
+
+  procedure rotacionarPeloCentroPonto();
+  const
+    NUMERO_PONTOS_PONTO = 1;
+  var
+    pontoResultadoPonto: TVetor;
+    somaXPonto, somaYPonto: double;
+  begin
+    somaXPonto := ponto.getXP1;
+    somaYPonto := ponto.getYP1;
+    pontoResultadoPonto := calculaCentro(somaXPonto, somaYPonto, NUMERO_PONTOS_PONTO);
+    translacao(-(pontoResultadoPonto[0]), -(pontoResultadoPonto[1]));
+    rotacionar(graus);
+    translacao(pontoResultadoPonto[0], pontoResultadoPonto[1]);
+  end;
+
+  procedure rotacionarPeloCentroTriangulo();
+  const
+    NUMERO_PONTOS_TRIANGULO = 3;
+  var
+    pontoResultadoTriangulo: TVetor;
+    somaXTriangulo, somaYTriangulo: double;
+  begin
+    somaXTriangulo := triangulo.getXP1 + triangulo.getXP2 + triangulo.getXP3;
+    somaYTriangulo := triangulo.getYP1 + triangulo.getYP2 + triangulo.getYP3;
+    pontoResultadoTriangulo := calculaCentro(somaXTriangulo, somaYTriangulo, NUMERO_PONTOS_TRIANGULO);
+    translacao(-(pontoResultadoTriangulo[0]), -(pontoResultadoTriangulo[1]));
+    rotacionar(graus);
+    translacao(pontoResultadoTriangulo[0], pontoResultadoTriangulo[1]);
+  end;
+
+  procedure rotacionarPeloCentroQuadrado();
+  const
+    NUMERO_PONTOS_QUADRADO = 4;
+  var
+    pontoResultadoQuadrado: TVetor;
+    somaXQuadrado, somaYQuadrado: double;
+  begin
+    somaXQuadrado := quadrado.getXP1 + quadrado.getXP2 + quadrado.getXP3 + quadrado.getXP4;
+    somaYQuadrado := quadrado.getYP1 + quadrado.getYP2 + quadrado.getYP3 + quadrado.getYP4;
+    pontoResultadoQuadrado := calculaCentro(somaXQuadrado, somaYQuadrado, NUMERO_PONTOS_QUADRADO);
+    translacao(-(pontoResultadoQuadrado[0]), -(pontoResultadoQuadrado[1]));
+    rotacionar(graus);
+    translacao(pontoResultadoQuadrado[0], pontoResultadoQuadrado[1]);
+  end;
+
+begin
+  if (desenharLinha) then
+  begin
+    rotacionarPeloCentroLinha();
+  end;
+
+  if (desenharQuadrado) then
+  begin
+    rotacionarPeloCentroQuadrado();
+  end;
+
+  if (desenharPonto) then
+  begin
+    rotacionarPeloCentroPonto();
+  end;
+
+  if (desenharTriangulo) then
+  begin
+    rotacionarPeloCentroTriangulo();
+  end;
+end;
+
+
+procedure TPrincipal.rotacionarPorPonto(graus: double);
+var
+  matrizEscalonamento: TMatriz;
+
+  procedure rotacionarPorPontoLinha();
+  var
+    x, y: double;
+  begin
+    x := linha.getXP1;
+    y := linha.getYP1;
+    translacao(-x, -y);
+    rotacionar(graus);
+    translacao(x, y);
+  end;
+
+  procedure rotacionarPorPontoPonto();
+  var
+    x, y: double;
+  begin
+    x := ponto.getXP1;
+    y := ponto.getYP1;
+    translacao(-x, -y);
+    rotacionar(graus);
+    translacao(x, y);
+  end;
+
+  procedure rotacionarPorPontoTriangulo();
+  var
+    x, y: double;
+  begin
+    x := triangulo.getXP1;
+    y := triangulo.getYP1;
+    translacao(-x, -y);
+    rotacionar(graus);
+    translacao(x, y);
+  end;
+
+  procedure rotacionarPorPontoQuadrado();
+  var
+    x, y: double;
+  begin
+    x := quadrado.getXP1;
+    y := quadrado.getYP1;
+    translacao(-x, -y);
+    rotacionar(graus);
+    translacao(x, y);
+  end;
+
+begin
+  if (desenharLinha) then
+  begin
+    rotacionarPorPontoLinha();
+  end;
+
+  if (desenharQuadrado) then
+  begin
+    rotacionarPorPontoQuadrado();
+  end;
+
+  if (desenharPonto) then
+  begin
+    rotacionarPorPontoPonto();
+  end;
+
+  if (desenharTriangulo) then
+  begin
+    rotacionarPorPontoTriangulo();
+  end;
+end;
+
 procedure TPrincipal.setDesenharLinha(desenhar: boolean);
+  procedure adicionarLinha();
+  begin
+    ListBox.Items.Add('Linha');
+  end;
 begin
   desenharLinha := desenhar;
 end;
@@ -261,7 +467,7 @@ var
     pontoResultadoPonto := calculaCentro(somaXPonto, somaYPonto, NUMERO_PONTOS_PONTO);
     translacao(-(pontoResultadoPonto[0]), -(pontoResultadoPonto[1]));
     escalonar(escX, escY);
-    translacao(pontoResultadoPonto[0], pontoResultadoPonto[1]);    
+    translacao(pontoResultadoPonto[0], pontoResultadoPonto[1]);
   end;
 
   procedure escalonarTriangulo();
@@ -273,10 +479,10 @@ var
   begin
     somaXTriangulo := triangulo.getXP1 + triangulo.getXP2 + triangulo.getXP3;
     somaYTriangulo := triangulo.getYP1 + triangulo.getYP2 + triangulo.getYP3;
-    pontoResultadoTriangulo := calculaCentro(somaXTriangulo, somaYTriangulo, NUMERO_PONTOS_TRIANGULO);    
+    pontoResultadoTriangulo := calculaCentro(somaXTriangulo, somaYTriangulo, NUMERO_PONTOS_TRIANGULO);
     translacao(-(pontoResultadoTriangulo[0]), -(pontoResultadoTriangulo[1]));
     escalonar(escX, escY);
-    translacao(pontoResultadoTriangulo[0], pontoResultadoTriangulo[1]);    
+    translacao(pontoResultadoTriangulo[0], pontoResultadoTriangulo[1]);
   end;
 
   procedure escalonarQuadrado();
@@ -288,16 +494,16 @@ var
   begin
     somaXQuadrado := quadrado.getXP1 + quadrado.getXP2 + quadrado.getXP3 + quadrado.getXP4;
     somaYQuadrado := quadrado.getYP1 + quadrado.getYP2 + quadrado.getYP3 + quadrado.getYP4;
-    pontoResultadoQuadrado := calculaCentro(somaXQuadrado, somaYQuadrado, NUMERO_PONTOS_QUADRADO);    
+    pontoResultadoQuadrado := calculaCentro(somaXQuadrado, somaYQuadrado, NUMERO_PONTOS_QUADRADO);
     translacao(-(pontoResultadoQuadrado[0]), -(pontoResultadoQuadrado[1]));
     escalonar(escX, escY);
-    translacao(pontoResultadoQuadrado[0], pontoResultadoQuadrado[1]);    
+    translacao(pontoResultadoQuadrado[0], pontoResultadoQuadrado[1]);
   end;
 
 begin
   if (desenharLinha) then
   begin
-    escalonarLinha();  
+    escalonarLinha();
   end;
 
   if (desenharQuadrado) then
@@ -313,7 +519,7 @@ begin
   if (desenharTriangulo) then
   begin
     escalonarTriangulo();
-  end;  
+  end;
 end;
 
 
@@ -475,122 +681,44 @@ begin
   translacaoQuadrado();
 end;
 
-procedure TPrincipal.FormCreate(Sender: TObject);
-var
-  DC:HDC;
-  RC:HGLRC;
-  i:integer;
-begin
-  DC := GetDC(Handle);        //Actually, you can use any windowed control here
-  SetupPixelFormat(DC);
-  RC := wglCreateContext(DC); //makes OpenGL window out of DC
-  wglMakeCurrent(DC, RC);   //makes OpenGL window active
-  GLInit;                   //initialize OpenGL
-  zoom := 1;
-  linha := TLinha.Create(self);
-  ponto := TPonto.Create(self);
-  quadrado := TQuadrado.Create(self);
-  triangulo := TTriangulo.Create(self);
-end;
-
-procedure TPrincipal.Draw;
-begin
-  glClear(GL_COLOR_BUFFER_BIT);
-  glClearColor(1.0, 1.0, 1.0, 1.0);
-  glLoadIdentity();
-  glViewPort(-40, -40, 80, 80);
-  DesenhaLinhasDivisorias();
-  glScaled(zoom, zoom, 0);
-  DesenhaLinha();
-  DesenhaTriangulo();
-  DesenhaQuadrado();
-  DesenhaPonto();
-  glScaled(-zoom, -zoom, 0);
-  SwapBuffers(wglGetCurrentDC);
-  glFlush();
-end;
-
-procedure TPrincipal.FormPaint(Sender: TObject);
-begin
-   Draw;
-end;
-
 procedure TPrincipal.btnBaixoClick(Sender: TObject);
 begin
-  linha.setP1Y(linha.getYP1() - 0.5);
-  linha.setP2Y(linha.getYP2() - 0.5);
-
-  triangulo.setP1Y(triangulo.getYP1 - 0.5);
-  triangulo.setP2Y(triangulo.getYP2 - 0.5);
-  triangulo.setP3Y(triangulo.getYP3 - 0.5);
-
-  quadrado.setP1Y(quadrado.getYP1 - 0.5);
-  quadrado.setP2Y(quadrado.getYP2 - 0.5);
-  quadrado.setP3Y(quadrado.getYP3 - 0.5);
-  quadrado.setP4Y(quadrado.getYP4 - 0.5);
-
-  ponto.setP1Y(ponto.getYP1 - 0.5);
+  yViewPort := yViewPort - 2;
+  heigthViewport := heigthViewport - 2;
 end;
 
 procedure TPrincipal.btnCimaClick(Sender: TObject);
 begin
-  linha.setP1Y(linha.getYP1() + 0.5);
-  linha.setP2Y(linha.getYP2() + 0.5);
-
-  triangulo.setP1Y(triangulo.getYP1 + 0.5);
-  triangulo.setP2Y(triangulo.getYP2 + 0.5);
-  triangulo.setP3Y(triangulo.getYP3 + 0.5);
-
-  quadrado.setP1Y(quadrado.getYP1 + 0.5);
-  quadrado.setP2Y(quadrado.getYP2 + 0.5);
-  quadrado.setP3Y(quadrado.getYP3 + 0.5);
-  quadrado.setP4Y(quadrado.getYP4 + 0.5);
-
-  ponto.setP1Y(ponto.getYP1 + 0.5);
+  yViewPort := yViewPort + 2;
+  heigthViewport := heigthViewport + 2;
 end;
 
 procedure TPrincipal.btnDireitaClick(Sender: TObject);
 begin
-  linha.setP1X(linha.getXP1() + 0.5);
-  linha.setP2X(linha.getXP2() + 0.5);
-
-  triangulo.setP1X(triangulo.getXP1 + 0.5);
-  triangulo.setP2X(triangulo.getXP2 + 0.5);
-  triangulo.setP3X(triangulo.getXP3 + 0.5);
-
-  quadrado.setP1X(quadrado.getXP1 + 0.5);
-  quadrado.setP2X(quadrado.getXP2 + 0.5);
-  quadrado.setP3X(quadrado.getXP3 + 0.5);
-  quadrado.setP4X(quadrado.getXP4 + 0.5);
-
-  ponto.setP1X(ponto.getXP1 + 0.5);
+  xViewPort := xViewPort + 2;
+  widthViewport := widthViewport + 2;
 end;
 
 procedure TPrincipal.btnEsquerdaClick(Sender: TObject);
 begin
-  linha.setP1X(linha.getXP1() - 0.5);
-  linha.setP2X(linha.getXP2() - 0.5);
-
-  triangulo.setP1X(triangulo.getXP1 - 0.5);
-  triangulo.setP2X(triangulo.getXP2 - 0.5);
-  triangulo.setP3X(triangulo.getXP3 - 0.5);
-
-  quadrado.setP1X(quadrado.getXP1 - 0.5);
-  quadrado.setP2X(quadrado.getXP2 - 0.5);
-  quadrado.setP3X(quadrado.getXP3 - 0.5);
-  quadrado.setP4X(quadrado.getXP4 - 0.5);
-
-  ponto.setP1X(ponto.getXP1 - 0.5);
+  xViewPort := xViewPort - 2;
+  widthViewport := widthViewport - 2;
 end;
 
 procedure TPrincipal.btnZoomInClick(Sender: TObject);
 begin
-  zoom := zoom + 0.2;
+  xViewport := xViewport - 2;
+  widthViewport := widthViewport + 4;
+  yViewport := yViewport - 2;
+  heigthViewport := heigthViewport + 4;
 end;
 
 procedure TPrincipal.btnZoomOutClick(Sender: TObject);
 begin
-  zoom := zoom - 0.2;
+  xViewport := xViewport + 2;
+  widthViewport := widthViewport - 4;
+  yViewport := yViewport + 2;
+  heigthViewport := heigthViewport - 4;
 end;
 
 function TPrincipal.calculaCentro(somaX, somaY, numPontos: double): TVetor;
