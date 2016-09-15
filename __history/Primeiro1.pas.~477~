@@ -23,6 +23,7 @@ type
     btnRotacionar: TButton;
     btnEscalonamento: TButton;
     btnTranslacao: TButton;
+    ListBox: TListBox;
     procedure FormCreate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure btnTrianguloClick(Sender: TObject);
@@ -390,7 +391,8 @@ var
   end;
 
 begin
-  if (desenharLinha) then
+
+  if (Principal.ListBox.Items.Values['Linha'] = true) then
   begin
     rotacionarPorPontoLinha();
   end;
@@ -414,21 +416,25 @@ end;
 procedure TPrincipal.setDesenharLinha(desenhar: boolean);
 begin
   desenharLinha := desenhar;
+  Principal.ListBox.Items.Add('Linha');
 end;
 
 procedure TPrincipal.setDesenharPonto(desenhar: boolean);
 begin
   desenharPonto := desenhar;
+  Principal.ListBox.Items.Add('Ponto');
 end;
 
 procedure TPrincipal.setDesenharQuadrado(desenhar: boolean);
 begin
   desenharQuadrado := desenhar;
+  Principal.ListBox.Items.Add('Quadrado');
 end;
 
 procedure TPrincipal.setDesenharTriangulo(desenhar: boolean);
 begin
   desenharTriangulo := desenhar;
+  Principal.ListBox.Items.Add('Triangulo');
 end;
 
 procedure TPrincipal.escalonamentoNatural(escX, escY: double);

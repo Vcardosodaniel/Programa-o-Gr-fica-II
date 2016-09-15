@@ -23,7 +23,7 @@ type
     btnRotacionar: TButton;
     btnEscalonamento: TButton;
     btnTranslacao: TButton;
-    ListBox1: TListBox;
+    ListBox: TListBox;
     procedure FormCreate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure btnTrianguloClick(Sender: TObject);
@@ -129,7 +129,6 @@ procedure TPrincipal.FormCreate(Sender: TObject);
 var
   DC:HDC;
   RC:HGLRC;
-  i:integer;
 begin
   DC := GetDC(Handle);        //Actually, you can use any windowed control here
   SetupPixelFormat(DC);
@@ -256,8 +255,6 @@ begin
 end;
 
 procedure TPrincipal.rotacionarPeloCentro(graus: double);
-var
-  matrizEscalonamento: TMatriz;
 
   procedure rotacionarPeloCentroLinha();
   const
@@ -345,7 +342,7 @@ end;
 procedure TPrincipal.rotacionarPorPonto(graus: double);
 var
   matrizEscalonamento: TMatriz;
-
+  desenho: string;
   procedure rotacionarPorPontoLinha();
   var
     x, y: double;
@@ -391,7 +388,8 @@ var
   end;
 
 begin
-  if (desenharLinha) then
+  desenho := Principal.ListBox.ItemIndex.ToString;
+  if ( desenho = 'Linha') then
   begin
     rotacionarPorPontoLinha();
   end;
@@ -415,21 +413,25 @@ end;
 procedure TPrincipal.setDesenharLinha(desenhar: boolean);
 begin
   desenharLinha := desenhar;
+  Principal.ListBox.Items.Add('Linha');
 end;
 
 procedure TPrincipal.setDesenharPonto(desenhar: boolean);
 begin
   desenharPonto := desenhar;
+  Principal.ListBox.Items.Add('Ponto');
 end;
 
 procedure TPrincipal.setDesenharQuadrado(desenhar: boolean);
 begin
   desenharQuadrado := desenhar;
+  Principal.ListBox.Items.Add('Quadrado');
 end;
 
 procedure TPrincipal.setDesenharTriangulo(desenhar: boolean);
 begin
   desenharTriangulo := desenhar;
+  Principal.ListBox.Items.Add('Triangulo');
 end;
 
 procedure TPrincipal.escalonamentoNatural(escX, escY: double);

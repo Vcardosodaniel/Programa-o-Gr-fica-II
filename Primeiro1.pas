@@ -129,7 +129,6 @@ procedure TPrincipal.FormCreate(Sender: TObject);
 var
   DC:HDC;
   RC:HGLRC;
-  i:integer;
 begin
   DC := GetDC(Handle);        //Actually, you can use any windowed control here
   SetupPixelFormat(DC);
@@ -179,6 +178,7 @@ end;
 procedure TPrincipal.rotacionar(graus: double);
 var
   matrizRotacao: TMatriz;
+  desenho: string;
 
   procedure rotacionarLinha();
   var
@@ -249,16 +249,28 @@ var
 
 begin
   zeraMatriz();
-  rotacionarLinha();
-  rotacionarPonto();
-  rotacionarTriangulo();
-  rotacionarQuadrado();
+  desenho := Principal.ListBox.Items.Strings[Principal.ListBox.ItemIndex];
+  if (desenho = 'Linha') then
+  begin
+    rotacionarLinha();
+  end;
+  if (desenho = 'Ponto') then
+  begin
+    rotacionarPonto();
+  end;
+  if (desenho = 'Triangulo') then
+  begin
+    rotacionarTriangulo();
+  end;
+  if (desenho = 'Quadrado') then
+  begin
+    rotacionarQuadrado();
+  end;
 end;
 
 procedure TPrincipal.rotacionarPeloCentro(graus: double);
 var
-  matrizEscalonamento: TMatriz;
-
+  desenho: string;
   procedure rotacionarPeloCentroLinha();
   const
     NUMERO_PONTOS_LINHA = 2;
@@ -320,22 +332,23 @@ var
   end;
 
 begin
-  if (desenharLinha) then
+  desenho := Principal.ListBox.Items.Strings[Principal.ListBox.ItemIndex];
+  if (desenho = 'Linha') then
   begin
     rotacionarPeloCentroLinha();
   end;
 
-  if (desenharQuadrado) then
+  if (desenho = 'Quadrado') then
   begin
     rotacionarPeloCentroQuadrado();
   end;
 
-  if (desenharPonto) then
+  if (desenho = 'Ponto') then
   begin
     rotacionarPeloCentroPonto();
   end;
 
-  if (desenharTriangulo) then
+  if (desenho = 'Triangulo') then
   begin
     rotacionarPeloCentroTriangulo();
   end;
@@ -345,7 +358,7 @@ end;
 procedure TPrincipal.rotacionarPorPonto(graus: double);
 var
   matrizEscalonamento: TMatriz;
-
+  desenho: string;
   procedure rotacionarPorPontoLinha();
   var
     x, y: double;
@@ -391,22 +404,23 @@ var
   end;
 
 begin
-  if (desenharLinha) then
+  desenho := Principal.ListBox.Items.Strings[Principal.ListBox.ItemIndex];
+  if ( desenho = 'Linha') then
   begin
     rotacionarPorPontoLinha();
   end;
 
-  if (desenharQuadrado) then
+  if (desenho = 'Quadrado') then
   begin
     rotacionarPorPontoQuadrado();
   end;
 
-  if (desenharPonto) then
+  if (desenho = 'Ponto') then
   begin
     rotacionarPorPontoPonto();
   end;
 
-  if (desenharTriangulo) then
+  if (desenho = 'Triangulo') then
   begin
     rotacionarPorPontoTriangulo();
   end;
@@ -439,6 +453,7 @@ end;
 procedure TPrincipal.escalonamentoNatural(escX, escY: double);
 var
   matrizEscalonamento: TMatriz;
+  desenho: string;
 
   procedure escalonarLinha();
   const
@@ -501,22 +516,23 @@ var
   end;
 
 begin
-  if (desenharLinha) then
+  desenho := Principal.ListBox.Items.Strings[Principal.ListBox.ItemIndex];
+  if (desenho = 'Linha') then
   begin
     escalonarLinha();
   end;
 
-  if (desenharQuadrado) then
+  if (desenho = 'Quadrado') then
   begin
     escalonarQuadrado();
   end;
 
-  if (desenharPonto) then
+  if (desenho = 'Ponto') then
   begin
     escalonarPonto();
   end;
 
-  if (desenharTriangulo) then
+  if (desenho = 'Triangulo') then
   begin
     escalonarTriangulo();
   end;
@@ -526,6 +542,7 @@ end;
 procedure TPrincipal.escalonar(escX, escY: double);
 var
   matrizEscalonamento: TMatriz;
+  desenho: string;
 
   procedure escalonarLinha();
   var
@@ -596,15 +613,29 @@ var
 
 begin
   zeraMatriz();
-  escalonarLinha();
-  escalonarPonto();
-  escalonarTriangulo();
-  escalonarQuadrado();
+  desenho := Principal.ListBox.Items.Strings[Principal.ListBox.ItemIndex];
+  if (desenho = 'Linha') then
+  begin
+    escalonarLinha();
+  end;
+  if (desenho = 'Ponto') then
+  begin
+    escalonarPonto();
+  end;
+  if (desenho = 'Triangulo') then
+  begin
+    escalonarTriangulo();
+  end;
+   if (desenho = 'Quadrado') then
+  begin
+    escalonarQuadrado();
+  end;
 end;
 
 procedure TPrincipal.translacao(tX: Double; tY: Double);
 var
   matrizTranslacao: TMatriz;
+  desenho: string;
 
   procedure translacaoLinha();
   var
@@ -675,10 +706,23 @@ var
 
 begin
   zeraMatriz();
-  translacaoLinha();
-  translacaoPonto();
-  translacaoTriangulo();
-  translacaoQuadrado();
+  desenho := Principal.ListBox.Items.Strings[Principal.ListBox.ItemIndex];
+  if (desenho = 'Linha') then
+  begin
+    translacaoLinha();
+  end;
+  if (desenho = 'Ponto') then
+  begin
+    translacaoPonto();
+  end;
+  if (desenho = 'Quadrado') then
+  begin
+    translacaoQuadrado();
+  end;
+  if (desenho = 'Triangulo') then
+  begin
+    translacaoTriangulo();
+  end;
 end;
 
 procedure TPrincipal.btnBaixoClick(Sender: TObject);
