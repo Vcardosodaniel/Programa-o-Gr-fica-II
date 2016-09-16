@@ -5,7 +5,7 @@ interface
 uses
   OpenGL, Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ExtCtrls, ComCtrls, Math, Linha, Ponto, Quadrado, Triangulo, Vetor,
-  Rotacionar, Escalonamento, Translacao;
+  Rotacionar, Escalonamento, Translacao, Poligono;
 
 type
   TMatriz = array[0..2,0..2] of double;
@@ -24,6 +24,7 @@ type
     btnEscalonamento: TButton;
     btnTranslacao: TButton;
     ListBox: TListBox;
+    btnPoligono: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure btnTrianguloClick(Sender: TObject);
@@ -39,11 +40,13 @@ type
     procedure btnRotacionarClick(Sender: TObject);
     procedure btnEscalonamentoClick(Sender: TObject);
     procedure btnTranslacaoClick(Sender: TObject);
+    procedure btnPoligonoClick(Sender: TObject);
   private
     procedure Draw; //Draws an OpenGL scene on request
     procedure DesenhaLinha();
     procedure DesenhaTriangulo();
     procedure DesenhaQuadrado();
+    procedure DesenhaPoligono();
     procedure DesenhaPonto();
     procedure DesenhaLinhasDivisorias();
     function multiplicarVetorPorMatriz(ponto: TVetor; matriz: TMatriz):TVetor;
@@ -59,26 +62,27 @@ type
     procedure setDesenharLinha(desenhar: boolean);
     procedure setDesenharPonto(desenhar: boolean);
     procedure setDesenharQuadrado(desenhar: boolean);
+    procedure setDesenharPoligono(desenhar: boolean);
     procedure setDesenharTriangulo(desenhar: boolean);
 
   end;
 
 var
   Principal: TPrincipal;
-  desenharLinha, desenharQuadrado, desenharTriangulo, desenharPonto: boolean;
   xViewPort, yViewPort, widthViewPort, heigthViewport: integer;
 
 implementation
 
 uses
-  CoordenadasQuadrado, CoordenadasTriangulo, CoordenadasLinhas, CoordenadasPonto;
+  CoordenadasQuadrado, CoordenadasTriangulo, CoordenadasLinhas, CoordenadasPonto,
+  CoordenadasPoligono;
 
 var
   linha: TLinha;
   ponto: TPonto;
   quadrado: TQuadrado;
   triangulo: TTriangulo;
-  zoom: double;
+  poligono: TPoligono;
 
 {$R *.DFM}
 
@@ -156,6 +160,7 @@ begin
   DesenhaTriangulo();
   DesenhaQuadrado();
   DesenhaPonto();
+  DesenhaPoligono();
   SwapBuffers(wglGetCurrentDC);
   glFlush();
 end;
@@ -234,6 +239,42 @@ var
     quadrado.setP4Y(pontoRotacionado[1]);
   end;
 
+  procedure rotacionarPoligono();
+  var
+    pontoRotacionado: TVetor;
+  begin
+    pontoRotacionado := multiplicarVetorPorMatriz(poligono.getP1, matrizRotacao);
+    poligono.setP1X(pontoRotacionado[0]);
+    poligono.setP1Y(pontoRotacionado[1]);
+    pontoRotacionado := multiplicarVetorPorMatriz(poligono.getP2, matrizRotacao);
+    poligono.setP2X(pontoRotacionado[0]);
+    poligono.setP2Y(pontoRotacionado[1]);
+    pontoRotacionado := multiplicarVetorPorMatriz(poligono.getP3, matrizRotacao);
+    poligono.setP3X(pontoRotacionado[0]);
+    poligono.setP3Y(pontoRotacionado[1]);
+    pontoRotacionado := multiplicarVetorPorMatriz(poligono.getP4, matrizRotacao);
+    poligono.setP4X(pontoRotacionado[0]);
+    poligono.setP4Y(pontoRotacionado[1]);
+    pontoRotacionado := multiplicarVetorPorMatriz(poligono.getP5, matrizRotacao);
+    poligono.setP5X(pontoRotacionado[0]);
+    poligono.setP5Y(pontoRotacionado[1]);
+    pontoRotacionado := multiplicarVetorPorMatriz(poligono.getP6, matrizRotacao);
+    poligono.setP6X(pontoRotacionado[0]);
+    poligono.setP6Y(pontoRotacionado[1]);
+    pontoRotacionado := multiplicarVetorPorMatriz(poligono.getP7, matrizRotacao);
+    poligono.setP7X(pontoRotacionado[0]);
+    poligono.setP7Y(pontoRotacionado[1]);
+    pontoRotacionado := multiplicarVetorPorMatriz(poligono.getP8, matrizRotacao);
+    poligono.setP8X(pontoRotacionado[0]);
+    poligono.setP8Y(pontoRotacionado[1]);
+    pontoRotacionado := multiplicarVetorPorMatriz(poligono.getP9, matrizRotacao);
+    poligono.setP9X(pontoRotacionado[0]);
+    poligono.setP9Y(pontoRotacionado[1]);
+    pontoRotacionado := multiplicarVetorPorMatriz(poligono.getP10, matrizRotacao);
+    poligono.setP10X(pontoRotacionado[0]);
+    poligono.setP10Y(pontoRotacionado[1]);
+  end;
+
   procedure zeraMatriz();
   begin
     matrizRotacao[0][0] := cos(DegToRad(graus));
@@ -265,6 +306,10 @@ begin
   if (desenho = 'Quadrado') then
   begin
     rotacionarQuadrado();
+  end;
+  if (desenho = 'Poligono') then
+  begin
+    rotacionarPoligono();
   end;
 end;
 
@@ -331,6 +376,23 @@ var
     translacao(pontoResultadoQuadrado[0], pontoResultadoQuadrado[1]);
   end;
 
+  procedure rotacionarPeloCentroPoligono();
+  const
+    NUMERO_PONTOS_POLIGONO = 4;
+  var
+    pontoResultadoPoligono: TVetor;
+    somaXPoligono, somaYPoligono: double;
+  begin
+    somaXPoligono := poligono.getXP1 + poligono.getXP2 + poligono.getXP3 + poligono.getXP4 + poligono.getXP5
+                   + poligono.getXP6 + poligono.getXP7 + poligono.getXP8 + poligono.getXP9 + poligono.getXP10;
+    somaYPoligono := poligono.getYP1 + poligono.getYP2 + poligono.getYP3 + poligono.getYP4 + poligono.getYP5
+                   + poligono.getYP6 + poligono.getYP7 + poligono.getYP8 + poligono.getYP10 + poligono.getYP10;
+    pontoResultadoPoligono := calculaCentro(somaXPoligono, somaYPoligono, NUMERO_PONTOS_POLIGONO);
+    translacao(-(pontoResultadoPoligono[0]), -(pontoResultadoPoligono[1]));
+    rotacionar(graus);
+    translacao(pontoResultadoPoligono[0], pontoResultadoPoligono[1]);
+  end;
+
 begin
   desenho := Principal.ListBox.Items.Strings[Principal.ListBox.ItemIndex];
   if (desenho = 'Linha') then
@@ -351,6 +413,11 @@ begin
   if (desenho = 'Triangulo') then
   begin
     rotacionarPeloCentroTriangulo();
+  end;
+
+  if (desenho = 'Poligono') then
+  begin
+    rotacionarPeloCentroPoligono();
   end;
 end;
 
@@ -403,6 +470,17 @@ var
     translacao(x, y);
   end;
 
+  procedure rotacionarPorPontoPoligono();
+  var
+    x, y: double;
+  begin
+    x := poligono.getXP1;
+    y := poligono.getYP1;
+    translacao(-x, -y);
+    rotacionar(graus);
+    translacao(x, y);
+  end;
+
 begin
   desenho := Principal.ListBox.Items.Strings[Principal.ListBox.ItemIndex];
   if ( desenho = 'Linha') then
@@ -424,29 +502,35 @@ begin
   begin
     rotacionarPorPontoTriangulo();
   end;
+
+  if (desenho = 'Poligono') then
+  begin
+    rotacionarPorPontoPoligono();
+  end;
 end;
 
 procedure TPrincipal.setDesenharLinha(desenhar: boolean);
 begin
-  desenharLinha := desenhar;
   Principal.ListBox.Items.Add('Linha');
+end;
+
+procedure TPrincipal.setDesenharPoligono(desenhar: boolean);
+begin
+  Principal.ListBox.Items.Add('Poligono');
 end;
 
 procedure TPrincipal.setDesenharPonto(desenhar: boolean);
 begin
-  desenharPonto := desenhar;
   Principal.ListBox.Items.Add('Ponto');
 end;
 
 procedure TPrincipal.setDesenharQuadrado(desenhar: boolean);
 begin
-  desenharQuadrado := desenhar;
   Principal.ListBox.Items.Add('Quadrado');
 end;
 
 procedure TPrincipal.setDesenharTriangulo(desenhar: boolean);
 begin
-  desenharTriangulo := desenhar;
   Principal.ListBox.Items.Add('Triangulo');
 end;
 
@@ -515,6 +599,21 @@ var
     translacao(pontoResultadoQuadrado[0], pontoResultadoQuadrado[1]);
   end;
 
+  procedure escalonarPoligono();
+  const
+    NUMERO_PONTOS_POLIGONO = 10;
+  var
+    pontoResultadoPoligono: TVetor;
+    somaXPoligono, somaYPoligono: double;
+  begin
+    somaXPoligono := quadrado.getXP1 + quadrado.getXP2 + quadrado.getXP3 + quadrado.getXP4;
+    somaYPoligono := quadrado.getYP1 + quadrado.getYP2 + quadrado.getYP3 + quadrado.getYP4;
+    pontoResultadoPoligono := calculaCentro(somaXPoligono, somaYPoligono, NUMERO_PONTOS_POLIGONO);
+    translacao(-(pontoResultadoPoligono[0]), -(pontoResultadoPoligono[1]));
+    escalonar(escX, escY);
+    translacao(pontoResultadoPoligono[0], pontoResultadoPoligono[1]);
+  end;
+
 begin
   desenho := Principal.ListBox.Items.Strings[Principal.ListBox.ItemIndex];
   if (desenho = 'Linha') then
@@ -535,6 +634,11 @@ begin
   if (desenho = 'Triangulo') then
   begin
     escalonarTriangulo();
+  end;
+
+  if (desenho = 'Poligono') then
+  begin
+    escalonarPoligono();
   end;
 end;
 
@@ -598,6 +702,42 @@ var
     quadrado.setP4Y(pontoEscalonado[1]);
   end;
 
+  procedure escalonarPoligono();
+  var
+    pontoEscalonado: TVetor;
+  begin
+    pontoEscalonado := multiplicarVetorPorMatriz(poligono.getP1, matrizEscalonamento);
+    poligono.setP1X(pontoEscalonado[0]);
+    poligono.setP1Y(pontoEscalonado[1]);
+    pontoEscalonado := multiplicarVetorPorMatriz(poligono.getP2, matrizEscalonamento);
+    poligono.setP2X(pontoEscalonado[0]);
+    poligono.setP2Y(pontoEscalonado[1]);
+    pontoEscalonado := multiplicarVetorPorMatriz(poligono.getP3, matrizEscalonamento);
+    poligono.setP3X(pontoEscalonado[0]);
+    poligono.setP3Y(pontoEscalonado[1]);
+    pontoEscalonado := multiplicarVetorPorMatriz(poligono.getP4, matrizEscalonamento);
+    poligono.setP4X(pontoEscalonado[0]);
+    poligono.setP4Y(pontoEscalonado[1]);
+    pontoEscalonado := multiplicarVetorPorMatriz(poligono.getP5, matrizEscalonamento);
+    poligono.setP5X(pontoEscalonado[0]);
+    poligono.setP5Y(pontoEscalonado[1]);
+    pontoEscalonado := multiplicarVetorPorMatriz(poligono.getP6, matrizEscalonamento);
+    poligono.setP6X(pontoEscalonado[0]);
+    poligono.setP6Y(pontoEscalonado[1]);
+    pontoEscalonado := multiplicarVetorPorMatriz(poligono.getP7, matrizEscalonamento);
+    poligono.setP7X(pontoEscalonado[0]);
+    poligono.setP7Y(pontoEscalonado[1]);
+    pontoEscalonado := multiplicarVetorPorMatriz(poligono.getP8, matrizEscalonamento);
+    poligono.setP8X(pontoEscalonado[0]);
+    poligono.setP8Y(pontoEscalonado[1]);
+    pontoEscalonado := multiplicarVetorPorMatriz(poligono.getP9, matrizEscalonamento);
+    poligono.setP9X(pontoEscalonado[0]);
+    poligono.setP9Y(pontoEscalonado[1]);
+    pontoEscalonado := multiplicarVetorPorMatriz(poligono.getP10, matrizEscalonamento);
+    poligono.setP10X(pontoEscalonado[0]);
+    poligono.setP10Y(pontoEscalonado[1]);
+  end;
+
   procedure zeraMatriz();
   begin
     matrizEscalonamento[0][0] := escX;
@@ -626,9 +766,13 @@ begin
   begin
     escalonarTriangulo();
   end;
-   if (desenho = 'Quadrado') then
+  if (desenho = 'Quadrado') then
   begin
     escalonarQuadrado();
+  end;
+  if (desenho = 'Poligono') then
+  begin
+    escalonarPoligono();
   end;
 end;
 
@@ -691,6 +835,42 @@ var
     quadrado.setP4Y(pontoResultado[1]);
   end;
 
+  procedure translacaoPoligono();
+  var
+    pontoResultado: TVetor;
+  begin
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP1, matrizTranslacao);
+    poligono.setP1X(pontoResultado[0]);
+    poligono.setP1Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP2, matrizTranslacao);
+    poligono.setP2X(pontoResultado[0]);
+    poligono.setP2Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP3, matrizTranslacao);
+    poligono.setP3X(pontoResultado[0]);
+    poligono.setP3Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP4, matrizTranslacao);
+    poligono.setP4X(pontoResultado[0]);
+    poligono.setP4Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP5, matrizTranslacao);
+    poligono.setP5X(pontoResultado[0]);
+    poligono.setP5Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP6, matrizTranslacao);
+    poligono.setP6X(pontoResultado[0]);
+    poligono.setP6Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP7, matrizTranslacao);
+    poligono.setP7X(pontoResultado[0]);
+    poligono.setP7Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP8, matrizTranslacao);
+    poligono.setP8X(pontoResultado[0]);
+    poligono.setP8Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP9, matrizTranslacao);
+    poligono.setP9X(pontoResultado[0]);
+    poligono.setP9Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP10, matrizTranslacao);
+    poligono.setP10X(pontoResultado[0]);
+    poligono.setP10Y(pontoResultado[1]);
+  end;
+
   procedure zeraMatriz();
   begin
     matrizTranslacao[0][0] := 1;
@@ -722,6 +902,10 @@ begin
   if (desenho = 'Triangulo') then
   begin
     translacaoTriangulo();
+  end;
+  if (desenho = 'Poligono') then
+  begin
+    translacaoPoligono();
   end;
 end;
 
@@ -807,6 +991,14 @@ begin
   coordenadasLinha.showModal();
 end;
 
+procedure TPrincipal.btnPoligonoClick(Sender: TObject);
+var
+  coordenadasPoligono: TfrmPoligono;
+begin
+  coordenadasPoligono := TfrmPoligono.Create(self);
+  coordenadasPoligono.showModal();
+end;
+
 procedure TPrincipal.btnPontoClick(Sender: TObject);
 var
   coordenadasPonto: TfrmPonto;
@@ -858,13 +1050,30 @@ end;
 
 procedure TPrincipal.DesenhaLinha();
 begin
-    glColor3f(1.0, 1.0, 0.0);
-    glLineWidth(10);
-    glBegin(GL_LINES);
-      glVertex2f(Linha.getXP1, Linha.getYP1);
-      glVertex2f(Linha.getXP2, Linha.getYP2);
-    glEnd();
-    glLineWidth(1);
+  glColor3f(1.0, 1.0, 0.0);
+  glLineWidth(10);
+  glBegin(GL_LINES);
+    glVertex2f(Linha.getXP1, Linha.getYP1);
+    glVertex2f(Linha.getXP2, Linha.getYP2);
+  glEnd();
+  glLineWidth(1);
+end;
+
+procedure TPrincipal.DesenhaPoligono();
+begin
+  glColor3f(1.0, 0.0, 0.5);
+  glBegin(GL_LINE_LOOP);
+    glVertex2f(Poligono.getXP1, Poligono.getYP1);
+    glVertex2f(Poligono.getXP2, Poligono.getYP2);
+    glVertex2f(Poligono.getXP3, Poligono.getYP3);
+    glVertex2f(Poligono.getXP4, Poligono.getYP4);
+    glVertex2f(Poligono.getXP5, Poligono.getYP5);
+    glVertex2f(Poligono.getXP6, Poligono.getYP6);
+    glVertex2f(Poligono.getXP7, Poligono.getYP7);
+    glVertex2f(Poligono.getXP8, Poligono.getYP8);
+    glVertex2f(Poligono.getXP9, Poligono.getYP9);
+    glVertex2f(Poligono.getXP10, Poligono.getYP10);
+  glEnd();
 end;
 
 procedure TPrincipal.DesenhaPonto;

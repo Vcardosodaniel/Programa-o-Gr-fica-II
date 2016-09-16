@@ -143,4 +143,13 @@ object Principal: TPrincipal
     ItemHeight = 13
     TabOrder = 13
   end
+  object btnPoligono: TButton
+    Left = 0
+    Top = 26
+    Width = 75
+    Height = 25
+    Caption = 'Poligono'
+    TabOrder = 14
+    OnClick = btnPoligonoClick
+  end
 end

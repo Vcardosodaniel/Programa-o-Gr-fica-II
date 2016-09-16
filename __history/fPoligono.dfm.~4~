@@ -1,0 +1,102 @@
+object frmPoligono: TfrmPoligono
+  Left = 0
+  Top = 0
+  Caption = 'Poligono'
+  ClientHeight = 405
+  ClientWidth = 630
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Principal: TPanel
+    Left = 8
+    Top = 8
+    Width = 609
+    Height = 385
+    TabOrder = 0
+    object gpPoligono: TGroupBox
+      Left = 24
+      Top = 16
+      Width = 561
+      Height = 345
+      Caption = 'Coordenadas'
+      TabOrder = 0
+      object lblPonto1: TLabel
+        Left = 26
+        Top = 32
+        Width = 48
+        Height = 13
+        Caption = 'Ponto 1 ='
+      end
+      object lblPonto2: TLabel
+        Left = 26
+        Top = 59
+        Width = 48
+        Height = 13
+        Caption = 'Ponto 2 ='
+      end
+      object lblPonto3: TLabel
+        Left = 26
+        Top = 86
+        Width = 48
+        Height = 13
+        Cursor = 3
+        Caption = 'Ponto 3 ='
+      end
+      object lblPonto4: TLabel
+        Left = 26
+        Top = 113
+        Width = 48
+        Height = 13
+        Caption = 'Ponto 4 ='
+      end
+      object lblPonto5: TLabel
+        Left = 26
+        Top = 140
+        Width = 48
+        Height = 13
+        Caption = 'Ponto 5 ='
+      end
+      object lblPonto6: TLabel
+        Left = 26
+        Top = 168
+        Width = 48
+        Height = 13
+        Caption = 'Ponto 6 ='
+      end
+      object lblPonto7: TLabel
+        Left = 26
+        Top = 194
+        Width = 48
+        Height = 13
+        Caption = 'Ponto 7 ='
+      end
+      object lblPonto8: TLabel
+        Left = 26
+        Top = 224
+        Width = 48
+        Height = 13
+        Caption = 'Ponto 8 ='
+      end
+      object lblPonto9: TLabel
+        Left = 26
+        Top = 252
+        Width = 48
+        Height = 13
+        Caption = 'Ponto 9 ='
+      end
+      object lblPonto10: TLabel
+        Left = 26
+        Top = 278
+        Width = 54
+        Height = 13
+        Caption = 'Ponto 10 ='
+      end
+    end
+  end
+end

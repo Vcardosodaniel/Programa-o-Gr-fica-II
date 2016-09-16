@@ -1,0 +1,36 @@
+unit fPoligono;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls;
+
+type
+  TfrmPoligono = class(TForm)
+    Principal: TPanel;
+    gpPoligono: TGroupBox;
+    lblPonto1: TLabel;
+    lblPonto2: TLabel;
+    lblPonto3: TLabel;
+    lblPonto4: TLabel;
+    lblPonto5: TLabel;
+    lblPonto6: TLabel;
+    lblPonto7: TLabel;
+    lblPonto8: TLabel;
+    lblPonto9: TLabel;
+    lblPonto10: TLabel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmPoligono: TfrmPoligono;
+
+implementation
+
+{$R *.dfm}
+
+end.

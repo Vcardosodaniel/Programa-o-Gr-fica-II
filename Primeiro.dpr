@@ -14,7 +14,9 @@ uses
   Vetor in 'Vetor.pas',
   Rotacionar in 'Rotacionar.pas' {frmRotacionar},
   Escalonamento in 'Escalonamento.pas' {frmEscalonamento},
-  Translacao in 'Translacao.pas' {frmTranslacao};
+  Translacao in 'Translacao.pas' {frmTranslacao},
+  Poligono in 'Poligono.pas',
+  CoordenadasPoligono in 'CoordenadasPoligono.pas' {frmPoligono};
 
 {$R *.res}
 
@@ -22,8 +24,5 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrincipal, Principal);
-  Application.CreateForm(TfrmRotacionar, frmRotacionar);
-  Application.CreateForm(TfrmEscalonamento, frmEscalonamento);
-  Application.CreateForm(TfrmTranslacao, frmTranslacao);
   Application.Run;
 end.
