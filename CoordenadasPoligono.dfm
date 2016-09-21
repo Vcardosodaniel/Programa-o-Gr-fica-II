@@ -278,28 +278,28 @@ object frmPoligono: TfrmPoligono
         Top = 191
         Width = 72
         Height = 21
-        TabOrder = 7
+        TabOrder = 5
       end
       object edXPonto8: TEdit
         Left = 112
         Top = 221
         Width = 72
         Height = 21
-        TabOrder = 5
+        TabOrder = 3
       end
       object edXPonto9: TEdit
         Left = 112
         Top = 249
         Width = 72
         Height = 21
-        TabOrder = 3
+        TabOrder = 1
       end
       object edXPonto10: TEdit
         Left = 112
         Top = 276
         Width = 72
         Height = 21
-        TabOrder = 1
+        TabOrder = 7
       end
       object edXPonto2: TEdit
         Left = 112
@@ -361,41 +361,41 @@ object frmPoligono: TfrmPoligono
     Top = 161
     Width = 72
     Height = 21
-    TabOrder = 9
+    TabOrder = 8
   end
   object edYPonto6: TEdit
     Left = 260
     Top = 189
     Width = 72
     Height = 21
-    TabOrder = 10
+    TabOrder = 9
   end
   object edYPonto7: TEdit
     Left = 260
     Top = 215
     Width = 72
     Height = 21
-    TabOrder = 8
+    TabOrder = 6
   end
   object edYPonto8: TEdit
     Left = 260
     Top = 245
     Width = 72
     Height = 21
-    TabOrder = 6
+    TabOrder = 4
   end
   object edYPonto9: TEdit
     Left = 260
     Top = 273
     Width = 72
     Height = 21
-    TabOrder = 4
+    TabOrder = 2
   end
   object edYPonto10: TEdit
     Left = 260
     Top = 300
     Width = 72
     Height = 21
-    TabOrder = 2
+    TabOrder = 10
   end
 end

@@ -5,7 +5,7 @@ interface
 uses
   OpenGL, Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ExtCtrls, ComCtrls, Math, Linha, Ponto, Quadrado, Triangulo, Vetor,
-  Rotacionar, Escalonamento, Translacao, Poligono;
+  Rotacionar, Escalonamento, Translacao, Poligono, Reflexao;
 
 type
   TMatriz = array[0..2,0..2] of double;
@@ -25,6 +25,7 @@ type
     btnTranslacao: TButton;
     ListBox: TListBox;
     btnPoligono: TButton;
+    btnReflexao: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure btnTrianguloClick(Sender: TObject);
@@ -41,6 +42,7 @@ type
     procedure btnEscalonamentoClick(Sender: TObject);
     procedure btnTranslacaoClick(Sender: TObject);
     procedure btnPoligonoClick(Sender: TObject);
+    procedure btnReflexaoClick(Sender: TObject);
   private
     procedure Draw; //Draws an OpenGL scene on request
     procedure DesenhaLinha();
@@ -59,6 +61,7 @@ type
     procedure escalonar(escX, escY: double);
     procedure escalonamentoNatural(escX, escY: double);
     procedure translacao(tX, tY: double);
+    procedure reflexao(eixo: string);
     procedure setDesenharLinha(desenhar: boolean);
     procedure setDesenharPonto(desenhar: boolean);
     procedure setDesenharQuadrado(desenhar: boolean);
@@ -178,6 +181,190 @@ begin
   resultado[1] := (ponto[0]*matriz[0][1] + ponto[1]*matriz[1][1] + ponto[2]*matriz[2][1]);
   resultado[2] := 1;
   Result := resultado;
+end;
+
+procedure TPrincipal.reflexao(eixo: string);
+var
+  matrizReflexao: TMatriz;
+  desenho: string;
+
+  procedure reflexaoLinha();
+  var
+    pontoResultado: TVetor;
+  begin
+    pontoResultado := multiplicarVetorPorMatriz(linha.getP1, matrizReflexao);
+    linha.setP1X(pontoResultado[0]);
+    linha.setP1Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(linha.getP2, matrizReflexao);
+    linha.setP2X(pontoResultado[0]);
+    linha.setP2Y(pontoResultado[1]);
+  end;
+
+  procedure reflexaoPonto();
+  var
+    pontoResultado: TVetor;
+  begin
+    pontoResultado := multiplicarVetorPorMatriz(ponto.getP1, matrizReflexao);
+    ponto.setP1X(pontoResultado[0]);
+    ponto.setP1Y(pontoResultado[1]);
+  end;
+
+  procedure reflexaoTriangulo();
+  var
+    pontoResultado: TVetor;
+  begin
+    pontoResultado := multiplicarVetorPorMatriz(triangulo.getP1, matrizReflexao);
+    triangulo.setP1X(pontoResultado[0]);
+    triangulo.setP1Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(triangulo.getP2, matrizReflexao);
+    triangulo.setP2X(pontoResultado[0]);
+    triangulo.setP2Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(triangulo.getP3, matrizReflexao);
+    triangulo.setP3X(pontoResultado[0]);
+    triangulo.setP3Y(pontoResultado[1]);
+  end;
+
+  procedure reflexaoQuadrado();
+  var
+    pontoResultado: TVetor;
+  begin
+    pontoResultado := multiplicarVetorPorMatriz(quadrado.getP1, matrizReflexao);
+    quadrado.setP1X(pontoResultado[0]);
+    quadrado.setP1Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(quadrado.getP2, matrizReflexao);
+    quadrado.setP2X(pontoResultado[0]);
+    quadrado.setP2Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(quadrado.getP3, matrizReflexao);
+    quadrado.setP3X(pontoResultado[0]);
+    quadrado.setP3Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(quadrado.getP4, matrizReflexao);
+    quadrado.setP4X(pontoResultado[0]);
+    quadrado.setP4Y(pontoResultado[1]);
+  end;
+
+  procedure reflexaoPoligono();
+  var
+    pontoResultado: TVetor;
+  begin
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP1, matrizReflexao);
+    poligono.setP1X(pontoResultado[0]);
+    poligono.setP1Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP2, matrizReflexao);
+    poligono.setP2X(pontoResultado[0]);
+    poligono.setP2Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP3, matrizReflexao);
+    poligono.setP3X(pontoResultado[0]);
+    poligono.setP3Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP4, matrizReflexao);
+    poligono.setP4X(pontoResultado[0]);
+    poligono.setP4Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP5, matrizReflexao);
+    poligono.setP5X(pontoResultado[0]);
+    poligono.setP5Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP6, matrizReflexao);
+    poligono.setP6X(pontoResultado[0]);
+    poligono.setP6Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP7, matrizReflexao);
+    poligono.setP7X(pontoResultado[0]);
+    poligono.setP7Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP8, matrizReflexao);
+    poligono.setP8X(pontoResultado[0]);
+    poligono.setP8Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP9, matrizReflexao);
+    poligono.setP9X(pontoResultado[0]);
+    poligono.setP9Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP10, matrizReflexao);
+    poligono.setP10X(pontoResultado[0]);
+    poligono.setP10Y(pontoResultado[1]);
+  end;
+
+  function setMatrizReflexaoX():TMatriz;
+  var
+    matriz: TMatriz;
+  begin
+    matriz[0][0] := 1;
+    matriz[0][1] := 0;
+    matriz[0][2] := 0;
+    matriz[1][0] := 0;
+    matriz[1][1] := -1;
+    matriz[1][2] := 0;
+    matriz[2][0] := 0;
+    matriz[2][1] := 0;
+    matriz[2][2] := 1;
+    Result := matriz;
+  end;
+
+  function setMatrizReflexaoY():TMatriz;
+  var
+    matriz: TMatriz;
+  begin
+    matriz[0][0] := -1;
+    matriz[0][1] := 0;
+    matriz[0][2] := 0;
+    matriz[1][0] := 0;
+    matriz[1][1] := 1;
+    matriz[1][2] := 0;
+    matriz[2][0] := 0;
+    matriz[2][1] := 0;
+    matriz[2][2] := 1;
+    Result := matriz;
+  end;
+
+  function setMatrizReflexaoOrigem():TMatriz;
+  var
+    matriz: TMatriz;
+  begin
+    matriz[0][0] := -1;
+    matriz[0][1] := 0;
+    matriz[0][2] := 0;
+    matriz[1][0] := 0;
+    matriz[1][1] := -1;
+    matriz[1][2] := 0;
+    matriz[2][0] := 0;
+    matriz[2][1] := 0;
+    matriz[2][2] := 1;
+    Result := matriz;
+  end;
+
+begin
+  if (eixo = 'x') then
+  begin
+    matrizReflexao := setMatrizReflexaoX();
+  end;
+
+  if (eixo = 'y') then
+  begin
+    matrizReflexao := setMatrizReflexaoY();
+  end;
+
+  if (eixo = 'origem') then
+  begin
+    matrizReflexao := setMatrizReflexaoOrigem();
+  end;
+
+  desenho := Principal.ListBox.Items.Strings[Principal.ListBox.ItemIndex];
+  if (desenho = 'Linha') then
+  begin
+    reflexaoLinha();
+  end;
+  if (desenho = 'Ponto') then
+  begin
+    reflexaoPonto();
+  end;
+  if (desenho = 'Triangulo') then
+  begin
+    reflexaoTriangulo();
+  end;
+  if (desenho = 'Quadrado') then
+  begin
+    reflexaoQuadrado();
+  end;
+  if (desenho = 'Poligono') then
+  begin
+    reflexaoPoligono();
+  end;
+
+
 end;
 
 procedure TPrincipal.rotacionar(graus: double);
@@ -378,7 +565,7 @@ var
 
   procedure rotacionarPeloCentroPoligono();
   const
-    NUMERO_PONTOS_POLIGONO = 4;
+    NUMERO_PONTOS_POLIGONO = 10;
   var
     pontoResultadoPoligono: TVetor;
     somaXPoligono, somaYPoligono: double;
@@ -1013,6 +1200,14 @@ var
 begin
   coordenadasQuadrado := TfrmCoordenadasQuadrado.Create(self);
   coordenadasQuadrado.showModal();
+end;
+
+procedure TPrincipal.btnReflexaoClick(Sender: TObject);
+var
+  reflexao: TfrmReflexao;
+begin
+  reflexao := TfrmReflexao.Create(self);
+  reflexao.ShowModal;
 end;
 
 procedure TPrincipal.btnRotacionarClick(Sender: TObject);

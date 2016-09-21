@@ -1,0 +1,31 @@
+unit Reflexao;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
+
+type
+  TfrmReflexao = class(TForm)
+    Principal: TPanel;
+    gpReflexao: TGroupBox;
+    rbReflexaoX: TRadioButton;
+    rbReflexaoY: TRadioButton;
+    rbReflexaoOrigem: TRadioButton;
+    btnOk: TButton;
+    btnCancelar: TButton;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmReflexao: TfrmReflexao;
+
+implementation
+
+{$R *.dfm}
+
+end.

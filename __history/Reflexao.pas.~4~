@@ -1,0 +1,54 @@
+unit Reflexao;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Primeiro1;
+
+type
+  TfrmReflexao = class(TForm)
+    Principal: TPanel;
+    gpReflexao: TGroupBox;
+    rbReflexaoX: TRadioButton;
+    rbReflexaoY: TRadioButton;
+    rbReflexaoOrigem: TRadioButton;
+    btnOk: TButton;
+    btnCancelar: TButton;
+    procedure btnOkClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmReflexao: TfrmReflexao;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmReflexao.btnOkClick(Sender: TObject);
+var
+  principal: TPrincipal;
+begin
+  if(rbReflexaoX.Checked = true) then
+  begin
+    principal.reflexao('x');
+  end;
+
+  if(rbReflexaoY.Checked = true) then
+  begin
+    principal.reflexao('y');
+  end;
+
+  if(rbReflexaoOrigem.Checked = true) then
+  begin
+    principal.reflexao('origem');
+  end;
+
+
+end;
+
+end.

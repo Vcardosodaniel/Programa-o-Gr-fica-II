@@ -16,7 +16,8 @@ uses
   Escalonamento in 'Escalonamento.pas' {frmEscalonamento},
   Translacao in 'Translacao.pas' {frmTranslacao},
   Poligono in 'Poligono.pas',
-  CoordenadasPoligono in 'CoordenadasPoligono.pas' {frmPoligono};
+  CoordenadasPoligono in 'CoordenadasPoligono.pas' {frmPoligono},
+  Reflexao in 'Reflexao.pas' {frmReflexao};
 
 {$R *.res}
 

@@ -91,7 +91,7 @@ object Principal: TPrincipal
     OnClick = btnPontoClick
   end
   object btnZoomIn: TButton
-    Left = -2
+    Left = 0
     Top = 558
     Width = 75
     Height = 25
@@ -100,7 +100,7 @@ object Principal: TPrincipal
     OnClick = btnZoomInClick
   end
   object btnZoomOut: TButton
-    Left = 79
+    Left = 80
     Top = 558
     Width = 75
     Height = 25
@@ -120,7 +120,7 @@ object Principal: TPrincipal
   object btnEscalonamento: TButton
     Left = 240
     Top = 558
-    Width = 92
+    Width = 87
     Height = 25
     Caption = 'Escalonamento'
     TabOrder = 11
@@ -151,5 +151,14 @@ object Principal: TPrincipal
     Caption = 'Poligono'
     TabOrder = 14
     OnClick = btnPoligonoClick
+  end
+  object btnReflexao: TButton
+    Left = 0
+    Top = 528
+    Width = 75
+    Height = 25
+    Caption = 'Reflex'#227'o'
+    TabOrder = 15
+    OnClick = btnReflexaoClick
   end
 end

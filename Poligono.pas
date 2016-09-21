@@ -92,6 +92,57 @@ begin
   Inicializa();
 end;
 
+
+function TPoligono.getP1: TVetor;
+begin
+  Result := p1;
+end;
+
+function TPoligono.getP10: TVetor;
+begin
+  Result := p10;
+end;
+
+function TPoligono.getP2: TVetor;
+begin
+  Result := p2;
+end;
+
+function TPoligono.getP3: TVetor;
+begin
+  Result := p3;
+end;
+
+function TPoligono.getP4: TVetor;
+begin
+  Result := p4;
+end;
+
+function TPoligono.getP5: TVetor;
+begin
+  Result := p5;
+end;
+
+function TPoligono.getP6: TVetor;
+begin
+  Result := p6;
+end;
+
+function TPoligono.getP7: TVetor;
+begin
+  Result := p7;
+end;
+
+function TPoligono.getP8: TVetor;
+begin
+  Result := p8;
+end;
+
+function TPoligono.getP9: TVetor;
+begin
+  Result := p9;
+end;
+
 function TPoligono.getXP1: double;
 begin
   Result := p1[0];
@@ -99,7 +150,7 @@ end;
 
 function TPoligono.getXP10: double;
 begin
-  Result:= p10[0];
+  Result := p10[0];
 end;
 
 function TPoligono.getXP2: double;
@@ -159,7 +210,7 @@ end;
 
 function TPoligono.getYP3: double;
 begin
-  Result := p3[1];
+  Result :=  p3[1];
 end;
 
 function TPoligono.getYP4: double;
@@ -233,56 +284,6 @@ begin
   p10[0] := p10X;
   p10[1] := p10Y;
   p10[2] := 1;
-end;
-
-function TPoligono.getP1: TVetor;
-begin
-  Result := p1;
-end;
-
-function TPoligono.getP10: TVetor;
-begin
-  Result := p10;
-end;
-
-function TPoligono.getP2: TVetor;
-begin
-  Result := p2;
-end;
-
-function TPoligono.getP3: TVetor;
-begin
-  Result := p3;
-end;
-
-function TPoligono.getP4: TVetor;
-begin
-  Result := p4;
-end;
-
-function TPoligono.getP5: TVetor;
-begin
-  Result := p5;
-end;
-
-function TPoligono.getP6: TVetor;
-begin
-  Result := p6;
-end;
-
-function TPoligono.getP7: TVetor;
-begin
-  Result := p7;
-end;
-
-function TPoligono.getP8: TVetor;
-begin
-  Result := p8;
-end;
-
-function TPoligono.getP9: TVetor;
-begin
-  Result := p9;
 end;
 
 procedure TPoligono.setP10X(value: double);
@@ -362,7 +363,7 @@ end;
 
 procedure TPoligono.setP7Y(value: double);
 begin
-  p7 [1] := value;
+  p7[1] := value;
 end;
 
 procedure TPoligono.setP8X(value: double);
