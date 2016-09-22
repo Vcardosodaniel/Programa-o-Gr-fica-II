@@ -161,4 +161,13 @@ object Principal: TPrincipal
     TabOrder = 15
     OnClick = btnReflexaoClick
   end
+  object btnCisalhamento: TButton
+    Left = 80
+    Top = 528
+    Width = 75
+    Height = 25
+    Caption = 'Cisalhamento'
+    TabOrder = 16
+    OnClick = btnCisalhamentoClick
+  end
 end

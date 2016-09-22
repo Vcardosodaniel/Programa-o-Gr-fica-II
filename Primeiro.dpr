@@ -17,7 +17,8 @@ uses
   Translacao in 'Translacao.pas' {frmTranslacao},
   Poligono in 'Poligono.pas',
   CoordenadasPoligono in 'CoordenadasPoligono.pas' {frmPoligono},
-  Reflexao in 'Reflexao.pas' {frmReflexao};
+  Reflexao in 'Reflexao.pas' {frmReflexao},
+  Cisalhamento in 'Cisalhamento.pas' {frmCisalhamento};
 
 {$R *.res}
 
@@ -25,5 +26,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrincipal, Principal);
+  Application.CreateForm(TfrmCisalhamento, frmCisalhamento);
   Application.Run;
 end.

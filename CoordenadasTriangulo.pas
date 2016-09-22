@@ -58,7 +58,7 @@ begin
   Triangulo.setP2Y(StrToFloat(edYPonto2.Text));
   Triangulo.setP3X(StrToFloat(edXPonto3.Text));
   Triangulo.setP3Y(StrToFloat(edYPonto3.Text));
-  principal.setDesenharTriangulo(true);
+  principal.setDesenharTriangulo();
   btnCancelClick(self);
 end;
 

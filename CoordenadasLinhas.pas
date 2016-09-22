@@ -51,7 +51,7 @@ begin
   linha.setP1Y(StrToFloat(edYPonto1.Text));
   linha.setP2X(StrToFloat(edXPonto2.Text));
   linha.setP2Y(StrToFloat(edYPonto2.Text));
-  principal.setDesenharLinha(true);
+  principal.setDesenharLinha();
   btnCancelarClick(self);
 end;
 

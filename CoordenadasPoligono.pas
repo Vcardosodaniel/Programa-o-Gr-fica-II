@@ -102,7 +102,7 @@ begin
   Poligono.setP9Y(StrToFloat(edYPonto9.Text));
   Poligono.setP10X(StrToFloat(edXPonto10.Text));
   Poligono.setP10Y(StrToFloat(edYPonto10.Text));
-  principal.setDesenharPoligono(true);
+  principal.setDesenharPoligono();
   btnCancelarClick(self);
 end;
 

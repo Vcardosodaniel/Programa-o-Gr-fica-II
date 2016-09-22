@@ -66,7 +66,7 @@ begin
   Quadrado.setP3Y(StrToFloat(edYPonto3.Text));
   Quadrado.setP4X(StrToFloat(edXPonto4.Text));
   Quadrado.setP4Y(StrToFloat(edYPonto4.Text));
-  principal.setDesenharQuadrado(true);
+  principal.setDesenharQuadrado();
   btnCancelarClick(self);
 end;
 

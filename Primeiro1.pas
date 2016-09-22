@@ -5,7 +5,7 @@ interface
 uses
   OpenGL, Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ExtCtrls, ComCtrls, Math, Linha, Ponto, Quadrado, Triangulo, Vetor,
-  Rotacionar, Escalonamento, Translacao, Poligono, Reflexao;
+  Rotacionar, Escalonamento, Translacao, Poligono, Reflexao, Cisalhamento;
 
 type
   TMatriz = array[0..2,0..2] of double;
@@ -26,6 +26,7 @@ type
     ListBox: TListBox;
     btnPoligono: TButton;
     btnReflexao: TButton;
+    btnCisalhamento: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure btnTrianguloClick(Sender: TObject);
@@ -43,6 +44,7 @@ type
     procedure btnTranslacaoClick(Sender: TObject);
     procedure btnPoligonoClick(Sender: TObject);
     procedure btnReflexaoClick(Sender: TObject);
+    procedure btnCisalhamentoClick(Sender: TObject);
   private
     procedure Draw; //Draws an OpenGL scene on request
     procedure DesenhaLinha();
@@ -62,11 +64,12 @@ type
     procedure escalonamentoNatural(escX, escY: double);
     procedure translacao(tX, tY: double);
     procedure reflexao(eixo: string);
-    procedure setDesenharLinha(desenhar: boolean);
-    procedure setDesenharPonto(desenhar: boolean);
-    procedure setDesenharQuadrado(desenhar: boolean);
-    procedure setDesenharPoligono(desenhar: boolean);
-    procedure setDesenharTriangulo(desenhar: boolean);
+    procedure cisalhamento(shX, shY: double);
+    procedure setDesenharLinha();
+    procedure setDesenharPonto();
+    procedure setDesenharQuadrado();
+    procedure setDesenharPoligono();
+    procedure setDesenharTriangulo();
 
   end;
 
@@ -364,7 +367,142 @@ begin
     reflexaoPoligono();
   end;
 
+end;
 
+procedure TPrincipal.cisalhamento(shX, shY: double);
+var
+  matrizCisalhamento: TMatriz;
+  desenho: string;
+
+  procedure cisalhamentoLinha();
+  var
+    pontoResultado: TVetor;
+  begin
+    pontoResultado := multiplicarVetorPorMatriz(linha.getP1, matrizCisalhamento);
+    linha.setP1X(pontoResultado[0]);
+    linha.setP1Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(linha.getP2, matrizCisalhamento);
+    linha.setP2X(pontoResultado[0]);
+    linha.setP2Y(pontoResultado[1]);
+  end;
+
+  procedure cisalhamentoPonto();
+  var
+    pontoResultado: TVetor;
+  begin
+    pontoResultado := multiplicarVetorPorMatriz(ponto.getP1, matrizCisalhamento);
+    ponto.setP1X(pontoResultado[0]);
+    ponto.setP1Y(pontoResultado[1]);
+  end;
+
+  procedure cisalhamentoTriangulo();
+  var
+    pontoResultado: TVetor;
+  begin
+    pontoResultado := multiplicarVetorPorMatriz(triangulo.getP1, matrizCisalhamento);
+    triangulo.setP1X(pontoResultado[0]);
+    triangulo.setP1Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(triangulo.getP2, matrizCisalhamento);
+    triangulo.setP2X(pontoResultado[0]);
+    triangulo.setP2Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(triangulo.getP3, matrizCisalhamento);
+    triangulo.setP3X(pontoResultado[0]);
+    triangulo.setP3Y(pontoResultado[1]);
+  end;
+
+  procedure cisalhamentoQuadrado();
+  var
+    pontoResultado: TVetor;
+  begin
+    pontoResultado := multiplicarVetorPorMatriz(quadrado.getP1, matrizCisalhamento);
+    quadrado.setP1X(pontoResultado[0]);
+    quadrado.setP1Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(quadrado.getP2, matrizCisalhamento);
+    quadrado.setP2X(pontoResultado[0]);
+    quadrado.setP2Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(quadrado.getP3, matrizCisalhamento);
+    quadrado.setP3X(pontoResultado[0]);
+    quadrado.setP3Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(quadrado.getP4, matrizCisalhamento);
+    quadrado.setP4X(pontoResultado[0]);
+    quadrado.setP4Y(pontoResultado[1]);
+  end;
+
+  procedure cisalhamentoPoligono();
+  var
+    pontoResultado: TVetor;
+  begin
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP1, matrizCisalhamento);
+    poligono.setP1X(pontoResultado[0]);
+    poligono.setP1Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP2, matrizCisalhamento);
+    poligono.setP2X(pontoResultado[0]);
+    poligono.setP2Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP3, matrizCisalhamento);
+    poligono.setP3X(pontoResultado[0]);
+    poligono.setP3Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP4, matrizCisalhamento);
+    poligono.setP4X(pontoResultado[0]);
+    poligono.setP4Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP5, matrizCisalhamento);
+    poligono.setP5X(pontoResultado[0]);
+    poligono.setP5Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP6, matrizCisalhamento);
+    poligono.setP6X(pontoResultado[0]);
+    poligono.setP6Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP7, matrizCisalhamento);
+    poligono.setP7X(pontoResultado[0]);
+    poligono.setP7Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP8, matrizCisalhamento);
+    poligono.setP8X(pontoResultado[0]);
+    poligono.setP8Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP9, matrizCisalhamento);
+    poligono.setP9X(pontoResultado[0]);
+    poligono.setP9Y(pontoResultado[1]);
+    pontoResultado := multiplicarVetorPorMatriz(poligono.getP10, matrizCisalhamento);
+    poligono.setP10X(pontoResultado[0]);
+    poligono.setP10Y(pontoResultado[1]);
+  end;
+
+  function zeraMatriz():TMatriz;
+  var
+    matriz: TMatriz;
+  begin
+    matriz[0][0] := 1;
+    matriz[0][1] := shY;
+    matriz[0][2] := 0;
+    matriz[1][0] := shX;
+    matriz[1][1] := 1;
+    matriz[1][2] := 0;
+    matriz[2][0] := 0;
+    matriz[2][1] := 0;
+    matriz[2][2] := 1;
+    Result := matriz;
+  end;
+
+begin
+  matrizCisalhamento := zeraMatriz();
+  desenho := Principal.ListBox.Items.Strings[Principal.ListBox.ItemIndex];
+    if (desenho = 'Linha') then
+  begin
+    cisalhamentoLinha();
+  end;
+  if (desenho = 'Ponto') then
+  begin
+    cisalhamentoPonto();
+  end;
+  if (desenho = 'Triangulo') then
+  begin
+    cisalhamentoTriangulo();
+  end;
+  if (desenho = 'Quadrado') then
+  begin
+    cisalhamentoQuadrado();
+  end;
+  if (desenho = 'Poligono') then
+  begin
+    cisalhamentoPoligono();
+  end;
 end;
 
 procedure TPrincipal.rotacionar(graus: double);
@@ -696,27 +834,27 @@ begin
   end;
 end;
 
-procedure TPrincipal.setDesenharLinha(desenhar: boolean);
+procedure TPrincipal.setDesenharLinha();
 begin
   Principal.ListBox.Items.Add('Linha');
 end;
 
-procedure TPrincipal.setDesenharPoligono(desenhar: boolean);
+procedure TPrincipal.setDesenharPoligono();
 begin
   Principal.ListBox.Items.Add('Poligono');
 end;
 
-procedure TPrincipal.setDesenharPonto(desenhar: boolean);
+procedure TPrincipal.setDesenharPonto();
 begin
   Principal.ListBox.Items.Add('Ponto');
 end;
 
-procedure TPrincipal.setDesenharQuadrado(desenhar: boolean);
+procedure TPrincipal.setDesenharQuadrado();
 begin
   Principal.ListBox.Items.Add('Quadrado');
 end;
 
-procedure TPrincipal.setDesenharTriangulo(desenhar: boolean);
+procedure TPrincipal.setDesenharTriangulo();
 begin
   Principal.ListBox.Items.Add('Triangulo');
 end;
@@ -1208,6 +1346,14 @@ var
 begin
   reflexao := TfrmReflexao.Create(self);
   reflexao.ShowModal;
+end;
+
+procedure TPrincipal.btnCisalhamentoClick(Sender: TObject);
+var
+  cisalhamento: TfrmCisalhamento;
+begin
+  cisalhamento := TfrmCisalhamento.Create(self);
+  cisalhamento.ShowModal();
 end;
 
 procedure TPrincipal.btnRotacionarClick(Sender: TObject);

@@ -43,7 +43,7 @@ var
 begin
   Ponto.setP1X(StrToFloat(edXPonto.Text));
   Ponto.setP1Y(StrToFloat(edYPonto.Text));
-  principal.setDesenharPonto(true);
+  principal.setDesenharPonto();
   btnCancelarClick(self);
 end;
 

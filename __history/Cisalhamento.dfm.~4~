@@ -1,0 +1,59 @@
+object frmCisalhamento: TfrmCisalhamento
+  Left = 0
+  Top = 0
+  Caption = 'Cisalhamento'
+  ClientHeight = 307
+  ClientWidth = 619
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Principal: TPanel
+    Left = 8
+    Top = 8
+    Width = 601
+    Height = 281
+    TabOrder = 0
+    object gbCisalhamento: TGroupBox
+      Left = 24
+      Top = 20
+      Width = 553
+      Height = 225
+      Caption = 'Coordenadas'
+      TabOrder = 0
+      object lblCisX: TLabel
+        Left = 40
+        Top = 48
+        Width = 20
+        Height = 13
+        Caption = 'X = '
+      end
+      object lblCisY: TLabel
+        Left = 40
+        Top = 96
+        Width = 17
+        Height = 13
+        Caption = 'Y ='
+      end
+      object edCisX: TEdit
+        Left = 70
+        Top = 45
+        Width = 74
+        Height = 21
+        TabOrder = 0
+      end
+      object edCisY: TEdit
+        Left = 70
+        Top = 93
+        Width = 74
+        Height = 21
+        TabOrder = 1
+      end
+    end
+  end
+end
