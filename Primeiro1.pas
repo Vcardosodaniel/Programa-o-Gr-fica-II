@@ -1196,42 +1196,50 @@ var
     poligono.setP10Y(pontoResultado[1]);
   end;
 
-  procedure zeraMatriz();
+  function zeraMatriz():TMatriz;
+  var
+    matriz: TMatriz;
   begin
-    matrizTranslacao[0][0] := 1;
-    matrizTranslacao[0][1] := 0;
-    matrizTranslacao[0][2] := 0;
-    matrizTranslacao[1][0] := 0;
-    matrizTranslacao[1][1] := 1;
-    matrizTranslacao[1][2] := 0;
-    matrizTranslacao[2][0] := tX;
-    matrizTranslacao[2][1] := tY;
-    matrizTranslacao[2][2] := 1;
+    matriz[0][0] := 1;
+    matriz[0][1] := 0;
+    matriz[0][2] := 0;
+    matriz[1][0] := 0;
+    matriz[1][1] := 1;
+    matriz[1][2] := 0;
+    matriz[2][0] := tX;
+    matriz[2][1] := tY;
+    matriz[2][2] := 1;
+    Result := matriz;
   end;
 
 begin
-  zeraMatriz();
+  matrizTranslacao := zeraMatriz();
   desenho := Principal.ListBox.Items.Strings[Principal.ListBox.ItemIndex];
   if (desenho = 'Linha') then
   begin
     translacaoLinha();
   end;
+
   if (desenho = 'Ponto') then
   begin
     translacaoPonto();
   end;
+
   if (desenho = 'Quadrado') then
   begin
     translacaoQuadrado();
   end;
+
   if (desenho = 'Triangulo') then
   begin
     translacaoTriangulo();
   end;
+
   if (desenho = 'Poligono') then
   begin
     translacaoPoligono();
   end;
+
 end;
 
 procedure TPrincipal.btnBaixoClick(Sender: TObject);

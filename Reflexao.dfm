@@ -47,7 +47,7 @@ object frmReflexao: TfrmReflexao
       object rbReflexaoOrigem: TRadioButton
         Left = 48
         Top = 152
-        Width = 113
+        Width = 137
         Height = 17
         Caption = 'Reflexao pela Origem'
         TabOrder = 2
