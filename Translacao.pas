@@ -16,6 +16,8 @@ type
     edPontoY: TEdit;
     btnOk: TButton;
     btnCancelar: TButton;
+    Label3: TLabel;
+    edPontoZ: TEdit;
     procedure btnCancelarClick(Sender: TObject);
     procedure btnOkClick(Sender: TObject);
   private
@@ -43,7 +45,7 @@ procedure TfrmTranslacao.btnOkClick(Sender: TObject);
 var
   principal: TPrincipal;
 begin
-  principal.translacao(StrToFloat(edPontoX.Text), StrToFloat(edPontoY.Text));
+  principal.translacao(StrToFloat(edPontoX.Text), StrToFloat(edPontoY.Text), StrToFloat(edPontoZ.Text));
   btnCancelarClick(self);
 end;
 

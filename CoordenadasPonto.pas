@@ -16,6 +16,8 @@ type
     edYPonto: TEdit;
     btnOK: TButton;
     btnCancelar: TButton;
+    lblZPonto: TLabel;
+    edZPonto: TEdit;
     procedure btnCancelarClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
   private
@@ -43,6 +45,8 @@ var
 begin
   Ponto.setP1X(StrToFloat(edXPonto.Text));
   Ponto.setP1Y(StrToFloat(edYPonto.Text));
+  Ponto.setP1Z(StrToFloat(edZPonto.Text));
+
   principal.setDesenharPonto();
   btnCancelarClick(self);
 end;

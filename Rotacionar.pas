@@ -17,6 +17,10 @@ type
     rbPonto: TRadioButton;
     btnOk: TButton;
     btnCancelar: TButton;
+    GroupBox1: TGroupBox;
+    rbRotacaoX: TRadioButton;
+    rbRotacaoY: TRadioButton;
+    rbRotacaoZ: TRadioButton;
     procedure btnCancelarClick(Sender: TObject);
     procedure btnOkClick(Sender: TObject);
   private
@@ -43,6 +47,22 @@ procedure TfrmRotacionar.btnOkClick(Sender: TObject);
 var
   principal: TPrincipal;
 begin
+
+  if(rbRotacaoX.Checked = true)then
+  begin
+    principal.setEixoTransformacoes('x');
+  end;
+
+  if(rbRotacaoZ.Checked = true)then
+  begin
+    principal.setEixoTransformacoes('z');
+  end;
+
+  if(rbRotacaoY.Checked = true)then
+  begin
+    principal.setEixoTransformacoes('y');
+  end;
+
   if (rbOrigem.Checked = true) then
   begin
     principal.rotacionar(StrToFloat(edGraus.Text));

@@ -32,6 +32,14 @@ type
     edYPonto3: TEdit;
     edXPonto4: TEdit;
     edYPonto4: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    edZPonto1: TEdit;
+    edZPonto2: TEdit;
+    edZPonto3: TEdit;
+    edZPonto4: TEdit;
     procedure btnCancelarClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
   private
@@ -44,7 +52,6 @@ var
   frmCoordenadasQuadrado: TfrmCoordenadasQuadrado;
 
 implementation
-
 
 {$R *.dfm}
 
@@ -60,12 +67,20 @@ var
 begin
   Quadrado.setP1X(StrToFloat(edXPonto1.Text));
   Quadrado.setP1Y(StrToFloat(edYPonto1.Text));
+  Quadrado.setP1Z(StrToFloat(edZPonto1.Text));
+
   Quadrado.setP2X(StrToFloat(edXPonto2.Text));
   Quadrado.setP2Y(StrToFloat(edYPonto2.Text));
+  Quadrado.setP2Z(StrToFloat(edZPonto2.Text));
+
   Quadrado.setP3X(StrToFloat(edXPonto3.Text));
   Quadrado.setP3Y(StrToFloat(edYPonto3.Text));
+  Quadrado.setP3Z(StrToFloat(edZPonto3.Text));
+
   Quadrado.setP4X(StrToFloat(edXPonto4.Text));
   Quadrado.setP4Y(StrToFloat(edYPonto4.Text));
+  Quadrado.setP4Z(StrToFloat(edZPonto4.Text));
+
   principal.setDesenharQuadrado();
   btnCancelarClick(self);
 end;

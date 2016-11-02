@@ -22,6 +22,10 @@ type
     edYPonto1: TEdit;
     edXPonto2: TEdit;
     edYPonto2: TEdit;
+    lblZPonto1: TLabel;
+    lblZPonto2: TLabel;
+    edZPonto1: TEdit;
+    edZPonto2: TEdit;
     procedure btnCancelarClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
   private
@@ -49,8 +53,12 @@ var
 begin
   linha.setP1X(StrToFloat(edXPonto1.Text));
   linha.setP1Y(StrToFloat(edYPonto1.Text));
+  linha.setP1Z(StrToFloat(edZPonto1.Text));
+
   linha.setP2X(StrToFloat(edXPonto2.Text));
   linha.setP2Y(StrToFloat(edYPonto2.Text));
+  linha.setP2Z(StrToFloat(edZPonto2.Text));
+
   principal.setDesenharLinha();
   btnCancelarClick(self);
 end;

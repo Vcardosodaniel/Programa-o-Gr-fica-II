@@ -31,28 +31,35 @@ object frmEscalonamento: TfrmEscalonamento
       object lblPontoX: TLabel
         Left = 21
         Top = 29
-        Width = 23
+        Width = 17
         Height = 13
         Caption = 'X= '
       end
       object lblPontoY: TLabel
-        Left = 157
+        Left = 105
         Top = 29
-        Width = 23
+        Width = 17
         Height = 13
         Caption = 'Y= '
+      end
+      object lblPontoZ: TLabel
+        Left = 192
+        Top = 29
+        Width = 17
+        Height = 13
+        Caption = 'Z= '
       end
       object edPontoX: TEdit
         Left = 40
         Top = 26
-        Width = 73
+        Width = 48
         Height = 21
         TabOrder = 0
       end
       object edPontoY: TEdit
-        Left = 179
+        Left = 127
         Top = 26
-        Width = 73
+        Width = 48
         Height = 21
         TabOrder = 1
       end
@@ -71,6 +78,13 @@ object frmEscalonamento: TfrmEscalonamento
         Height = 17
         Caption = 'Pelo Centro'
         TabOrder = 3
+      end
+      object edPontoZ: TEdit
+        Left = 209
+        Top = 26
+        Width = 48
+        Height = 21
+        TabOrder = 4
       end
     end
     object btnOK: TButton

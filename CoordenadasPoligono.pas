@@ -62,6 +62,26 @@ type
     lblYPonto8: TLabel;
     lblYPonto9: TLabel;
     lblYPonto10: TLabel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    edZPonto1: TEdit;
+    edZPonto2: TEdit;
+    edZPonto3: TEdit;
+    edZPonto4: TEdit;
+    edZPonto5: TEdit;
+    edZPonto6: TEdit;
+    edZPonto7: TEdit;
+    edZPonto8: TEdit;
+    edZPonto9: TEdit;
+    edZPonto10: TEdit;
     procedure btnCancelarClick(Sender: TObject);
     procedure btnOkClick(Sender: TObject);
   private
@@ -84,24 +104,44 @@ var
 begin
   Poligono.setP1X(StrToFloat(edXPonto1.Text));
   Poligono.setP1Y(StrToFloat(edYPonto1.Text));
+  Poligono.setP1Z(StrToFloat(edZPonto1.Text));
+
   Poligono.setP2X(StrToFloat(edXPonto2.Text));
   Poligono.setP2Y(StrToFloat(edYPonto2.Text));
+  Poligono.setP2Z(StrToFloat(edZPonto2.Text));
+
   Poligono.setP3X(StrToFloat(edXPonto3.Text));
   Poligono.setP3Y(StrToFloat(edYPonto3.Text));
+  Poligono.setP3Z(StrToFloat(edZPonto3.Text));
+
   Poligono.setP4X(StrToFloat(edXPonto4.Text));
   Poligono.setP4Y(StrToFloat(edYPonto4.Text));
+  Poligono.setP4Z(StrToFloat(edZPonto4.Text));
+
   Poligono.setP5X(StrToFloat(edXPonto5.Text));
   Poligono.setP5Y(StrToFloat(edYPonto5.Text));
+  Poligono.setP5Z(StrToFloat(edZPonto5.Text));
+
   Poligono.setP6X(StrToFloat(esXPonto6.Text));
   Poligono.setP6Y(StrToFloat(edYPonto6.Text));
+  Poligono.setP6Z(StrToFloat(edZPonto6.Text));
+
   Poligono.setP7X(StrToFloat(edXPonto7.Text));
   Poligono.setP7Y(StrToFloat(edYPonto7.Text));
+  Poligono.setP7Z(StrToFloat(edZPonto7.Text));
+
   Poligono.setP8X(StrToFloat(edXPonto8.Text));
   Poligono.setP8Y(StrToFloat(edYPonto8.Text));
+  Poligono.setP8Z(StrToFloat(edZPonto8.Text));
+
   Poligono.setP9X(StrToFloat(edXPonto9.Text));
   Poligono.setP9Y(StrToFloat(edYPonto9.Text));
+  Poligono.setP9Z(StrToFloat(edZPonto9.Text));
+
   Poligono.setP10X(StrToFloat(edXPonto10.Text));
   Poligono.setP10Y(StrToFloat(edYPonto10.Text));
+  Poligono.setP10Z(StrToFloat(edZPonto10.Text));
+
   principal.setDesenharPoligono();
   btnCancelarClick(self);
 end;

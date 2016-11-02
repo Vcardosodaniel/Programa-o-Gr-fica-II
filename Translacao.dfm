@@ -30,31 +30,45 @@ object frmTranslacao: TfrmTranslacao
       TabOrder = 0
       object Label1: TLabel
         Left = 40
-        Top = 40
+        Top = 26
         Width = 17
         Height = 13
         Caption = 'X= '
       end
       object Label2: TLabel
         Left = 40
-        Top = 80
+        Top = 66
         Width = 17
         Height = 13
         Caption = 'Y= '
       end
+      object Label3: TLabel
+        Left = 40
+        Top = 103
+        Width = 17
+        Height = 13
+        Caption = 'Z= '
+      end
       object edPontoX: TEdit
         Left = 63
-        Top = 37
+        Top = 23
         Width = 75
         Height = 21
         TabOrder = 0
       end
       object edPontoY: TEdit
         Left = 63
-        Top = 77
+        Top = 63
         Width = 75
         Height = 21
         TabOrder = 1
+      end
+      object edPontoZ: TEdit
+        Left = 63
+        Top = 100
+        Width = 75
+        Height = 21
+        TabOrder = 2
       end
     end
     object btnOk: TButton

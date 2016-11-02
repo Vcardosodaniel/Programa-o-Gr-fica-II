@@ -15,46 +15,84 @@ type
 
     procedure setP1X(value: double);
     procedure setP1Y(value: double);
+    procedure setP1Z(value: double);
+
     procedure setP2X(value: double);
     procedure setP2Y(value: double);
+    procedure setP2Z(value: double);
+
     procedure setP3X(value: double);
     procedure setP3Y(value: double);
+    procedure setP3Z(value: double);
+
     procedure setP4X(value: double);
     procedure setP4Y(value: double);
+    procedure setP4Z(value: double);
+
     procedure setP5X(value: double);
     procedure setP5Y(value: double);
+    procedure setP5Z(value: double);
+
     procedure setP6X(value: double);
     procedure setP6Y(value: double);
+    procedure setP6Z(value: double);
+
     procedure setP7X(value: double);
     procedure setP7Y(value: double);
+    procedure setP7Z(value: double);
+
     procedure setP8X(value: double);
     procedure setP8Y(value: double);
+    procedure setP8Z(value: double);
+
     procedure setP9X(value: double);
     procedure setP9Y(value: double);
+    procedure setP9Z(value: double);
+
     procedure setP10X(value: double);
     procedure setP10Y(value: double);
+    procedure setP10Z(value: double);
 
 
     function getXP1(): double;
     function getYP1(): double;
+    function getZP1(): double;
+
     function getXP2(): double;
     function getYP2(): double;
+    function getZP2(): double;
+
     function getXP3(): double;
     function getYP3(): double;
+    function getZP3(): double;
+
     function getXP4(): double;
     function getYP4(): double;
+    function getZP4(): double;
+
     function getXP5(): double;
     function getYP5(): double;
+    function getZP5(): double;
+
     function getXP6(): double;
     function getYP6(): double;
+    function getZP6(): double;
+
     function getXP7(): double;
     function getYP7(): double;
+    function getZP7(): double;
+
     function getXP8(): double;
     function getYP8(): double;
+    function getZP8(): double;
+
     function getXP9(): double;
     function getYP9(): double;
+    function getZP9(): double;
+
     function getXP10(): double;
     function getYP10(): double;
+    function getZP10(): double;
 
     function getP1(): TVetor;
     function getP2(): TVetor;
@@ -81,8 +119,8 @@ var
   p8: TVetor;
   p9: TVetor;
   p10: TVetor;
-  p1X, p1Y, p2X, p2Y, p3X, p3Y, p4X, p4Y, p5X, p5Y,
-  p6X, p6Y, p7X, p7Y, p8X, p8Y, p9X, p9Y, p10X, p10Y: double;
+  p1X, p1Y, p1Z, p2X, p2Y, p2Z, p3X, p3Y, p3Z, p4X, p4Y, p4Z, p5X, p5Y, p5Z,
+  p6X, p6Y, p6Z, p7X, p7Y, p7Z, p8X, p8Y, p8Z, p9X, p9Y, p9Z, p10X, p10Y, p10Z: double;
 
 { TLinha }
 
@@ -243,47 +281,107 @@ begin
   Result := p9[1];
 end;
 
+function TPoligono.getZP1: double;
+begin
+  Result := p1[2];
+end;
+
+function TPoligono.getZP10: double;
+begin
+  Result := p10[2];
+end;
+
+function TPoligono.getZP2: double;
+begin
+  Result := p2[2];
+end;
+
+function TPoligono.getZP3: double;
+begin
+  Result := p3[2];
+end;
+
+function TPoligono.getZP4: double;
+begin
+    Result := p4[2];
+end;
+
+function TPoligono.getZP5: double;
+begin
+    Result := p5[2];
+end;
+
+function TPoligono.getZP6: double;
+begin
+  Result := p6[2];
+end;
+
+function TPoligono.getZP7: double;
+begin
+  Result := p7[2];
+end;
+
+function TPoligono.getZP8: double;
+begin
+  Result := p8[2];
+end;
+
+function TPoligono.getZP9: double;
+begin
+  Result := p9[2];
+end;
+
 procedure TPoligono.Inicializa();
 begin
   p1[0] := p1X;
   p1[1] := p1Y;
-  p1[2] := 1;
+  p1[2] := p1Z;
+  p1[3] := 1;
 
   p2[0] := p2X;
   p2[1] := p2Y;
-  p2[2] := 1;
+  p2[2] := p2Z;
+  p2[3] := 1;
 
   p3[0] := p3X;
   p3[1] := p3Y;
-  p3[2] := 1;
+  p3[2] := p3Z;
+  p3[3] := 1;
 
   p4[0] := p4X;
   p4[1] := p4Y;
-  p4[2] := 1;
+  p4[2] := p4Z;
+  p4[3] := 1;
 
   p5[0] := p5X;
   p5[1] := p5Y;
-  p5[2] := 1;
+  p5[2] := p5Z;
+  p5[3] := 1;
 
   p6[0] := p6X;
   p6[1] := p6Y;
-  p6[2] := 1;
+  p6[2] := p6Z;
+  p6[3] := 1;
 
   p7[0] := p7X;
   p7[1] := p7Y;
-  p7[2] := 1;
+  p7[2] := p7Z;
+  p7[3] := 1;
 
   p8[0] := p8X;
   p8[1] := p8Y;
-  p8[2] := 1;
+  p8[2] := p8Z;
+  p8[3] := 1;
 
   p9[0] := p9X;
   p9[1] := p9Y;
-  p9[2] := 1;
+  p9[2] := p9Z;
+  p9[3] := 1;
 
   p10[0] := p10X;
   p10[1] := p10Y;
-  p10[2] := 1;
+  p10[2] := p10Z;
+  p10[3] := 1;
 end;
 
 procedure TPoligono.setP10X(value: double);
@@ -296,6 +394,11 @@ begin
   p10[1] := value;
 end;
 
+procedure TPoligono.setP10Z(value: double);
+begin
+  p10[2] := value;
+end;
+
 procedure TPoligono.setP1X(value: double);
 begin
   p1[0] := value;
@@ -304,6 +407,11 @@ end;
 procedure TPoligono.setP1Y(value: double);
 begin
   p1[1] := value;
+end;
+
+procedure TPoligono.setP1Z(value: double);
+begin
+  p1[2] := value;
 end;
 
 procedure TPoligono.setP2X(value: double);
@@ -316,6 +424,11 @@ begin
   p2[1] := value;
 end;
 
+procedure TPoligono.setP2Z(value: double);
+begin
+  p2[2] := value;
+end;
+
 procedure TPoligono.setP3X(value: double);
 begin
   p3[0] := value;
@@ -324,6 +437,11 @@ end;
 procedure TPoligono.setP3Y(value: double);
 begin
   p3[1] := value;
+end;
+
+procedure TPoligono.setP3Z(value: double);
+begin
+  p3[2] := value;
 end;
 
 procedure TPoligono.setP4X(value: double);
@@ -336,6 +454,11 @@ begin
   p4[1] := value;
 end;
 
+procedure TPoligono.setP4Z(value: double);
+begin
+  p4[2] := value;
+end;
+
 procedure TPoligono.setP5X(value: double);
 begin
   p5[0] := value;
@@ -344,6 +467,11 @@ end;
 procedure TPoligono.setP5Y(value: double);
 begin
   p5[1] := value;
+end;
+
+procedure TPoligono.setP5Z(value: double);
+begin
+  p5[2] := value;
 end;
 
 procedure TPoligono.setP6X(value: double);
@@ -356,6 +484,11 @@ begin
   p6[1] := value;
 end;
 
+procedure TPoligono.setP6Z(value: double);
+begin
+  p6[2] := value;
+end;
+
 procedure TPoligono.setP7X(value: double);
 begin
   p7[0] := value;
@@ -364,6 +497,11 @@ end;
 procedure TPoligono.setP7Y(value: double);
 begin
   p7[1] := value;
+end;
+
+procedure TPoligono.setP7Z(value: double);
+begin
+  p7[2] := value;
 end;
 
 procedure TPoligono.setP8X(value: double);
@@ -376,6 +514,11 @@ begin
   p8[1] := value;
 end;
 
+procedure TPoligono.setP8Z(value: double);
+begin
+  p8[2] := value;
+end;
+
 procedure TPoligono.setP9X(value: double);
 begin
   p9[0] := value;
@@ -384,6 +527,11 @@ end;
 procedure TPoligono.setP9Y(value: double);
 begin
   p9[1] := value;
+end;
+
+procedure TPoligono.setP9Z(value: double);
+begin
+  p9[2] := value;
 end;
 
 end.

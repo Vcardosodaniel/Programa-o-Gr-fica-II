@@ -18,6 +18,8 @@ type
     rbCentro: TRadioButton;
     btnOK: TButton;
     btnCancelar: TButton;
+    lblPontoZ: TLabel;
+    edPontoZ: TEdit;
     procedure btnCancelarClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
   private
@@ -47,12 +49,12 @@ var
 begin
   if (rbOrigem.Checked = true) then
   begin
-    principal.escalonar(StrToFloat(edPontoX.Text), StrToFloat(edPontoY.Text));
+    principal.escalonar(StrToFloat(edPontoX.Text), StrToFloat(edPontoY.Text), StrToFloat(edPontoZ.Text));
     btnCancelarClick(self);
   end;
   if (rbCentro.Checked = true) then
   begin
-    principal.escalonamentoNatural(StrToFloat(edPontoX.Text), StrToFloat(edPontoY.Text));
+    principal.escalonamentoNatural(StrToFloat(edPontoX.Text), StrToFloat(edPontoY.Text),StrToFloat(edPontoZ.Text));
     btnCancelarClick(self);
   end;
 end;

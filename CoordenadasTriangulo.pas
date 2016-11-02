@@ -27,6 +27,12 @@ type
     lblXPonto1: TLabel;
     lblXPonto2: TLabel;
     lblXPonto3: TLabel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    edZPonto1: TEdit;
+    edZPonto2: TEdit;
+    edZPonto3: TEdit;
     procedure btnCancelClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
   private
@@ -54,10 +60,16 @@ var
 begin
   Triangulo.setP1X(StrToFloat(edXPonto1.Text));
   Triangulo.setP1Y(StrToFloat(edYPonto1.Text));
+  Triangulo.setP1Z(StrToFloat(edZPonto1.Text));
+
   Triangulo.setP2X(StrToFloat(edXPonto2.Text));
   Triangulo.setP2Y(StrToFloat(edYPonto2.Text));
+  Triangulo.setP2Z(StrToFloat(edZPonto2.Text));
+
   Triangulo.setP3X(StrToFloat(edXPonto3.Text));
   Triangulo.setP3Y(StrToFloat(edYPonto3.Text));
+  Triangulo.setP3Z(StrToFloat(edZPonto3.Text));
+
   principal.setDesenharTriangulo();
   btnCancelClick(self);
 end;

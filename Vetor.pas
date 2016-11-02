@@ -3,7 +3,7 @@ unit Vetor;
 interface
 
 type
-  TVetor = array[0..2] of double;
+  TVetor = array[0..3] of double;
 
 implementation
 

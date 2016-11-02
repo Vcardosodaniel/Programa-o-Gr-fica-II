@@ -1,0 +1,50 @@
+unit Translacao;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
+
+type
+  TfrmTranslacao = class(TForm)
+    Principal: TPanel;
+    gpTranslacao: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    edPontoX: TEdit;
+    edPontoY: TEdit;
+    btnOk: TButton;
+    btnCancelar: TButton;
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnOkClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmTranslacao: TfrmTranslacao;
+
+implementation
+
+uses
+  Primeiro1;
+
+{$R *.dfm}
+
+procedure TfrmTranslacao.btnCancelarClick(Sender: TObject);
+begin
+  self.Close();
+end;
+
+procedure TfrmTranslacao.btnOkClick(Sender: TObject);
+var
+  principal: TPrincipal;
+begin
+  principal.translacao(StrToFloat(edPontoX.Text), StrToFloat(edPontoY.Text));
+  btnCancelarClick(self);
+end;
+
+end.
